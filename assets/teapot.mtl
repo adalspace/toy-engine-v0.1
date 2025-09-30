@@ -1,0 +1,14 @@
+# Blender 4.3.2 MTL File: 'Teapot.blend'
+# www.blender.org
+
+newmtl m_pot
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /home/landam/Downloads/Teapot/Textures/pot_basecolor.png
+map_Ns /home/landam/Downloads/Teapot/Textures/pot_rough.png
+map_refl /home/landam/Downloads/Teapot/Textures/pot_metal.png
+map_Bump -bm 1.000000 /home/landam/Downloads/Teapot/Textures/pot_norm.png

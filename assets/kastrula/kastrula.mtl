@@ -1,0 +1,53 @@
+# Blender 4.3.2 MTL File: 'None'
+# www.blender.org
+
+newmtl Chaynik-Korpus
+Ns 256.862732
+Ka 1.000000 1.000000 1.000000
+Ks 0.928571 0.928571 0.928571
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd /home/landam/Downloads/Kastrula/textures/Chaynik.png
+
+newmtl Chaynik-Krishka
+Ns 198.039215
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.509524 0.509524 0.509524
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump /home/landam/Downloads/Kastrula/textures/Chaynik_Norm.png
+
+newmtl Chaynik-Nakip
+Ns 96.078453
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd /home/landam/Downloads/Kastrula/textures/Chaynik.png
+
+newmtl Chaynik_Me
+Ns 96.078453
+Ka 1.000000 1.000000 1.000000
+Kd 0.467201 0.424507 0.373288
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Chaynik_Me_Bl
+Ns 1000.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
