@@ -2,6 +2,7 @@
 #define MODEL_H_
 #include <vector>
 #include <string>
+#include <filesystem>
 #include <unordered_map>
 #include <glm/glm.hpp>
 #include <memory>
@@ -120,7 +121,7 @@ public:
     static Object LoadFile(const std::string& filename);
 
 private:
-    void LoadMaterials(const std::string& filename);
+    void LoadMaterials(const std::filesystem::path& filename);
 private:
     void AddMaterial(std::string name, std::shared_ptr<Material> material);
     std::shared_ptr<Material> GetMaterial(std::string name);
