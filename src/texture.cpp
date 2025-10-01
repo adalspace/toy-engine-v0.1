@@ -10,7 +10,7 @@ std::unique_ptr<Texture> Texture::LoadFile(const std::string& filename) {
     auto texture = std::make_unique<Texture>();
 
     int w, h, c;
-    unsigned char *data = stbi_load(filename.c_str(), &w, &h, &c, 0);
+    unsigned char *data = stbi_load(filename.c_str(), &w, &h, &c, 4);
     if (!data) {
         std::cerr << "ERROR: Failed to load texture under '" << filename << "'" << std::endl;
         std::exit(1);
@@ -26,7 +26,7 @@ std::unique_ptr<Texture> Texture::LoadFile(const std::string& filename) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     // TODO: automatically detect values for this function
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 
     std::cout << "Loaded texture under '" << filename << "' with size of " << sizeof(data) << " bytes" << std::endl;
