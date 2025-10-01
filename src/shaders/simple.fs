@@ -41,6 +41,7 @@ void main()
     // float spec = pow(max(dot(viewDir, reflectDir), 0.0), clamp(shininess, 2, 256));
     // vec3 specular = (useSpecular) ? specularStrength * spec * specularColor : vec3(0.0);
 
+    // Blinn Phong
     vec3 halfDir = normalize(lightDir + viewDir);
     float spec = pow(max(dot(norm, halfDir), 0.0), clamp(shininess, 2.0, 256.0));
     vec3 specular = (useSpecular) ? specularStrength * spec * specularColor : vec3(0.0);
@@ -49,14 +50,6 @@ void main()
     vec3 diffuse = diff * diffuseColor;
 
     vec3 ambient = ambientStrength * ambientColor;
-
-    float distance    = length(lightPos - vertexPos);
-    float attenuation = 1.0 / (1.0 + 0.09 * distance + 0.032 * (distance * distance));
-    // tweak 0.09 and 0.032 for range/falloff
-
-    // diffuse  *= attenuation;
-    // specular *= attenuation;
-    // ambient  *= attenuation; // optional, sometimes left constant
 
     vec3 texColor = (useTexture)
         ? texture(diffuseTex, TexCoords).rgb
