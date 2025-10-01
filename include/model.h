@@ -64,6 +64,8 @@ private:
     glm::vec3 m_diffuse { 0.8f, 0.8f, 0.8f };
     glm::vec3 m_specular { 1.0f, 1.0f, 1.0f };
     float m_shininess { 32.0f };
+    float m_opacity { 1.0f };
+    int m_illum { 2 };
 
     std::unique_ptr<Texture> m_diffuse_tex { nullptr };
 public:
@@ -77,12 +79,16 @@ public:
     inline const float GetSpecularWeight() const { return m_shininess; }
     inline const bool HasDiffuseTexture() const { return m_diffuse_tex != nullptr; }
     inline const Texture* GetDiffuseTexture() const { return m_diffuse_tex.get(); }
+    inline const float GetOpacity() const { return m_opacity; }
+    inline const int GetIllumination() const { return m_illum; }
 public:
     inline void SetAmbientColor(glm::vec3 ambient) { m_ambient = ambient; }
     inline void SetDiffuseColor(glm::vec3 diffuse) { m_diffuse = diffuse; }
     inline void SetSpecularColor(glm::vec3 specular) { m_specular = specular; }
     inline void SetSpecularWeight(float weight) { m_shininess = weight; }
     inline void SetDiffuseTexture(std::unique_ptr<Texture>&& texture) { m_diffuse_tex = std::move(texture); }
+    inline void SetOpacity(float opacity) { m_opacity = opacity; }
+    inline void SetIllumination(float illum) { m_illum = illum; }
 };
 
 class Mesh {

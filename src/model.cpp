@@ -142,6 +142,20 @@ void Object::LoadMaterials(const std::filesystem::path& filename) {
             currentMaterial->SetDiffuseColor(glm::vec3(r, g, b));
             break;
         }
+        case MtlElement::D:
+        {
+            float d;
+            iss >> d;
+            currentMaterial->SetOpacity(d);
+            break;
+        }
+        case MtlElement::ILLUM:
+        {
+            int illum;
+            iss >> illum;
+            currentMaterial->SetIllumination(illum);
+            break;
+        }
         case MtlElement::MAP_KD:
         {
             std::string texturePath;
@@ -325,7 +339,10 @@ void Object::Render(Shader& shader)
         auto material = GetMaterial(mesh.materialName);
         
         shader.setFloat("ambientStrength", 0.2f);
-        shader.setFloat("specularStrength", material->GetSpecularWeight());
+        shader.setFloat("shininess", material->GetSpecularWeight());
+        shader.setFloat("opacity", material->GetOpacity());
+        shader.setBool("useSpecular", material->GetIllumination() >= 2);
+        shader.setFloat("specularStrength", 1.0f);
         shader.setVec3("ambientColor", material->GetAmbientColor());
         shader.setVec3("diffuseColor", material->GetDiffuseColor());
         shader.setVec3("specularColor", material->GetSpecularColor());
