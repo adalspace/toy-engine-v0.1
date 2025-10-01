@@ -86,7 +86,7 @@ Object::Object() {
     m_texCoords = std::vector<glm::vec2>();
 }
 
-void Object::LoadMaterials(const std::string& filename) {
+void Object::LoadMaterials(const std::filesystem::path& filename) {
     std::ifstream file(filename);
 
     std::string currentMaterialName;
