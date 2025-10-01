@@ -6,7 +6,9 @@
 #include <errno.h>
 #include "prelude.h"
 
+#ifndef WIN32
 #define GLEW_STATIC
+#endif
 #include <GL/glew.h>
 
 #define SCREEN_WIDTH 1024
