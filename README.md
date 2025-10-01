@@ -27,3 +27,16 @@ The run command in that case would look following:
 ```console
 __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia ./build/CodingGame
 ```
+
+## TODO List
+
+### Optimizations
+
+🚀 Summary of Speedups
+- Replace toElement / toMtlElement string comparisons with char-based switches.
+- Replace std::stoi with a custom fast Parser::TakeIndex.
+- Pre-reserve vectors for vertices, normals, texcoords, meshes.
+- Load whole file into memory before parsing (fastest for large OBJs).
+- Defer texture loading until after parsing.
+- Store material pointers in meshes → no runtime lookups in render.
+- Inline parsing functions.

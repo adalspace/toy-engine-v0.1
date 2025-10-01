@@ -11,26 +11,10 @@
 #include "texture.h"
 #include "renderer/material.h"
 #include "renderer/basics.h"
+#include "renderer/mesh.h"
 
 enum ObjElement { OHASH, MTLLIB, USEMTL, O, V, VN, VT, F, OUNKNOWN };
 enum MtlElement { MHASH, NEWMTL, NS, KA, KS, KD, NI, D, ILLUM, MAP_KD, MAP_KA, MUNKNOWN };
-
-class Mesh {
-public: // TODO: abstract away
-    unsigned int m_vao, m_vbo, m_ebo;
-    std::vector<Vertex> m_vertexBuffer;
-    std::vector<unsigned int> m_indexBuffer;
-public: // TODO: abstract away
-    void Bind() { glBindVertexArray(m_vao); }
-    void Unbind() { glBindVertexArray(0); }
-    void Upload();
-public:
-    std::string materialName;
-public:
-    Mesh();
-public:
-    void Render();
-};
 
 class Object {
 private:
@@ -43,7 +27,7 @@ private:
 
     std::unordered_map<std::string, std::shared_ptr<Material>> m_materials;
 private:
-    static inline int NormalizeIndex(const std::string &s, int baseCount);
+    static inline int NormalizeIndex(int idx, int baseCount);
 
 private:
     Object();

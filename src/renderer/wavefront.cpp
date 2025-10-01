@@ -1,78 +1,98 @@
 #include <iostream>
 #include <fstream>
-#include <sstream>
+#include <cstring>
 #include <memory>
 #include <filesystem>
 #include <GL/glew.h>
 
+#include "IO/parser.h"
+#include "renderer/mesh.h"
 #include "renderer/wavefront.h"
 
-ObjElement toElement(const std::string &s) {
-    if (s == "#") return ObjElement::OHASH;
-    if (s == "mtllib") return ObjElement::MTLLIB;
-    if (s == "usemtl") return ObjElement::USEMTL;
-    if (s == "o") return ObjElement::O;
-    if (s == "v") return ObjElement::V;
-    if (s == "vn") return ObjElement::VN;
-    if (s == "vt") return ObjElement::VT;
-    if (s == "f") return ObjElement::F;
+#define DEFAULT_MATERIAL_NAME "default"
+
+// ObjElement toElement(const std::string &s) {
+//     if (s == "#") return ObjElement::OHASH;
+//     if (s == "mtllib") return ObjElement::MTLLIB;
+//     if (s == "usemtl") return ObjElement::USEMTL;
+//     if (s == "o") return ObjElement::O;
+//     if (s == "v") return ObjElement::V;
+//     if (s == "vn") return ObjElement::VN;
+//     if (s == "vt") return ObjElement::VT;
+//     if (s == "f") return ObjElement::F;
+//     return ObjElement::OUNKNOWN;
+// }
+
+inline ObjElement toElement(const char* s) {
+    switch (s[0]) {
+        case '#': return ObjElement::OHASH;
+        case 'm': if (strcmp(s, "mtllib") == 0) return ObjElement::MTLLIB; break;
+        case 'u': if (strcmp(s, "usemtl") == 0) return ObjElement::USEMTL; break;
+        case 'o': if (s[1] == '\0') return ObjElement::O; break;
+        case 'v':
+            if (s[1] == '\0') return ObjElement::V;
+            if (s[1] == 'n' && s[2] == '\0') return ObjElement::VN;
+            if (s[1] == 't' && s[2] == '\0') return ObjElement::VT;
+            break;
+        case 'f': if (s[1] == '\0') return ObjElement::F; break;
+    }
     return ObjElement::OUNKNOWN;
 }
 
-MtlElement toMtlElement(const std::string &s) {
-    if (s == "#") return MtlElement::MHASH;
-    if (s == "newmtl") return MtlElement::NEWMTL;
-    if (s == "Ns") return MtlElement::NS;
-    if (s == "Ka") return MtlElement::KA;
-    if (s == "Ks") return MtlElement::KS;
-    if (s == "Kd") return MtlElement::KD;
-    if (s == "Ni") return MtlElement::NI;
-    if (s == "d") return MtlElement::D;
-    if (s == "illum") return MtlElement::ILLUM;
-    if (s == "map_Kd") return MtlElement::MAP_KD;
-    if (s == "map_Ka") return MtlElement::MAP_KA;
-    // if (s == "map_Ke") return MtlElement::MAP_KE;
+// MtlElement toMtlElement(const std::string &s) {
+//     if (s == "#") return MtlElement::MHASH;
+//     if (s == "newmtl") return MtlElement::NEWMTL;
+//     if (s == "Ns") return MtlElement::NS;
+//     if (s == "Ka") return MtlElement::KA;
+//     if (s == "Ks") return MtlElement::KS;
+//     if (s == "Kd") return MtlElement::KD;
+//     if (s == "Ni") return MtlElement::NI;
+//     if (s == "d") return MtlElement::D;
+//     if (s == "illum") return MtlElement::ILLUM;
+//     if (s == "map_Kd") return MtlElement::MAP_KD;
+//     if (s == "map_Ka") return MtlElement::MAP_KA;
+//     // if (s == "map_Ke") return MtlElement::MAP_KE;
+//     return MtlElement::MUNKNOWN;
+// }
+
+inline MtlElement toMtlElement(const char* s) {
+    switch (s[0]) {
+        case '#': return MtlElement::MHASH;
+        case 'n':
+            if (strcmp(s, "newmtl") == 0) return MtlElement::NEWMTL;
+            break;
+        case 'N':
+            if (s[1] == 's' && s[2] == '\0') return MtlElement::NS;
+            if (s[1] == 'i' && s[2] == '\0') return MtlElement::NI;
+            break;
+        case 'K':
+            if (s[1] == 'a' && s[2] == '\0') return MtlElement::KA;
+            if (s[1] == 's' && s[2] == '\0') return MtlElement::KS;
+            if (s[1] == 'd' && s[2] == '\0') return MtlElement::KD;
+            break;
+        case 'd':
+            if (s[1] == '\0') return MtlElement::D;
+            break;
+        case 'i':
+            if (strcmp(s, "illum") == 0) return MtlElement::ILLUM;
+            break;
+        case 'm':
+            if (strcmp(s, "map_Kd") == 0) return MtlElement::MAP_KD;
+            if (strcmp(s, "map_Ka") == 0) return MtlElement::MAP_KA;
+            // if (strcmp(s, "map_Ke") == 0) return MtlElement::MAP_KE;
+            break;
+    }
     return MtlElement::MUNKNOWN;
 }
 
-void Vertex::DefineAttrib()
-{
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, m_position)));
-    glEnableVertexAttribArray(0);
-
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, m_normal)));
-    glEnableVertexAttribArray(1);
-    
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, m_texCoord)));
-    glEnableVertexAttribArray(2);
-}
-
-inline int Object::NormalizeIndex(const std::string &s, int baseCount) {
-    if (s.empty()) return -1;
-    int idx = std::stoi(s);
-    if (idx > 0) return idx - 1;
-    return baseCount + idx;
-}
-
-Mesh::Mesh() {
-    glGenVertexArrays(1, &m_vao);
-    glGenBuffers(1, &m_vbo);
-    glGenBuffers(1, &m_ebo);
-
-    glBindVertexArray(m_vao);
-
-    // VBO (vertex buffer)
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STATIC_DRAW);
-
-    // EBO (index buffer)
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 0, nullptr, GL_STATIC_DRAW);
-
-    Vertex::DefineAttrib();
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+inline int Object::NormalizeIndex(int idx, int baseCount) {
+    // idx is the raw value returned by parser:
+    //  0 -> means "not present" or invalid in our convention
+    // >0 -> 1-based index -> convert to 0-based
+    // <0 -> negative index -> relative to baseCount: baseCount + idx
+    if (idx == 0) return -1;          // absent / invalid
+    if (idx > 0) return idx - 1;      // 1-based -> 0-based
+    return baseCount + idx;           // negative -> count from end
 }
 
 Object::Object() {
@@ -83,91 +103,130 @@ Object::Object() {
 
 void Object::LoadMaterials(const std::filesystem::path& filename) {
     std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open MTL file: " << filename << std::endl;
+        return;
+    }
 
     std::string currentMaterialName;
     std::shared_ptr<Material> currentMaterial;
-    
-    std::string line;
-    while (std::getline(file, line)) {
-        std::istringstream iss(line);
-        std::string prefix;
-        iss >> prefix;
-        switch(toMtlElement(prefix)) {
-        case MtlElement::MHASH:
-        {
-            std::cout << "comment: " << line << std::endl;
+
+    char line[1024]; // buffer per line
+
+    while (file.getline(line, sizeof(line))) {
+        Parser p(line);
+        char* prefix = p.TakeWord();
+        if (!prefix) continue;
+
+        switch (toMtlElement(prefix)) {
+        case MtlElement::MHASH: // comment
             continue;
-        }
+
         case MtlElement::NEWMTL:
         {
+            // If a material was being built, commit it first
             if (currentMaterial) {
-                m_materials.insert(std::make_pair(currentMaterialName, std::move(currentMaterial)));
+                AddMaterial(currentMaterialName, std::move(currentMaterial));
                 currentMaterial = nullptr;
             }
-            std::string materialName;
-            iss >> materialName;
-            currentMaterialName = materialName;
-            currentMaterial = std::make_shared<Material>();
-            break;
-        }
-        case MtlElement::NS:
-        {
-            float weight;
-            iss >> weight;
-            currentMaterial->SetSpecularWeight(weight);
-        }
-        case MtlElement::KA:
-        {
-            float r, g, b;
-            iss >> r >> g >> b;
-            currentMaterial->SetAmbientColor(glm::vec3(r, g, b));
-            break;
-        }
-        case MtlElement::KS:
-        {
-            float r, g, b;
-            iss >> r >> g >> b;
-            currentMaterial->SetSpecularColor(glm::vec3(r, g, b));
-            break;
-        }
-        case MtlElement::KD:
-        {
-            float r, g, b;
-            iss >> r >> g >> b;
-            currentMaterial->SetDiffuseColor(glm::vec3(r, g, b));
-            break;
-        }
-        case MtlElement::D:
-        {
-            float d;
-            iss >> d;
-            currentMaterial->SetOpacity(d);
-            break;
-        }
-        case MtlElement::ILLUM:
-        {
-            int illum;
-            iss >> illum;
-            currentMaterial->SetIllumination(illum);
-            break;
-        }
-        case MtlElement::MAP_KD:
-        {
-            std::string texturePath;
-            std::string part;
-            while (iss >> part) {
-                texturePath += part + " ";
+
+            char* materialName = p.TakeWord();
+            if (materialName) {
+                currentMaterialName = materialName;
+                currentMaterial = std::make_shared<Material>();
             }
-            texturePath = texturePath.substr(0, texturePath.size() - 1);
-            currentMaterial->SetDiffuseTexture(Texture::LoadFile(texturePath));
+            break;
         }
+
+        case MtlElement::NS: // specular weight
+        {
+            float weight = p.TakeFloat();
+            if (currentMaterial) currentMaterial->SetSpecularWeight(weight);
+            break;
+        }
+
+        case MtlElement::KA: // ambient color
+        {
+            float r = p.TakeFloat();
+            float g = p.TakeFloat();
+            float b = p.TakeFloat();
+            if (currentMaterial) currentMaterial->SetAmbientColor(glm::vec3(r, g, b));
+            break;
+        }
+
+        case MtlElement::KS: // specular color
+        {
+            float r = p.TakeFloat();
+            float g = p.TakeFloat();
+            float b = p.TakeFloat();
+            if (currentMaterial) currentMaterial->SetSpecularColor(glm::vec3(r, g, b));
+            break;
+        }
+
+        case MtlElement::KD: // diffuse color
+        {
+            float r = p.TakeFloat();
+            float g = p.TakeFloat();
+            float b = p.TakeFloat();
+            if (currentMaterial) currentMaterial->SetDiffuseColor(glm::vec3(r, g, b));
+            break;
+        }
+
+        case MtlElement::D: // opacity
+        {
+            float d = p.TakeFloat();
+            if (currentMaterial) currentMaterial->SetOpacity(d);
+            break;
+        }
+
+        case MtlElement::ILLUM: // illumination model
+        {
+            int illum = p.TakeInt();
+            if (currentMaterial) currentMaterial->SetIllumination(illum);
+            break;
+        }
+
+        case MtlElement::MAP_KD: // diffuse texture map
+        {
+            // take rest of line as texture path (can contain spaces)
+            char* texPath = p.TakeUntil('\0');
+            if (texPath && currentMaterial) {
+                // trim trailing spaces
+                size_t len = std::strlen(texPath);
+                while (len > 0 && (texPath[len - 1] == ' ' || texPath[len - 1] == '\t'))
+                    texPath[--len] = '\0';
+
+                currentMaterial->SetDiffuseTexture(Texture::LoadFile(texPath));
+            }
+            break;
+        }
+
+        case MtlElement::MAP_KA: // ambient texture map
+        {
+            char* texPath = p.TakeUntil('\0');
+            if (texPath && currentMaterial) {
+                size_t len = std::strlen(texPath);
+                while (len > 0 && (texPath[len - 1] == ' ' || texPath[len - 1] == '\t'))
+                    texPath[--len] = '\0';
+
+                // optional: handle ambient texture
+                // currentMaterial->SetAmbientTexture(Texture::LoadFile(texPath));
+            }
+            break;
+        }
+
+        default:
+            // ignore unknown tokens
+            break;
         }
     }
 
+    // Commit last material if pending
     if (currentMaterial) {
-        // m_materials.insert(std::make_pair(currentMaterialName, std::move(currentMaterial)));
         AddMaterial(currentMaterialName, std::move(currentMaterial));
     }
+
+    file.close();
 }
 
 void Object::AddMaterial(std::string name, std::shared_ptr<Material> material)
@@ -194,116 +253,126 @@ Mesh& Object::GetLastMesh()
     if (m_meshes.empty()) {
         auto material = std::make_shared<Material>();
         material->SetAmbientColor(glm::vec3(0.52f, 0.52f, 0.52f));
-        // TODO: come up with name for a default material
-        AddMaterial("", std::move(material));
-        CreateNewMesh("");
+        AddMaterial(DEFAULT_MATERIAL_NAME, std::move(material));
+        CreateNewMesh(DEFAULT_MATERIAL_NAME);
     }
     return m_meshes.back();
 }
 
 Object Object::LoadFile(const std::string& filename) {
     std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open OBJ file: " << filename << std::endl;
+        return {};
+    }
 
     Object obj;
+    char line[1024]; // static buffer for each line (enough for OBJ lines)
 
-    std::string line;
-    while (std::getline(file, line)) {
-        std::istringstream iss(line);
-        std::string prefix;
-        iss >> prefix;
-        switch(toElement(prefix)) {
-        // comment
-        case ObjElement::OHASH:
-        {
-            std::cout << "comment: " << line << std::endl;
+    while (file.getline(line, sizeof(line))) {
+        Parser p(line);
+        char* prefix = p.TakeWord();
+        if (!prefix) continue;
+
+        switch (toElement(prefix)) {
+        case ObjElement::OHASH: // comment
             continue;
-        }
+
         case ObjElement::MTLLIB:
         {
-            std::string mtlFile;
-            iss >> mtlFile;
-            std::filesystem::path fullPath = filename;
-            std::filesystem::path mtlPath = fullPath.replace_filename(mtlFile);
-            obj.LoadMaterials(mtlPath);
-            std::cout << "loaded mtl at '" << mtlPath << "' with "
-                << obj.m_materials.size() << " materials" << std::endl;
-            break;
-        }
-        case ObjElement::USEMTL:
-        {
-            std::string materialName;
-            iss >> materialName;
-            auto& mesh = obj.GetLastMesh();
-            if (mesh.materialName != materialName) {
-                Mesh mesh;
-                mesh.materialName = materialName;
-                obj.m_meshes.push_back(mesh);
+            char* mtlFile = p.TakeWord();
+            if (mtlFile) {
+                std::filesystem::path fullPath = filename;
+                std::filesystem::path mtlPath = fullPath.replace_filename(mtlFile);
+                obj.LoadMaterials(mtlPath);
             }
             break;
         }
-        // object name I suppose
-        case ObjElement::O:
+
+        case ObjElement::USEMTL:
         {
-            obj.m_name = line.substr(2);
+            char* materialName = p.TakeWord();
+            if (materialName) {
+                auto& mesh = obj.GetLastMesh();
+                if (mesh.materialName != materialName) {
+                    Mesh newMesh;
+                    newMesh.materialName = materialName;
+                    obj.m_meshes.push_back(newMesh);
+                }
+            }
             break;
         }
-        // vertex with its position
-        case ObjElement::V:
+
+        case ObjElement::O: // object name
         {
-            float x, y, z, w;
-            w = 1.0f;
-            iss >> x >> y >> z;
-            if (iss >> w) {
-                x /= w;
-                y /= w;
-                z /= w;
+            char* name = p.TakeWord();
+            if (name) obj.m_name = name;
+            break;
+        }
+
+        case ObjElement::V: // vertex
+        {
+            float x = p.TakeFloat();
+            float y = p.TakeFloat();
+            float z = p.TakeFloat();
+            float w = p.TakeFloat();
+
+            if (w != 0.0f && w != 1.0f) {
+                x /= w; y /= w; z /= w;
             }
             obj.m_vertices.emplace_back(x, y, z);
             break;
         }
-        case ObjElement::VN:
+
+        case ObjElement::VN: // normal
         {
-            float x, y, z;
-            iss >> x >> y >> z;
+            float x = p.TakeFloat();
+            float y = p.TakeFloat();
+            float z = p.TakeFloat();
             obj.m_normals.emplace_back(x, y, z);
             break;
         }
-        case ObjElement::VT:
+
+        case ObjElement::VT: // texcoord
         {
-            float u, v;
-            iss >> u >> v;
+            float u = p.TakeFloat();
+            float v = p.TakeFloat();
             obj.m_texCoords.emplace_back(u, 1.0f - v);
             break;
         }
-        case ObjElement::F:
+
+        case ObjElement::F: // face
         {
             auto& mesh = obj.GetLastMesh();
-            std::string token;
+            int raw_vi, raw_ti, raw_ni;
 
-            while (iss >> token) {
-                std::string a, b, c;
-                std::istringstream ref(token);
+            while (p.TakeFaceIndices(raw_vi, raw_ti, raw_ni)) {
+                // Convert raw OBJ indices to 0-based / -1 sentinel
+                int vi = Object::NormalizeIndex(raw_vi, (int)obj.m_vertices.size());
+                int ti = Object::NormalizeIndex(raw_ti, (int)obj.m_texCoords.size());
+                int ni = Object::NormalizeIndex(raw_ni, (int)obj.m_normals.size());
 
-                std::getline(ref, a, '/');
-                std::getline(ref, b, '/');
-                std::getline(ref, c, '/');
+                if (vi < 0) {
+                    // malformed token (no vertex) — skip
+                    continue;
+                }
 
-                int vi = Object::NormalizeIndex(a, (int)obj.m_vertices.size());
-                int ti = Object::NormalizeIndex(b, (int)obj.m_texCoords.size());
-                int ni = Object::NormalizeIndex(c, (int)obj.m_normals.size());
+                glm::vec3 vert = obj.m_vertices[vi];
+                glm::vec3 norm(0.0f);
+                glm::vec2 texCoord(0.0f);
 
-                glm::vec3 vert, norm;
-                glm::vec2 texCoord;
-                vert = obj.m_vertices[vi];
                 if (ni >= 0) norm = obj.m_normals[ni];
                 if (ti >= 0) texCoord = obj.m_texCoords[ti];
 
                 mesh.m_vertexBuffer.emplace_back(vert, norm, texCoord);
                 mesh.m_indexBuffer.push_back(mesh.m_vertexBuffer.size() - 1);
             }
-            
             break;
         }
+
+        default:
+            // ignore unknown tokens
+            break;
         }
     }
 
@@ -313,9 +382,6 @@ Object Object::LoadFile(const std::string& filename) {
     std::cout << "TexCoords count: " << obj.m_texCoords.size() << std::endl;
     std::cout << "Meshes count: " << obj.m_meshes.size() << std::endl;
     std::cout << "Materials count: " << obj.m_materials.size() << std::endl;
-    
-    // std::cout << "Vertex Buffer size: " << obj.m_vertexBuffer.size() << std::endl;
-    // std::cout << "Index Buffer size: " << obj.m_indexBuffer.size() << std::endl;
 
     file.close();
 
@@ -325,6 +391,7 @@ Object Object::LoadFile(const std::string& filename) {
 
     return obj;
 }
+
 
 void Object::Render(Shader& shader)
 {
@@ -353,23 +420,4 @@ void Object::Render(Shader& shader)
     }
 }
 
-void Mesh::Upload()
-{
-    glBindVertexArray(m_vao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, m_vertexBuffer.size() * sizeof(Vertex), m_vertexBuffer.data(), GL_STATIC_DRAW);
-
-    // Upload indices
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer.size() * sizeof(unsigned int), m_indexBuffer.data(), GL_STATIC_DRAW);
-
-    glBindVertexArray(0);
-}
-
-void Mesh::Render()
-{
-    Bind();
-    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indexBuffer.size()), GL_UNSIGNED_INT, 0);
-    Unbind();
-}
