@@ -1,4 +1,10 @@
 #include <iostream>
+
+// #ifdef WIN32
+#define _USE_MATH_DEFINES
+#include <cmath>
+// #endif
+
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/ext/quaternion_geometric.hpp>
