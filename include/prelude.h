@@ -1,6 +1,6 @@
 #ifndef PRELUDE_H_
 #define PRELUDE_H_
-#define GLEW_STATIC
+// #define GLEW_STATIC
 #include <GL/glew.h>
 #include "SDL3/SDL.h"
 
