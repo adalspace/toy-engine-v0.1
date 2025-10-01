@@ -5,6 +5,10 @@
 #include <cmath>
 // #endif
 
+#ifndef WIN32
+#define GLEW_STATIC
+#endif
+
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/ext/quaternion_geometric.hpp>
@@ -13,12 +17,10 @@
 #include <GL/glew.h>
 #include <SDL3/SDL.h>
 
-#include "shader.h"
-#include "file_manager.h"
-#include "prelude.h"
-#include "block.h"
-#include "vertex.h"
-#include "model.h"
+#include "renderer/shader.h"
+#include "IO/file_manager.h"
+#include "renderer/debug.h"
+#include "renderer/wavefront.h"
 
 #define WIDTH 1024
 #define HEIGHT 768

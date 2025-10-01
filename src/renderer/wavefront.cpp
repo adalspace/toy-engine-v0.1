@@ -5,7 +5,7 @@
 #include <filesystem>
 #include <GL/glew.h>
 
-#include "model.h"
+#include "renderer/wavefront.h"
 
 ObjElement toElement(const std::string &s) {
     if (s == "#") return ObjElement::OHASH;
@@ -45,11 +45,6 @@ void Vertex::DefineAttrib()
     
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, m_texCoord)));
     glEnableVertexAttribArray(2);
-}
-
-void Face::PushItem(const FaceItem& item)
-{
-    m_items.push_back(item);
 }
 
 inline int Object::NormalizeIndex(const std::string &s, int baseCount) {
@@ -284,8 +279,6 @@ Object Object::LoadFile(const std::string& filename) {
         {
             auto& mesh = obj.GetLastMesh();
             std::string token;
-            
-            Face fv;
 
             while (iss >> token) {
                 std::string a, b, c;

@@ -25,13 +25,13 @@ endif()
 # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ggdb")
 
 add_executable(CodingGame
-	src/prelude.cpp
-	src/file_manager.cpp
-	src/shader.cpp 
-	src/block.cpp 
-	src/vertex.cpp 
-	src/texture.cpp 
-	src/model.cpp 
+	src/IO/file_manager.cpp
+
+	src/renderer/debug.cpp
+	src/renderer/shader.cpp 
+	src/renderer/texture.cpp 
+	src/renderer/wavefront.cpp 
+	
 	src/main.cpp
 )
 
