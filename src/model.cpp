@@ -215,7 +215,7 @@ Object Object::LoadFile(const std::string& filename) {
             iss >> mtlFile;
             std::filesystem::path fullPath = filename;
             std::filesystem::path mtlPath = fullPath.replace_filename(mtlFile);
-            obj.LoadMaterials(mtlPath);
+            obj.LoadMaterials(mtlPath.u8string());
             std::cout << "loaded mtl at '" << mtlPath << "' with "
                 << obj.m_materials.size() << " materials" << std::endl;
             break;
