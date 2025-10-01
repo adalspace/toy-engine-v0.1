@@ -1,29 +1,55 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.16)
 project(CodingGame LANGUAGES C CXX)
 
-include(FetchContent)
+# --- deps via vcpkg ---
+# (vcpkg installs decide static vs shared; no "SDL3-shared" component needed)
+find_package(SDL3 CONFIG REQUIRED)
+find_package(OpenGL REQUIRED)
+find_package(GLEW CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
-FetchContent_Declare(
-	glm
-	GIT_REPOSITORY	https://github.com/g-truc/glm.git
-	GIT_TAG 	bf71a834948186f4097caa076cd2663c69a10e1e #refs/tags/1.0.1
+# --- exe ---
+add_executable(CodingGame
+  src/prelude.cpp
+  src/file_manager.cpp
+  src/shader.cpp
+  src/block.cpp
+  src/vertex.cpp
+  src/texture.cpp
+  src/model.cpp
+  src/main.cpp
 )
 
-FetchContent_MakeAvailable(glm)
+set_property(TARGET CodingGame PROPERTY CXX_STANDARD 17)
+set_property(TARGET CodingGame PROPERTY CXX_STANDARD_REQUIRED ON)
 
-find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3-shared)
-find_package(OpenGL REQUIRED)
-find_package(GLEW REQUIRED)
+file(COPY ${CMAKE_SOURCE_DIR}/src/shaders DESTINATION ${CMAKE_BINARY_DIR}/)
 
-# Add -ggdb to debug builds
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -ggdb")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ggdb")
+target_include_directories(CodingGame PRIVATE
+  ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_SOURCE_DIR}/contrib
+)
 
-add_executable(CodingGame src/prelude.cpp src/file_manager.cpp src/shader.cpp src/block.cpp src/vertex.cpp src/texture.cpp src/model.cpp src/main.cpp)
+target_link_libraries(CodingGame PRIVATE
+  glm::glm
+  OpenGL::GL
+  SDL3::SDL3           # vcpkg’s SDL3 target
+  GLEW::GLEW
+)
 
-set_property(TARGET CodingGame PROPERTY CXX_STANDARD_REQUIRED 17)
+# Debug flags per toolchain
+if (MSVC)
+  target_compile_options(CodingGame PRIVATE $<$<CONFIG:Debug>:/Zi>)
+  target_link_options(CodingGame PRIVATE $<$<CONFIG:Debug>:/DEBUG:FULL>)
+else()
+  target_compile_options(CodingGame PRIVATE $<$<CONFIG:Debug>:-ggdb>)
+endif()
 
-file(COPY src/shaders DESTINATION ${CMAKE_BINARY_DIR}/)
-
-target_include_directories(CodingGame PRIVATE ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/contrib)
-target_link_libraries(CodingGame PRIVATE SDL3::SDL3 OpenGL::GL GLEW::GLEW glm::glm)
+# --- copy runtime DLLs next to the exe on Windows ---
+# (CMake 3.21+)
+if (WIN32)
+  add_custom_command(TARGET CodingGame POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+      $<TARGET_RUNTIME_DLLS:CodingGame> $<TARGET_FILE_DIR:CodingGame>
+    COMMAND_EXPAND_LISTS)
+endif()
