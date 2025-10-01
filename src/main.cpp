@@ -1,4 +1,6 @@
 #include <iostream>
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/ext/quaternion_geometric.hpp>
