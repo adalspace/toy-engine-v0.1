@@ -1,7 +1,11 @@
 #ifndef PRELUDE_H_
 #define PRELUDE_H_
+
+#ifndef WIN32
 #define GLEW_STATIC
+#endif
 #include <GL/glew.h>
+
 #include "SDL3/SDL.h"
 
 struct RenderContext {
