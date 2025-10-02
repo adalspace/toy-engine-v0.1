@@ -6,16 +6,26 @@ This is a basic future game engine for OpenGL 3D rendered games
 
 ## Building on Windows
 
-In order to configure and run project on windows platform use following commands.
+In order to configure and run project on windows platform accomplish several steps.
 
-Configuring:
+### Configuring
 
 ```console
-cmake -S . -B build `       
-   -G "Visual Studio 17 2022" -A x64 `
-   -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
-   -DVCPKG_TARGET_TRIPLET=x64-windows `
-   -DCMAKE_BUILD_TYPE=Debug
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_BUILD_TYPE=Release
+```
+
+### Building
+
+```console
+cmake --build build --config Release
+```
+
+### Static Linking
+
+For static linking you just need to modify the configure command as follows:
+
+```console
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_BUILD_TYPE=Release
 ```
 
 ## Multi-GPU Devices
