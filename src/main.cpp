@@ -55,7 +55,7 @@ int main() {
 
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEPTH_TEST);
-    glDebugMessageCallback(MessageCallback, 0);
+    glDebugMessageCallback(MessageCallback, nullptr);
 
     Shader simpleShader;
     simpleShader.init(
@@ -85,7 +85,7 @@ int main() {
     // Object teapot = Object::LoadFile("./assets/kastrula/kastrula.obj");
     // Object bricks = Object::LoadFile("./assets/bricks/bricks.obj");
     Object lightSource = Object::LoadFile("./assets/cube.obj");
-    Object target = Object::LoadFile("./assets/car/car.obj");
+    Object target = Object::LoadFile("./assets/monkey.obj");
 
     bool paused = false;
 
