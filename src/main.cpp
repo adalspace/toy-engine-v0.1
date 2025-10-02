@@ -73,8 +73,8 @@ int main() {
     glm::mat4 model(1.f);
 
     glm::mat4 projection = glm::perspective(
-        (float)M_PI_2,
-        (float)screenWidth / (float)screenHeight,
+        static_cast<float>(M_PI_2),
+        static_cast<float>(screenWidth) / static_cast<float>(screenHeight),
         0.01f,
         100.0f
     );
@@ -99,7 +99,7 @@ int main() {
     bool quit = false;
     while (!quit) {
         Uint64 currentTicks = SDL_GetTicks();
-        float deltaTime = (currentTicks - lastTicks) / 1000.0f; // seconds
+        float deltaTime = static_cast<float>(currentTicks - lastTicks) / 1000.0f; // seconds
 
         lastTicks = currentTicks;
 
@@ -133,7 +133,7 @@ int main() {
         }
 
         float mouseXRel, mouseYRel;
-        Uint32 mouseState = SDL_GetRelativeMouseState(&mouseXRel, &mouseYRel);
+        SDL_GetRelativeMouseState(&mouseXRel, &mouseYRel);
 
         float sensitivity = 0.1f; // tweak as needed
         yaw   += mouseXRel * sensitivity;
@@ -182,8 +182,6 @@ int main() {
             }
         }
 
-        // std::cout << "angle = " << angle << std::endl;
-
         glClearColor(0x18/255.0f, 0x18/255.0f, 0x18/255.0f, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -225,7 +223,7 @@ int main() {
         Uint64 elapsed = currentTicks - startTicks;
 
         if (elapsed >= 1000) { // one second passed
-            double fps = (double)frameCount / (elapsed / 1000.0);
+            double fps = static_cast<double>(frameCount) / (static_cast<double>(elapsed) / 1000.0);
             std::cout << "FPS: " << fps << std::endl;
             frameCount = 0;
             startTicks = currentTicks;
