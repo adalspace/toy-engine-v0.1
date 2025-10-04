@@ -36,6 +36,10 @@ add_executable(CodingGame
   src/renderer/shader.cpp
   src/renderer/texture.cpp
   src/renderer/wavefront.cpp
+  src/renderer/engine.cpp
+
+  include/window/event.hpp
+  src/window/window.cpp
 
   src/main.cpp
 )
