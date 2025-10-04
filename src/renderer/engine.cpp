@@ -31,7 +31,7 @@ Engine::Engine() {
 }
 
 bool Engine::Running() const {
-    return m_isRunning;
+    return m_isRunning && m_window->IsOpen();
 }
 
 void Engine::Stop() {

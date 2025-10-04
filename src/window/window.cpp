@@ -61,6 +61,8 @@ Window::Window() {
     glDebugMessageCallback(MessageCallback, nullptr);
 
     glViewport(0, 0, m_width, m_height);
+
+    m_is_open = true;
 }
 
 void Window::ProcessEvents() {

@@ -19,12 +19,15 @@ private:
 
     int m_width;
     int m_height;
+
+    bool m_is_open;
 public:
     Window();
     ~Window();
 public:
     [[nodiscard]] inline int GetWidth() const { return m_width; }
     [[nodiscard]] inline int GetHeight() const { return m_height; }
+    [[nodiscard]] inline bool IsOpen() const { return m_is_open; }
 public:
     void ProcessEvents();
 public:
