@@ -2,6 +2,7 @@
 #define EVENT_H_
 
 #include <functional>
+#include <algorithm>
 #include <unordered_map>
 #include <vector>
 #include <typeindex>
