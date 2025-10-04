@@ -1,6 +1,8 @@
 #include "renderer/engine.h"
 
+#ifdef WIN32
 #include <corecrt_math_defines.h>
+#endif
 #include <GL/glew.h>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
@@ -20,12 +22,10 @@ Engine::Engine() {
     );
 
     m_window->subscribe<WindowResized>([this](const WindowResized& e) {
-        std::cout << "ENGINE: Window just resized" << std::endl;
         HandleWindowResized(e);
     });
 
     m_window->subscribe<WindowCloseRequested>([this](const WindowCloseRequested& e) {
-        std::cout << "ENGINE: Window closed" << std::endl;
         Stop();
     });
 }
