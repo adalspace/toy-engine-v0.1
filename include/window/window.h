@@ -14,7 +14,7 @@
 
 class Window : public EventBus {
 private:
-    SDL_Window *m_window;
+    SDL_Window *m_handle;
     SDL_GLContext m_context;
 
     int m_width;
@@ -23,7 +23,14 @@ private:
     bool m_is_open;
 public:
     Window();
+    Window(const char* title, int width, int height);
     ~Window();
+
+    Window(Window&& window) noexcept;
+    Window& operator=(Window&& window) noexcept;
+
+    Window(const Window& window) noexcept = delete;
+    Window& operator=(const Window& window) noexcept = delete;
 public:
     [[nodiscard]] inline int GetWidth() const { return m_width; }
     [[nodiscard]] inline int GetHeight() const { return m_height; }
