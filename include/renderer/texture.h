@@ -4,14 +4,13 @@
 #include <memory>
 
 class Texture {
-private:
-    unsigned int m_id;
-private:
 public:
-    Texture() {}
+    Texture() : m_id(0) {}
     static std::unique_ptr<Texture> LoadFile(const std::string& filename);
 public:
-    inline const unsigned int GetID() const { return m_id; }
+    [[nodiscard]] unsigned int GetID() const { return m_id; }
+private:
+    unsigned int m_id;
 };
 
 #endif // TEXTURE_H_

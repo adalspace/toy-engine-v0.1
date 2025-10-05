@@ -1,10 +1,8 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <iostream>
 #include <string>
 
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 
 class Shader

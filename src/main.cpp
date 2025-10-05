@@ -8,7 +8,6 @@
 #ifdef WIN32
 #include <corecrt_math_defines.h>
 #endif
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>

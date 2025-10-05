@@ -8,24 +8,13 @@
 #include <memory>
 
 #include "shader.h"
-#include "texture.h"
 #include "renderer/material.h"
-#include "renderer/basics.h"
 #include "renderer/mesh.h"
 
 enum ObjElement { OHASH, MTLLIB, USEMTL, O, V, VN, VT, F, OUNKNOWN };
 enum MtlElement { MHASH, NEWMTL, NS, KA, KS, KD, NI, D, ILLUM, MAP_KD, MAP_KA, MUNKNOWN };
 
 class Object {
-private:
-    std::string m_name;
-    std::vector<glm::vec3> m_vertices;
-    std::vector<glm::vec3> m_normals;
-    std::vector<glm::vec2> m_texCoords;
-
-    std::vector<Mesh> m_meshes;
-
-    std::unordered_map<std::string, std::shared_ptr<Material>> m_materials;
 private:
     static inline int NormalizeIndex(int idx, int baseCount);
 
@@ -46,6 +35,15 @@ private:
     void CreateNewMesh(const std::string& materialName);
 public:
     void Render(Shader& shader);
+private:
+    std::string m_name;
+    std::vector<glm::vec3> m_vertices;
+    std::vector<glm::vec3> m_normals;
+    std::vector<glm::vec2> m_texCoords;
+
+    std::vector<Mesh> m_meshes;
+
+    std::unordered_map<std::string, std::shared_ptr<Material>> m_materials;
 };
 
 #endif // MODEL_H_

@@ -1,8 +1,6 @@
 #ifndef RENDERER_DEBUG_
 #define RENDERER_DEBUG_
 
-#include <iostream>
-
 #include <GL/glew.h>
 
 void MessageCallback(GLenum source,

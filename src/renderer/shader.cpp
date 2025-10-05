@@ -1,3 +1,5 @@
+#include <iostream>
+#include <GL/glew.h>
 #include "renderer/shader.h"
 
 Shader::Shader()

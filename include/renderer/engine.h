@@ -13,8 +13,6 @@ class Engine {
 public:
     static void Run(std::unique_ptr<IApplication> app);
 private:
-    void HandleWindowResized(const WindowResized& event);
-private:
     static std::unique_ptr<IApplication> s_app;
     static std::shared_ptr<Window> s_window;
     static bool s_running;

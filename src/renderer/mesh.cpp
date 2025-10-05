@@ -1,6 +1,10 @@
 #include "renderer/mesh.h"
 
 Mesh::Mesh() {
+    m_vao = 0;
+    m_vbo = 0;
+    m_ebo = 0;
+    
     glGenVertexArrays(1, &m_vao);
     glGenBuffers(1, &m_vbo);
     glGenBuffers(1, &m_ebo);
@@ -21,8 +25,7 @@ Mesh::Mesh() {
     glBindVertexArray(0);
 }
 
-void Mesh::Upload()
-{
+void Mesh::Upload() const {
     glBindVertexArray(m_vao);
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);

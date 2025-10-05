@@ -3,8 +3,6 @@
 #include "renderer/engine.h"
 #include "window/event.h"
 
-#include "IO/file_manager.h"
-#include "renderer/shader.h"
 #include "renderer/wavefront.h"
 
 std::unique_ptr<IApplication> Engine::s_app = nullptr;

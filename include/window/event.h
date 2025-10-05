@@ -6,7 +6,6 @@
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
-#include <typeindex>
 
 class EventDispatcher {
     using Type = std::type_index;

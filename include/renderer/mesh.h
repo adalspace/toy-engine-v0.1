@@ -13,9 +13,9 @@ public: // TODO: abstract away
     std::vector<Vertex> m_vertexBuffer;
     std::vector<unsigned int> m_indexBuffer;
 public: // TODO: abstract away
-    void Bind() { glBindVertexArray(m_vao); }
+    void Bind() const { glBindVertexArray(m_vao); }
     void Unbind() { glBindVertexArray(0); }
-    void Upload();
+    void Upload() const;
 public:
     std::string materialName;
 public:

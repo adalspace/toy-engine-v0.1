@@ -1,5 +1,7 @@
 #include "renderer/debug.h"
 
+#include <iostream>
+
 void MessageCallback(GLenum source,
                      GLenum type,
                      GLuint id,

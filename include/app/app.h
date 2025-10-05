@@ -1,8 +1,6 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
-#include "window/event.h"
-
 class IApplication {
 public:
     virtual ~IApplication() = default;
