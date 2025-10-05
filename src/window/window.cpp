@@ -8,6 +8,8 @@
 
 #include "renderer/debug.h"
 
+std::shared_ptr<Window> Window::s_instance = nullptr;
+
 Window::Window(const char* title, int width, int height) {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 
@@ -55,20 +57,24 @@ Window::Window(const char* title, int width, int height) {
     glDebugMessageCallback(MessageCallback, nullptr);
 
     glViewport(0, 0, m_width, m_height);
-
-    m_is_open = true;
 }
 
 Window::Window() : Window("OpenGL Test", DEFAULT_WIDTH, DEFAULT_HEIGHT) {}
 
+std::shared_ptr<Window> Window::GetInstance() {
+    if (!s_instance) {
+        s_instance = std::shared_ptr<Window>(new Window(), WindowDeleter{});
+    }
+    return s_instance;
+}
+
 Window::Window(Window&& window) noexcept
-    : m_handle(window.m_handle), m_context(window.m_context), m_width(window.m_width), m_height(window.m_height), m_is_open(window.m_is_open)
+    : m_handle(window.m_handle), m_context(window.m_context), m_width(window.m_width), m_height(window.m_height)
 {
     window.m_handle = nullptr;
     window.m_context = (SDL_GLContext)nullptr;
     window.m_width = 0;
     window.m_height = 0;
-    window.m_is_open = false;
 }
 
 Window& Window::operator=(Window&& window) noexcept
@@ -81,7 +87,6 @@ Window& Window::operator=(Window&& window) noexcept
     this->m_context = window.m_context;
     this->m_width = window.m_width;
     this->m_height = window.m_height;
-    this->m_is_open = window.m_is_open;
 
     return *this;
 }
@@ -92,11 +97,11 @@ void Window::ProcessEvents() {
         switch (event.type) {
             case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
             case SDL_EVENT_QUIT:
-                publish(WindowCloseRequested());
+                Dispatch(WindowCloseRequested());
                 break;
             case SDL_EVENT_KEY_DOWN:
                 if (event.key.scancode == SDL_SCANCODE_ESCAPE) {
-                    publish(WindowCloseRequested());
+                    Dispatch(WindowCloseRequested());
                 }
                 break;
             case SDL_EVENT_WINDOW_RESIZED:
@@ -109,7 +114,7 @@ void Window::ProcessEvents() {
                         0,
                         width,
                         height);
-                    publish(WindowResized{ m_width, m_height });
+                    Dispatch(WindowResized{ m_width, m_height });
                 }
                 break;
             default: break;

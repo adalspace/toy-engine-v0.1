@@ -32,7 +32,9 @@ private:
 private:
     Object();
 public:
-    static Object LoadFile(const std::string& filename);
+    ~Object() = default;
+public:
+    static Object* LoadFile(const std::string& filename);
 
 private:
     void LoadMaterials(const std::filesystem::path& filename);

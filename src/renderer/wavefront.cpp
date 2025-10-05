@@ -259,14 +259,14 @@ Mesh& Object::GetLastMesh()
     return m_meshes.back();
 }
 
-Object Object::LoadFile(const std::string& filename) {
+Object* Object::LoadFile(const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Failed to open OBJ file: " << filename << std::endl;
         return {};
     }
 
-    Object obj;
+    Object* obj = new Object();
     char line[1024]; // static buffer for each line (enough for OBJ lines)
 
     while (file.getline(line, sizeof(line))) {
@@ -284,7 +284,7 @@ Object Object::LoadFile(const std::string& filename) {
             if (mtlFile) {
                 std::filesystem::path fullPath = filename;
                 std::filesystem::path mtlPath = fullPath.replace_filename(mtlFile);
-                obj.LoadMaterials(mtlPath);
+                obj->LoadMaterials(mtlPath);
             }
             break;
         }
@@ -293,11 +293,11 @@ Object Object::LoadFile(const std::string& filename) {
         {
             char* materialName = p.TakeWord();
             if (materialName) {
-                auto& mesh = obj.GetLastMesh();
+                auto& mesh = obj->GetLastMesh();
                 if (mesh.materialName != materialName) {
                     Mesh newMesh;
                     newMesh.materialName = materialName;
-                    obj.m_meshes.push_back(newMesh);
+                    obj->m_meshes.push_back(newMesh);
                 }
             }
             break;
@@ -306,7 +306,7 @@ Object Object::LoadFile(const std::string& filename) {
         case ObjElement::O: // object name
         {
             char* name = p.TakeWord();
-            if (name) obj.m_name = name;
+            if (name) obj->m_name = name;
             break;
         }
 
@@ -320,7 +320,7 @@ Object Object::LoadFile(const std::string& filename) {
             if (w != 0.0f && w != 1.0f) {
                 x /= w; y /= w; z /= w;
             }
-            obj.m_vertices.emplace_back(x, y, z);
+            obj->m_vertices.emplace_back(x, y, z);
             break;
         }
 
@@ -329,7 +329,7 @@ Object Object::LoadFile(const std::string& filename) {
             float x = p.TakeFloat();
             float y = p.TakeFloat();
             float z = p.TakeFloat();
-            obj.m_normals.emplace_back(x, y, z);
+            obj->m_normals.emplace_back(x, y, z);
             break;
         }
 
@@ -337,32 +337,32 @@ Object Object::LoadFile(const std::string& filename) {
         {
             float u = p.TakeFloat();
             float v = p.TakeFloat();
-            obj.m_texCoords.emplace_back(u, 1.0f - v);
+            obj->m_texCoords.emplace_back(u, 1.0f - v);
             break;
         }
 
         case ObjElement::F: // face
         {
-            auto& mesh = obj.GetLastMesh();
+            auto& mesh = obj->GetLastMesh();
             int raw_vi, raw_ti, raw_ni;
 
             while (p.TakeFaceIndices(raw_vi, raw_ti, raw_ni)) {
                 // Convert raw OBJ indices to 0-based / -1 sentinel
-                int vi = Object::NormalizeIndex(raw_vi, (int)obj.m_vertices.size());
-                int ti = Object::NormalizeIndex(raw_ti, (int)obj.m_texCoords.size());
-                int ni = Object::NormalizeIndex(raw_ni, (int)obj.m_normals.size());
+                int vi = Object::NormalizeIndex(raw_vi, (int)obj->m_vertices.size());
+                int ti = Object::NormalizeIndex(raw_ti, (int)obj->m_texCoords.size());
+                int ni = Object::NormalizeIndex(raw_ni, (int)obj->m_normals.size());
 
                 if (vi < 0) {
                     // malformed token (no vertex) — skip
                     continue;
                 }
 
-                glm::vec3 vert = obj.m_vertices[vi];
+                glm::vec3 vert = obj->m_vertices[vi];
                 glm::vec3 norm(0.0f);
                 glm::vec2 texCoord(0.0f);
 
-                if (ni >= 0) norm = obj.m_normals[ni];
-                if (ti >= 0) texCoord = obj.m_texCoords[ti];
+                if (ni >= 0) norm = obj->m_normals[ni];
+                if (ti >= 0) texCoord = obj->m_texCoords[ti];
 
                 mesh.m_vertexBuffer.emplace_back(vert, norm, texCoord);
                 mesh.m_indexBuffer.push_back(mesh.m_vertexBuffer.size() - 1);
@@ -376,16 +376,16 @@ Object Object::LoadFile(const std::string& filename) {
         }
     }
 
-    std::cout << "Object name: " << obj.m_name << std::endl;
-    std::cout << "Vertices count: " << obj.m_vertices.size() << std::endl;
-    std::cout << "Normals count: " << obj.m_normals.size() << std::endl;
-    std::cout << "TexCoords count: " << obj.m_texCoords.size() << std::endl;
-    std::cout << "Meshes count: " << obj.m_meshes.size() << std::endl;
-    std::cout << "Materials count: " << obj.m_materials.size() << std::endl;
+    std::cout << "Object name: " << obj->m_name << std::endl;
+    std::cout << "Vertices count: " << obj->m_vertices.size() << std::endl;
+    std::cout << "Normals count: " << obj->m_normals.size() << std::endl;
+    std::cout << "TexCoords count: " << obj->m_texCoords.size() << std::endl;
+    std::cout << "Meshes count: " << obj->m_meshes.size() << std::endl;
+    std::cout << "Materials count: " << obj->m_materials.size() << std::endl;
 
     file.close();
 
-    for (auto &mesh : obj.m_meshes) {
+    for (auto &mesh : obj->m_meshes) {
         mesh.Upload();
     }
 

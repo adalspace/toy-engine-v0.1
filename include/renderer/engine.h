@@ -7,23 +7,17 @@
 #include "window/window.h"
 #include "window/events/window.h"
 
+#include "app/app.h"
+
 class Engine {
-private:
-    std::unique_ptr<Window> m_window;
-    bool m_isRunning;
-private:
-    glm::mat4 m_projection;
 public:
-    Engine();
-    ~Engine();
-private:
-    void Stop();
-    void Destroy() const;
-    [[nodiscard]] bool Running() const;
+    static void Run(std::unique_ptr<IApplication> app);
 private:
     void HandleWindowResized(const WindowResized& event);
-public:
-    void Run();
+private:
+    static std::unique_ptr<IApplication> s_app;
+    static std::shared_ptr<Window> s_window;
+    static bool s_running;
 };
 
 

@@ -30,6 +30,8 @@ add_executable(CodingGame
   src/IO/parser.cpp
   src/IO/file_manager.cpp
 
+  src/window/window.cpp
+
   src/renderer/debug.cpp
   src/renderer/basics.cpp
   src/renderer/mesh.cpp
@@ -37,9 +39,6 @@ add_executable(CodingGame
   src/renderer/texture.cpp
   src/renderer/wavefront.cpp
   src/renderer/engine.cpp
-
-  include/window/event.hpp
-  src/window/window.cpp
 
   src/main.cpp
 )
