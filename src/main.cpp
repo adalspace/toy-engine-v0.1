@@ -15,44 +15,35 @@
 #include "renderer/shader.h"
 #include "renderer/wavefront.h"
 #include "renderer/engine.h"
+#include "renderer/renderer.h"
+#include "ecs/entity.h"
 
 #include "IO/file_manager.h"
 
 class Game : public IApplication {
 public:
-    Game() {}
+    Game()
+        : m_light(ecs::Entity(ecs::Mesh(Object::LoadFile("./assets/cube.obj")))),
+        m_camera(ecs::Entity(ecs::Mesh(nullptr))),
+        m_target(ecs::Entity(ecs::Mesh(Object::LoadFile("./assets/monkey.obj")))),
+        m_renderer(m_light, m_camera) {
+        // Object* lightObj = Object::LoadFile("./assets/cube.obj");
+        // ecs::Mesh lightMesh = ecs::Mesh(lightObj);
+        // m_light = ecs::Entity(lightMesh);
+        m_light.transform.pos = glm::vec3(-5.f, 5.f, 5.f);
+
+        // Object* cameraObj = nullptr;
+        // ecs::Mesh cameraMesh = ecs::Mesh(cameraObj);
+        // m_camera = ecs::Entity(cameraMesh);
+        m_camera.transform.pos = glm::vec3(0.f, 0.f, 2.f);
+    }
     ~Game() override {}
 
     void OnInit() override {
         std::cout << "Game initialized" << std::endl;
 
-        m_proj = glm::perspective(
-            static_cast<float>(M_PI_2),
-            static_cast<float>(Window::GetWidth()) / static_cast<float>(Window::GetHeight()),
-            0.01f,
-            100.0f
-        );
-
-        m_shader.init(
-            FileManager::read("./src/shaders/simple.vs"),
-            FileManager::read("./src/shaders/simple.fs")
-        );
-
-        m_camPos = glm::vec3(0.f, 0.f, 2.f);
-        // glm::vec3 cameraViewDirection(0.f, 0.f, -1.f);
-        // glm::vec3 lightPosition(1.f, 3.5f, -2.f);
-        m_lightPos = glm::vec3(-5.f, 5.f, 5.f);
-
-        m_model = glm::mat4(1.f);
-
         m_angle = 3.45f;
         m_lastTicks = SDL_GetTicks();
-
-        // m_sun = Object::LoadFile("./assets/cube.obj");
-        // m_target = Object::LoadFile("./assets/monkey.obj");
-
-        m_sun = std::unique_ptr<Object>(Object::LoadFile("./assets/cube.obj"));
-        m_target = std::unique_ptr<Object>(Object::LoadFile("./assets/monkey.obj"));
 
         m_paused = false;
 
@@ -65,12 +56,7 @@ public:
     }
 
     void OnWindowResized(const WindowResized& event) override {
-        m_proj = glm::perspective(
-            static_cast<float>(M_PI_2),
-            static_cast<float>(event.w) / static_cast<float>(event.h),
-            0.01f,
-            100.0f
-        );
+        m_renderer.OnWindowResized(event.w, event.h);
     }
 
     void OnUpdate() override {
@@ -114,13 +100,8 @@ public:
         if (state[SDL_SCANCODE_SPACE]) velocity.y += 1.f;
         if (state[SDL_SCANCODE_LSHIFT]) velocity.y -= 1.f;
 
-        m_camPos += velocity * deltaTime * 2.5f; // speed is e.g. 2.5f
-
-        m_view = glm::lookAt(
-            m_camPos,
-            m_camPos + cameraViewDirection,
-            glm::vec3(0.f, 1.f, 0.f)
-        );
+        m_camera.transform.pos += velocity * deltaTime * 2.5f; // speed is e.g. 2.5f
+        m_camera.transform.rot = cameraViewDirection;
 
         // update rotation
         if (!m_paused) {
@@ -129,36 +110,13 @@ public:
                 m_angle -= glm::two_pi<float>(); // keep value small
             }
         }
+
+        m_target.transform.rot.y = m_angle;
     }
 
     void OnRender() override {
-        m_shader.use();
-
-        m_shader.setMat4("u_view", m_view);
-        m_shader.setMat4("u_projection", m_proj);
-
-        m_shader.setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
-        m_shader.setVec3("lightPos", m_lightPos);
-        m_shader.setVec3("viewPos", m_camPos);
-
-        m_model = glm::mat4(1.f);
-        m_model = glm::translate(m_model, m_lightPos);
-
-        m_shader.setMat4("u_model", m_model);
-
-        m_sun->Render(m_shader);
-
-        // lightPosition -= glm::vec3(0.05f, 0.f, 0.f) * deltaTime;
-
-        m_model = glm::rotate(
-            glm::mat4(1.f),
-            m_angle,
-            glm::vec3(0.f, -0.5f, 0.0f)
-        ) * 0.5f;
-
-        m_shader.setMat4("u_model", m_model);
-
-        m_target->Render(m_shader);
+        m_renderer.RenderLight();
+        m_renderer.RenderEntity(m_target);
 
         m_frameCount++;
         m_currentTicks = SDL_GetTicks();
@@ -172,20 +130,13 @@ public:
         }
     }
 private:
-    Shader m_shader;
-
-    glm::mat4 m_model;
-    glm::mat4 m_proj;
-    glm::mat4 m_view;
-
-    glm::vec3 m_camPos;
-    glm::vec3 m_lightPos;
+    Renderer m_renderer;
+    ecs::Entity m_target;
+    ecs::Entity m_light;
+    ecs::Entity m_camera;
 
     float m_angle;
     Uint64 m_lastTicks;
-
-    std::unique_ptr<Object> m_sun = nullptr;
-    std::unique_ptr<Object> m_target = nullptr;
 
     bool m_paused = false;
 
