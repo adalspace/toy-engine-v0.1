@@ -23,7 +23,7 @@ Renderer::Renderer()
 
     m_shader.init(
         FileManager::read("./src/shaders/simple.vs"),
-        FileManager::read("./src/shaders/simple.fs")
+        FileManager::read("./src/shaders/pbr.fs")
     );
 
     m_model = glm::mat4(1.f);

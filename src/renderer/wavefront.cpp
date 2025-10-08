@@ -393,29 +393,97 @@ Object* Object::LoadFile(const std::string& filename) {
 }
 
 
+// void Object::Render(Shader& shader)
+// {
+//     for (auto &mesh : m_meshes) {
+//         auto material = GetMaterial(mesh.materialName);
+        
+//         shader.setFloat("ambientStrength", 0.2f);
+//         shader.setFloat("shininess", material->GetSpecularWeight());
+//         shader.setFloat("opacity", material->GetOpacity());
+//         shader.setBool("useSpecular", material->GetIllumination() >= 2);
+//         shader.setFloat("specularStrength", 1.0f);
+//         shader.setVec3("ambientColor", material->GetAmbientColor());
+//         shader.setVec3("diffuseColor", material->GetDiffuseColor());
+//         shader.setVec3("specularColor", material->GetSpecularColor());
+
+//         if (material->HasDiffuseTexture()) {
+//             shader.setBool("useTexture", true);
+//             glActiveTexture(GL_TEXTURE0);
+//             glBindTexture(GL_TEXTURE_2D, material->GetDiffuseTexture()->GetID());
+//             shader.setInt("diffuseTex", 0);
+//         } else {
+//             shader.setBool("useTexture", false);
+//         }
+
+//         mesh.Render();
+//     }
+// }
+
 void Object::Render(Shader& shader)
 {
-    for (auto &mesh : m_meshes) {
+    for (auto &mesh : m_meshes)
+    {
         auto material = GetMaterial(mesh.materialName);
-        
-        shader.setFloat("ambientStrength", 0.2f);
-        shader.setFloat("shininess", material->GetSpecularWeight());
-        shader.setFloat("opacity", material->GetOpacity());
-        shader.setBool("useSpecular", material->GetIllumination() >= 2);
-        shader.setFloat("specularStrength", 1.0f);
-        shader.setVec3("ambientColor", material->GetAmbientColor());
-        shader.setVec3("diffuseColor", material->GetDiffuseColor());
-        shader.setVec3("specularColor", material->GetSpecularColor());
 
+        // --- Basic material properties ---
+        shader.setFloat("opacity", material->GetOpacity());
+
+        // Albedo (base color)
+        shader.setVec3("albedo", material->GetDiffuseColor());
+
+        // Metallic and roughness (defaults)
+        shader.setFloat("metallic", 0.8f);
+        shader.setFloat("roughness", 0.5f);
+        shader.setFloat("ao", 1.0f); // default ambient occlusion if none
+
+        // --- Optional textures ---
+        int texUnit = 0;
+
+        // Albedo texture
         if (material->HasDiffuseTexture()) {
-            shader.setBool("useTexture", true);
-            glActiveTexture(GL_TEXTURE0);
+            shader.setBool("useAlbedoMap", true);
+            glActiveTexture(GL_TEXTURE0 + texUnit);
             glBindTexture(GL_TEXTURE_2D, material->GetDiffuseTexture()->GetID());
-            shader.setInt("diffuseTex", 0);
+            shader.setInt("albedoTex", texUnit++);
         } else {
-            shader.setBool("useTexture", false);
+            shader.setBool("useAlbedoMap", false);
         }
 
+        // Metallic texture
+        // if (material->HasMetallicTexture()) {
+        if (false) {
+            shader.setBool("useMetallicMap", true);
+            glActiveTexture(GL_TEXTURE0 + texUnit);
+            // glBindTexture(GL_TEXTURE_2D, material->GetMetallicTexture()->GetID());
+            shader.setInt("metallicTex", texUnit++);
+        } else {
+            shader.setBool("useMetallicMap", false);
+        }
+
+        // Roughness texture
+        // if (material->HasRoughnessTexture()) {
+        if (false) {
+            shader.setBool("useRoughnessMap", true);
+            glActiveTexture(GL_TEXTURE0 + texUnit);
+            // glBindTexture(GL_TEXTURE_2D, material->GetRoughnessTexture()->GetID());
+            shader.setInt("roughnessTex", texUnit++);
+        } else {
+            shader.setBool("useRoughnessMap", false);
+        }
+
+        // AO texture
+        // if (material->HasAoTexture()) {
+        if (false) {
+            shader.setBool("useAoMap", true);
+            glActiveTexture(GL_TEXTURE0 + texUnit);
+            // glBindTexture(GL_TEXTURE_2D, material->GetAoTexture()->GetID());
+            shader.setInt("aoTex", texUnit++);
+        } else {
+            shader.setBool("useAoMap", false);
+        }
+
+        // --- Render mesh ---
         mesh.Render();
     }
 }
