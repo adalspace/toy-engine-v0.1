@@ -27,7 +27,7 @@
 class Game : public IApplication {
 public:
     Game() {
-        Object* lightObj = Object::LoadFile("./assets/cube.obj");
+        Object* lightObj = Object::LoadFile("./assets/sphere.obj");
         const auto lightEntity = m_registry.create();
         m_registry.emplace<transform>(lightEntity, glm::vec3(-5.f, 5.f, 5.f), glm::vec3(0.f));
         m_registry.emplace<light>(lightEntity);
