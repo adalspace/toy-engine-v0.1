@@ -75,6 +75,8 @@ void Renderer::Render(entt::registry& registry) {
             return;
         }
 
+        m_shader.setBool("isLight", registry.all_of<light>(entity));
+
         m_model = glm::mat4(1.0f);
 
         // Apply translation

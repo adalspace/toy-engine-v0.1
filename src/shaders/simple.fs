@@ -27,6 +27,8 @@ uniform float opacity;
 uniform sampler2D diffuseTex;
 uniform bool useTexture;
 
+uniform bool isLight;
+
 #define LIGHT_COLOR vec3(1.0, 1.0, 1.0)
 
 void main()
@@ -56,6 +58,12 @@ void main()
         : diffuseColor;
 
     vec3 result = (ambient + diffuse + specular) * texColor;
+
+    if (isLight) {
+        vec3 emissive = LIGHT_COLOR * 10.0; // big intensity
+        FragColor = vec4(emissive, 1.0);
+        return;
+    }
 
     FragColor = vec4(result, opacity);
 }
