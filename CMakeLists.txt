@@ -16,6 +16,13 @@ if (UNIX)
   )
   FetchContent_MakeAvailable(glm)
 
+  FetchContent_Declare(
+    EnTT
+    GIT_REPOSITORY https://github.com/skypjack/entt.git
+    GIT_TAG        d4014c74dc3793aba95ae354d6e23a026c2796db
+  )
+  FetchContent_MakeAvailable(EnTT)
+
   find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3-shared)
   find_package(OpenGL REQUIRED)
   find_package(GLEW REQUIRED)
@@ -58,6 +65,7 @@ target_link_libraries(CodingGame PRIVATE
   OpenGL::GL
   GLEW::GLEW
   glm::glm
+  EnTT::EnTT
 )
 
 # ---------- Visibility (helps optimizer & smaller binaries on Release) ----------

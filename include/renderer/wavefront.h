@@ -35,6 +35,7 @@ private:
     void CreateNewMesh(const std::string& materialName);
 public:
     void Render(Shader& shader);
+    [[nodiscard]] inline const std::string Name() const { return m_name; }
 private:
     std::string m_name;
     std::vector<glm::vec3> m_vertices;

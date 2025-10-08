@@ -16,26 +16,31 @@
 #include "renderer/wavefront.h"
 #include "renderer/engine.h"
 #include "renderer/renderer.h"
-#include "ecs/entity.h"
 
 #include "IO/file_manager.h"
 
+#include "components/transform.h"
+#include "components/light.h"
+#include "components/camera.h"
+#include "components/mesh.h"
+
 class Game : public IApplication {
 public:
-    Game()
-        : m_light(ecs::Entity(ecs::Mesh(Object::LoadFile("./assets/cube.obj")))),
-        m_camera(ecs::Entity(ecs::Mesh(nullptr))),
-        m_target(ecs::Entity(ecs::Mesh(Object::LoadFile("./assets/monkey.obj")))),
-        m_renderer(m_light, m_camera) {
-        // Object* lightObj = Object::LoadFile("./assets/cube.obj");
-        // ecs::Mesh lightMesh = ecs::Mesh(lightObj);
-        // m_light = ecs::Entity(lightMesh);
-        m_light.transform.pos = glm::vec3(-5.f, 5.f, 5.f);
+    Game() {
+        Object* lightObj = Object::LoadFile("./assets/cube.obj");
+        const auto lightEntity = m_registry.create();
+        m_registry.emplace<transform>(lightEntity, glm::vec3(-5.f, 5.f, 5.f), glm::vec3(0.f));
+        m_registry.emplace<light>(lightEntity);
+        m_registry.emplace<mesh>(lightEntity, std::unique_ptr<Object>(lightObj));
 
-        // Object* cameraObj = nullptr;
-        // ecs::Mesh cameraMesh = ecs::Mesh(cameraObj);
-        // m_camera = ecs::Entity(cameraMesh);
-        m_camera.transform.pos = glm::vec3(0.f, 0.f, 2.f);
+        const auto cameraEntity = m_registry.create();
+        m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 0.f, 2.f));
+        m_registry.emplace<camera>(cameraEntity, glm::vec3(0.f, 0.f, 2.f));
+
+        Object* targetObj = Object::LoadFile("./assets/monkey.obj");
+        const auto targetEntity = m_registry.create();
+        m_registry.emplace<transform>(targetEntity, glm::vec3(0.f));
+        m_registry.emplace<mesh>(targetEntity, std::unique_ptr<Object>(targetObj));
     }
     ~Game() override {}
 
@@ -100,8 +105,11 @@ public:
         if (state[SDL_SCANCODE_SPACE]) velocity.y += 1.f;
         if (state[SDL_SCANCODE_LSHIFT]) velocity.y -= 1.f;
 
-        m_camera.transform.pos += velocity * deltaTime * 2.5f; // speed is e.g. 2.5f
-        m_camera.transform.rot = cameraViewDirection;
+        auto view = m_registry.view<camera, transform>();
+        for (auto [cam, camTransform] : view.each()) {
+            camTransform.position += velocity * deltaTime * 2.5f; // speed is e.g. 2.5f
+            camTransform.rotation = cameraViewDirection;
+        }
 
         // update rotation
         if (!m_paused) {
@@ -111,12 +119,17 @@ public:
             }
         }
 
-        m_target.transform.rot.y = m_angle;
+        auto rotateEntts = m_registry.view<transform, const mesh>();
+        for (auto [entity, transform, mesh] : rotateEntts.each()) {
+            // auto targetTransform = rotateEntts.get<transform>(entity);
+            if (!m_registry.all_of<light>(entity)) {
+                transform.rotation.y = m_angle;
+            }
+        }
     }
 
     void OnRender() override {
-        m_renderer.RenderLight();
-        m_renderer.RenderEntity(m_target);
+        m_renderer.Render(m_registry);
 
         m_frameCount++;
         m_currentTicks = SDL_GetTicks();
@@ -131,9 +144,7 @@ public:
     }
 private:
     Renderer m_renderer;
-    ecs::Entity m_target;
-    ecs::Entity m_light;
-    ecs::Entity m_camera;
+    entt::registry m_registry;
 
     float m_angle;
     Uint64 m_lastTicks;

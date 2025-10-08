@@ -58,6 +58,9 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "codecvt": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "ranges": "cpp",
+        "list": "cpp",
+        "unordered_set": "cpp"
     }
 }
