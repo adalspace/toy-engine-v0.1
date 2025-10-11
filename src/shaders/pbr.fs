@@ -60,7 +60,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, vec3 N, vec3 L)
     float currentDepth = projCoords.z;
 
     // bias to prevent self-shadowing (depend on slope)
-    float bias = max(0.05 * (1.0 - dot(N, L)), 0.005);
+    float bias = max(0.001 * (1.0 - dot(N, L)), 0.0005);
 
     // PCF (3x3)
     float shadow = 0.0;

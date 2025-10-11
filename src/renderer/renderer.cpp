@@ -158,22 +158,38 @@ void Renderer::Render(entt::registry& registry) {
     auto shadowLight = registry.view<light, transform>().back();
     auto &comp = registry.get<transform>(shadowLight);
 
-    float near_plane = -10.0f, far_plane = 20.0f;
-    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
-
-    glm::mat4 lightView = glm::lookAt(comp.position, 
-            glm::vec3( 0.0f, 0.0f,  0.0f), 
-            glm::vec3( 0.0f, 1.0f,  0.0f));
-
+    float near_plane = 0.1f, far_plane = 50.0f; // pick bounds that cover your scene
+    glm::vec3 lightPos = comp.position;
+    glm::vec3 target   = glm::vec3(0.0f, 0.5f, 0.0f);
+    glm::mat4 lightView = glm::lookAt(lightPos, target, glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 lightProjection = glm::ortho(-6.0f, 6.0f, -6.0f, 6.0f, 1.0f, 20.0f);
     glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+
+    // lightView = glm::lookAt(/*eye*/ -lightDir * distance, /*center*/ vec3(0), up)
+
+    // glm::mat4 lightSpaceMatrix = lightProjection * lightView;
     SwitchShader(&m_depthShader);
     m_currentShader->setMat4("u_lightSpace", lightSpaceMatrix);
+
+    // enable culling and render front faces to the shadow map
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);  // only for the depth pass
+    // or use polygon offset:
+    glEnable(GL_POLYGON_OFFSET_FILL);
+    glPolygonOffset(2.0f, 4.0f);
 
     glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
     glBindFramebuffer(GL_FRAMEBUFFER, m_depth_fbo);
         glClear(GL_DEPTH_BUFFER_BIT);
         RenderScene(registry);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    // enable culling and render front faces to the shadow map
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);  // only for the depth pass
+    // or use polygon offset:
+    glDisable(GL_POLYGON_OFFSET_FILL);
+    glPolygonOffset(0.f, 1.f);
 
     glViewport(0, 0, Window::GetWidth(), Window::GetHeight());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
