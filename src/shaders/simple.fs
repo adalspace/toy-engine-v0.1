@@ -7,8 +7,18 @@ in vec3 vertexPos;
 in vec3 vertexNormal;
 in vec2 TexCoords;
 
-uniform vec3 lightPos;
 uniform vec3 viewPos;
+
+// Lights
+struct Light {
+    vec3 position;
+    vec3 color;
+    float intensity;
+};
+
+#define MAX_LIGHTS 10
+uniform int lightsCount;
+uniform Light lights[MAX_LIGHTS];
 
 // From Object Renderer
 
@@ -29,38 +39,40 @@ uniform bool useTexture;
 
 uniform bool isLight;
 
-#define LIGHT_COLOR vec3(1.0, 1.0, 1.0)
-
 void main()
 {
     // Lighting vectors
-    vec3 lightDir = normalize(lightPos - vertexPos);
     vec3 norm = normalize(vertexNormal);
     vec3 viewDir = normalize(viewPos - vertexPos);
-    vec3 reflectDir = reflect(-lightDir, norm);
-
-    // Phong components
-    // float spec = pow(max(dot(viewDir, reflectDir), 0.0), clamp(shininess, 2, 256));
-    // vec3 specular = (useSpecular) ? specularStrength * spec * specularColor : vec3(0.0);
-
-    // Blinn Phong
-    vec3 halfDir = normalize(lightDir + viewDir);
-    float spec = pow(max(dot(norm, halfDir), 0.0), clamp(shininess, 2.0, 256.0));
-    vec3 specular = (useSpecular) ? specularStrength * spec * specularColor : vec3(0.0);
-
-    float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = diff * diffuseColor;
+    // vec3 viewDir = normalize(-vertexPos);
 
     vec3 ambient = ambientStrength * ambientColor;
-
     vec3 texColor = (useTexture)
         ? texture(diffuseTex, TexCoords).rgb
         : diffuseColor;
 
-    vec3 result = (ambient + diffuse + specular) * texColor;
+    vec3 result = ambient;
+
+    for (int i = 0; i < lightsCount; i++) {
+        vec3 lightDir = normalize(lights[i].position - vertexPos);
+        vec3 halfDir = normalize(lightDir + viewDir);
+        
+        // Blinn Phong
+        float diff = max(dot(norm, lightDir), 0.0);
+        vec3 diffuse = diff * diffuseColor * lights[i].color * lights[i].intensity;
+
+        float spec = pow(max(dot(norm, halfDir), 0.0), clamp(shininess, 2.0, 256.0));
+        vec3 specular = (useSpecular) ?
+            specularStrength * spec * specularColor * lights[i].color * lights[i].intensity
+            : vec3(0.0);
+
+        result += (diffuse + specular);
+    }
+
+    result *= texColor;
 
     if (isLight) {
-        vec3 emissive = LIGHT_COLOR * 10.0; // big intensity
+        vec3 emissive = vec3(1.0, 1.0, 1.0) * 10.0; // big intensity
         FragColor = vec4(emissive, 1.0);
         return;
     }

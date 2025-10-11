@@ -28,19 +28,29 @@ class Game : public IApplication {
 public:
     Game() {
         Object* lightObj = Object::LoadFile("./assets/sphere.obj");
-        const auto lightEntity = m_registry.create();
-        m_registry.emplace<transform>(lightEntity, glm::vec3(-5.f, 5.f, 5.f), glm::vec3(0.f));
-        m_registry.emplace<light>(lightEntity);
-        m_registry.emplace<mesh>(lightEntity, std::unique_ptr<Object>(lightObj));
+        // const auto lightEntity = m_registry.create();
+        // m_registry.emplace<transform>(lightEntity, glm::vec3(-5.f, 5.f, 5.f), glm::vec3(0.f));
+        // m_registry.emplace<light>(lightEntity, glm::vec3(1.f, 0.f, 0.f), 1.f);
+        // m_registry.emplace<mesh>(lightEntity, std::unique_ptr<Object>(lightObj));
+
+        const auto lEntt2 = m_registry.create();
+        m_registry.emplace<transform>(lEntt2, glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
+        m_registry.emplace<light>(lEntt2, glm::vec3(1.f, 1.f, 1.f), 1.5f);
+        m_registry.emplace<mesh>(lEntt2, std::unique_ptr<Object>(lightObj));
 
         const auto cameraEntity = m_registry.create();
-        m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 0.f, 2.f));
-        m_registry.emplace<camera>(cameraEntity, glm::vec3(0.f, 0.f, 2.f));
+        m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 2.f, 2.f));
+        m_registry.emplace<camera>(cameraEntity);
 
-        Object* targetObj = Object::LoadFile("./assets/monkey.obj");
+        Object* targetObj = Object::LoadFile("./assets/cube.obj");
         const auto targetEntity = m_registry.create();
-        m_registry.emplace<transform>(targetEntity, glm::vec3(0.f));
+        m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.5f, 0.f));
         m_registry.emplace<mesh>(targetEntity, std::unique_ptr<Object>(targetObj));
+
+        Object* floorObj = Object::LoadFile("./assets/plane.obj");
+        const auto floorEntt = m_registry.create();
+        m_registry.emplace<transform>(floorEntt, glm::vec3(0.f));
+        m_registry.emplace<mesh>(floorEntt, std::unique_ptr<Object>(floorObj));
     }
     ~Game() override {}
 
@@ -58,6 +68,8 @@ public:
         // FPS tracking
         m_startTicks = SDL_GetTicks();
         m_frameCount = 0;
+
+        m_renderer.GenerateShadowMaps(m_registry);
     }
 
     void OnWindowResized(const WindowResized& event) override {
@@ -119,13 +131,13 @@ public:
             }
         }
 
-        auto rotateEntts = m_registry.view<transform, const mesh>();
-        for (auto [entity, transform, mesh] : rotateEntts.each()) {
-            // auto targetTransform = rotateEntts.get<transform>(entity);
-            if (!m_registry.all_of<light>(entity)) {
-                transform.rotation.y = m_angle;
-            }
-        }
+        // auto rotateEntts = m_registry.view<transform, const mesh>();
+        // for (auto [entity, transform, mesh] : rotateEntts.each()) {
+        //     // auto targetTransform = rotateEntts.get<transform>(entity);
+        //     if (!m_registry.all_of<light>(entity)) {
+        //         transform.rotation.y = m_angle;
+        //     }
+        // }
     }
 
     void OnRender() override {

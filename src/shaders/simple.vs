@@ -9,11 +9,13 @@ layout (location = 2) in vec2 texCoord;     // Vertex texture uv
 out vec3 vertexPos;
 out vec3 vertexNormal;
 out vec2 TexCoords;
+out vec4 fragPosLightSpace;
 
 // Uniforms for transformation matrices
 uniform mat4 u_model;       // Model matrix: transforms from local space to world space
 uniform mat4 u_view;        // View matrix: transforms from world space to camera space (view space)
 uniform mat4 u_projection;  // Projection matrix: transforms from camera space to clip space
+uniform mat4 u_lightSpace;
 
 void main()
 {
@@ -24,6 +26,8 @@ void main()
     // vertexNormal = normal;
 
     TexCoords = texCoord;
+
+    fragPosLightSpace = u_lightSpace * vec4(vertexPos, 1.0);
 
     gl_Position = u_projection * u_view * vec4(vertexPos, 1.0);
 }
