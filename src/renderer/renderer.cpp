@@ -1,7 +1,11 @@
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
+#ifdef WIN32
+#include <corecrt_math_defines.h>
+#endif
 #include <glm/ext/matrix_transform.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/euler_angles.hpp>
 
 #include "renderer/renderer.h"

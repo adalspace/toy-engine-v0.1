@@ -31,6 +31,7 @@ elseif (MSVC) # vcpkg
   find_package(OpenGL REQUIRED)
   find_package(GLEW CONFIG REQUIRED)
   find_package(glm CONFIG REQUIRED)
+  find_package(EnTT CONFIG REQUIRED)
 endif()
 
 add_executable(CodingGame
