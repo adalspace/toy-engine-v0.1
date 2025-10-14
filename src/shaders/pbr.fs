@@ -1,7 +1,7 @@
 #version 410 core
 out vec4 FragColor;
 
-in vec3 vertexPos;
+in vec3 vertexPos;    // must be world-space position
 in vec3 vertexNormal;
 in vec2 TexCoords;
 
@@ -9,8 +9,8 @@ uniform vec3 viewPos;
 
 // Lights
 struct Light {
-    int type;
-    vec3 position;
+    int type;          // 0 = directional (shadowed), other = non-directional (no shadow)
+    vec3 position;     // for directional: encode light direction (see note)
     vec3 color;
     float intensity;
     mat4 lightSpace;
@@ -39,47 +39,52 @@ uniform bool useRoughnessMap;
 uniform bool useAoMap;
 
 uniform float opacity;
-// uniform int currentLight;
 
 #define PI 3.14159265359
 #define LIGHT_COLOR vec3(1.0, 1.0, 1.0)
 
+// -------------------------------------------------------------
+// Improved ShadowCalculation: returns [0,1] shadow factor (1 = fully in shadow)
 float ShadowCalculation(sampler2D shadowMap, mat4 lightSpace, vec3 N, vec3 L)
 {
+    // Transform fragment position to light's clip / NDC space
     vec4 fragPosLightSpace = lightSpace * vec4(vertexPos, 1.0);
 
-    // transform to [0,1]
+    // perspective divide
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    // to [0,1]
     projCoords = projCoords * 0.5 + 0.5;
-    if(projCoords.z > 1.0) {
+
+    // if outside the light's orthographic frustum (xy outside or z > 1), consider unshadowed
+    if (projCoords.z > 1.0) {
+        return 0.0;
+    }
+    if (projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0) {
         return 0.0;
     }
 
-    // get depth from shadow map
-    float closestDepth = texture(shadowMap, projCoords.xy).r;
     float currentDepth = projCoords.z;
+    // basic bias (slope-dependent)
+    float bias = max(0.001 * (1.0 - dot(N, L)), 0.0005);
 
-    // bias to prevent self-shadowing (depend on slope)
-    float bias = max(0.001 * (1.0 - dot(N, L)), 0.0005); 
-    // float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
-
+    // PCF (3x3)
     float shadow = 0.0;
     vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
-    for(int x = -1; x <= 1; ++x)
-    {
-        for(int y = -1; y <= 1; ++y)
-        {
-            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
-            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;        
-        }    
+    for (int x = -1; x <= 1; ++x) {
+        for (int y = -1; y <= 1; ++y) {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            shadow += (currentDepth - bias) > pcfDepth ? 1.0 : 0.0;
+        }
     }
     shadow /= 9.0;
 
+    // clamp to [0,1]
+    shadow = clamp(shadow, 0.0, 1.0);
     return shadow;
 }
 
 // ----------------------------------------------------------------------------
-// Helper functions (GGX, Fresnel, Geometry)
+// PBR helpers (unchanged)
 float DistributionGGX(vec3 N, vec3 H, float roughness)
 {
     float a      = roughness * roughness;
@@ -137,22 +142,33 @@ void main()
     vec3 F0 = mix(vec3(0.04), baseColor, metal);
 
     vec3 Lo = vec3(0.0);
-    // FragColor = vec4(1.0 - shadow, 1.0 - shadow, 1.0 - shadow, 1.0);
-    // return;
-
-    float shadow = 0.0;
 
     // Loop over all lights
     for (int i = 0; i < lightsCount; i++)
     {
-        vec3 L = normalize(lights[i].position - vertexPos);
+        // compute light vector L depending on type
+        vec3 L;
+        if (lights[i].type == 0) {
+            // directional light: convention here is that lights[i].position stores the direction
+            // *towards* the light (for example, for sun direction you may upload -sunDir).
+            // Adjust according to your CPU-side convention.
+            L = normalize(lights[i].position); // expect this to be a direction
+        } else {
+            // point / spot style light: position is world-space point
+            L = normalize(lights[i].position - vertexPos);
+        }
+
         vec3 H = normalize(V + L);
 
         float NDF = DistributionGGX(N, H, rough);
         float G   = GeometrySmith(N, V, L, rough);
         vec3  F   = fresnelSchlick(max(dot(H,V),0.0), F0);
 
-        shadow = ShadowCalculation(lights[i].shadowMap, lights[i].lightSpace, N, L);
+        // compute shadow only for directional (type==0) lights that have shadow maps
+        float shadow_i = 0.0;
+        if (lights[i].type == 0) {
+            shadow_i = ShadowCalculation(lights[i].shadowMap, lights[i].lightSpace, N, L);
+        }
 
         vec3 numerator = NDF * G * F;
         float denominator = 4.0 * max(dot(N,V),0.0) * max(dot(N,L),0.0) + 0.001;
@@ -165,14 +181,19 @@ void main()
         float NdotL = max(dot(N,L), 0.0);
 
         vec3 radiance = lights[i].color * lights[i].intensity;
-        Lo += (kD * baseColor / PI + specular) * radiance * NdotL;
+
+        // Apply shadow_i only to this light's contribution:
+        // when shadow_i == 1.0 -> this light contributes 0
+        // when shadow_i == 0.0 -> full contribution
+        vec3 contrib = (kD * baseColor / PI + specular) * radiance * NdotL * (1.0 - shadow_i);
+
+        Lo += contrib;
     }
 
-    // Ambient
+    // Ambient (unshadowed by design)
     vec3 ambient = vec3(0.03) * baseColor * aoValue;
 
-    // TODO: apply shadow
-    vec3 color = ambient + (1.0 - shadow) * Lo;
+    vec3 color = ambient + Lo;
 
     // HDR tonemapping + gamma
     color = color / (color + vec3(1.0));
