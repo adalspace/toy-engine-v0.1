@@ -33,6 +33,12 @@ public:
         m_registry.emplace<light>(lght, light::LightType::DIRECTIONAL, glm::vec3(1.f, 1.f, 1.f), 1.5f);
         m_registry.emplace<mesh>(lght, std::unique_ptr<Object>(lightObj));
 
+        Object* light2Obj = Object::LoadFile("./assets/sphere.obj");
+        const auto lght2 = m_registry.create();
+        m_registry.emplace<transform>(lght2, glm::vec3(-5.f, 5.f, -5.f), glm::vec3(0.f));
+        m_registry.emplace<light>(lght2, light::LightType::DIRECTIONAL, glm::vec3(1.f, 0.5f, 0.2f), 1.5f);
+        m_registry.emplace<mesh>(lght2, std::unique_ptr<Object>(light2Obj));
+
         const auto cameraEntity = m_registry.create();
         m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 2.f, 2.f));
         m_registry.emplace<camera>(cameraEntity);
