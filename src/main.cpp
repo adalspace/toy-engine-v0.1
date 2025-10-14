@@ -28,15 +28,10 @@ class Game : public IApplication {
 public:
     Game() {
         Object* lightObj = Object::LoadFile("./assets/sphere.obj");
-        // const auto lightEntity = m_registry.create();
-        // m_registry.emplace<transform>(lightEntity, glm::vec3(-5.f, 5.f, 5.f), glm::vec3(0.f));
-        // m_registry.emplace<light>(lightEntity, glm::vec3(1.f, 0.f, 0.f), 1.f);
-        // m_registry.emplace<mesh>(lightEntity, std::unique_ptr<Object>(lightObj));
-
-        const auto lEntt2 = m_registry.create();
-        m_registry.emplace<transform>(lEntt2, glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
-        m_registry.emplace<light>(lEntt2, glm::vec3(1.f, 1.f, 1.f), 1.5f);
-        m_registry.emplace<mesh>(lEntt2, std::unique_ptr<Object>(lightObj));
+        const auto lght = m_registry.create();
+        m_registry.emplace<transform>(lght, glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
+        m_registry.emplace<light>(lght, light::LightType::DIRECTIONAL, glm::vec3(1.f, 1.f, 1.f), 1.5f);
+        m_registry.emplace<mesh>(lght, std::unique_ptr<Object>(lightObj));
 
         const auto cameraEntity = m_registry.create();
         m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 2.f, 2.f));
@@ -47,7 +42,7 @@ public:
         m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.0f, 0.f));
         m_registry.emplace<mesh>(targetEntity, std::unique_ptr<Object>(targetObj));
 
-        Object* cubeObj = Object::LoadFile("./assets/cube.obj");
+        Object* cubeObj = Object::LoadFile("./assets/grass_block/grass_block.obj");
         const auto cubeEntity = m_registry.create();
         m_registry.emplace<transform>(cubeEntity, glm::vec3(-1.5f, 0.4f, 0.f));
         m_registry.emplace<mesh>(cubeEntity, std::unique_ptr<Object>(cubeObj));

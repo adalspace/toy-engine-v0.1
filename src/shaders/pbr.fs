@@ -4,15 +4,17 @@ out vec4 FragColor;
 in vec3 vertexPos;
 in vec3 vertexNormal;
 in vec2 TexCoords;
-in vec4 fragPosLightSpace;
 
 uniform vec3 viewPos;
 
 // Lights
 struct Light {
+    int type;
     vec3 position;
     vec3 color;
     float intensity;
+    mat4 lightSpace;
+    sampler2D shadowMap;
 };
 #define MAX_LIGHTS 10
 uniform int lightsCount;
@@ -36,50 +38,16 @@ uniform bool useMetallicMap;
 uniform bool useRoughnessMap;
 uniform bool useAoMap;
 
-// Shadows
-uniform sampler2D shadowMap;
-
 uniform float opacity;
 // uniform int currentLight;
 
 #define PI 3.14159265359
 #define LIGHT_COLOR vec3(1.0, 1.0, 1.0)
 
-// float ShadowCalculation(vec4 fragPosLightSpace, vec3 N, vec3 L)
-// {
-//     // transform to [0,1]
-//     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
-//     projCoords = projCoords * 0.5 + 0.5;
-
-//     // if outside light's orthographic frustum => not in shadow
-//     if (projCoords.z > 1.0 || projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0)
-//         return 0.0;
-
-//     // get depth from shadow map
-//     float closestDepth = texture(shadowMap, projCoords.xy).r;
-//     float currentDepth = projCoords.z;
-
-//     // bias to prevent self-shadowing (depend on slope)
-//     float bias = max(0.001 * (1.0 - dot(N, L)), 0.0005);
-
-//     // PCF (3x3)
-//     float shadow = 0.0;
-//     vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
-//     for(int x = -1; x <= 1; ++x)
-//     {
-//         for(int y = -1; y <= 1; ++y)
-//         {
-//             float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
-//             shadow += (currentDepth - bias > pcfDepth ? 1.0 : 0.0);
-//         }
-//     }
-//     shadow /= 9.0;
-
-//     return shadow;
-// }
-
-float ShadowCalculation(vec4 fragPosLightSpace, vec3 N, vec3 L)
+float ShadowCalculation(sampler2D shadowMap, mat4 lightSpace, vec3 N, vec3 L)
 {
+    vec4 fragPosLightSpace = lightSpace * vec4(vertexPos, 1.0);
+
     // transform to [0,1]
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
     projCoords = projCoords * 0.5 + 0.5;
@@ -184,7 +152,7 @@ void main()
         float G   = GeometrySmith(N, V, L, rough);
         vec3  F   = fresnelSchlick(max(dot(H,V),0.0), F0);
 
-        shadow = ShadowCalculation(fragPosLightSpace, N, L);
+        shadow = ShadowCalculation(lights[i].shadowMap, lights[i].lightSpace, N, L);
 
         vec3 numerator = NDF * G * F;
         float denominator = 4.0 * max(dot(N,V),0.0) * max(dot(N,L),0.0) + 0.001;

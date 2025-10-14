@@ -59,12 +59,17 @@ void Renderer::ApplyLights(entt::registry& registry, Shader &shader) {
     shader.setInt("lightsCount", static_cast<int>(lights.size()));
     size_t lightIndex = 0;
     for (auto entity : lights) {
-        auto &comp = registry.get<light>(entity);
+        auto &l = registry.get<light>(entity);
         auto &transf = registry.get<transform>(entity);
-
+        
+        shader.setInt("lights[" + std::to_string(lightIndex) + "].type", static_cast<int>(l.type));
         shader.setVec3("lights[" + std::to_string(lightIndex) + "].position", transf.position);
-        shader.setVec3("lights[" + std::to_string(lightIndex) + "].color", comp.color);
-        shader.setFloat("lights[" + std::to_string(lightIndex) + "].intensity", comp.intensity);
+        shader.setVec3("lights[" + std::to_string(lightIndex) + "].color", l.color);
+        shader.setFloat("lights[" + std::to_string(lightIndex) + "].intensity", l.intensity);
+        shader.setMat4("lights[" + std::to_string(lightIndex) + "].lightSpace", l.lightSpace);
+        shader.setInt("lights[" + std::to_string(lightIndex) + "].shadowMap", 10 + lightIndex);
+        glActiveTexture(GL_TEXTURE10 + lightIndex);
+        glBindTexture(GL_TEXTURE_2D, l.shadowMap);
 
         ++lightIndex;
     }
@@ -115,81 +120,78 @@ void Renderer::GenerateShadowMaps(entt::registry& registry) {
     const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 
     m_depthShader.use();
-    ApplyLights(registry, m_depthShader);
-    UpdateView(registry, m_depthShader);
-    
-    glGenFramebuffers(1, &m_depth_fbo);
 
-    glGenTextures(1, &m_depthMap);
-    glBindTexture(GL_TEXTURE_2D, m_depthMap);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, 
-                SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    auto lights = registry.view<light>();
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER); 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    for (auto [lEntt, l] : lights.each()) {
+        // TODO: support other light types when ready
+        if (l.type != light::LightType::DIRECTIONAL) return;
 
-    float borderColor[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+        glGenFramebuffers(1, &l.fbo);
+        glGenTextures(1, &l.shadowMap);
+        glBindTexture(GL_TEXTURE_2D, l.shadowMap);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, 
+                    SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    glBindFramebuffer(GL_FRAMEBUFFER, m_depth_fbo);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_depthMap, 0);
-    glDrawBuffer(GL_NONE);
-    glReadBuffer(GL_NONE);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER); 
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+
+        float borderColor[] = {1.0f, 1.0f, 1.0f, 1.0f};
+        glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, l.fbo);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, l.shadowMap, 0);
+        glDrawBuffer(GL_NONE);
+        glReadBuffer(GL_NONE);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
 }
 
 void Renderer::Render(entt::registry& registry) {
     const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    auto shadowLight = registry.view<light, transform>().back();
-    auto &comp = registry.get<transform>(shadowLight);
-
-    float near_plane = 0.1f, far_plane = 50.0f;
-    glm::vec3 lightPos = comp.position;
-    glm::vec3 target   = glm::vec3(0.0f, 0.5f, 0.0f);
-    glm::mat4 lightView = glm::lookAt(lightPos, target, glm::vec3(0.0f, 1.0f, 0.0f));
-    glm::mat4 lightProjection = glm::ortho(-6.0f, 6.0f, -6.0f, 6.0f, 1.0f, 20.0f);
-    glm::mat4 lightSpaceMatrix = lightProjection * lightView;
-
     m_depthShader.use();
-    m_depthShader.setMat4("u_lightSpace", lightSpaceMatrix);
 
-    // glEnable(GL_CULL_FACE);
-    // glCullFace(GL_FRONT);  // only for the depth pass
-    // glEnable(GL_POLYGON_OFFSET_FILL);
-    // glPolygonOffset(2.0f, 4.0f);
+    auto lights = registry.view<light, transform>();
 
-    glCullFace(GL_FRONT);
-    glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_depth_fbo);
-        glClear(GL_DEPTH_BUFFER_BIT);
-        RenderScene(registry, m_depthShader);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glCullFace(GL_BACK);
+    for (auto [lEntt, l, t] : lights.each()) {
+        // TODO: support other light types when ready
+        if (l.type != light::LightType::DIRECTIONAL) return;
 
-    // glEnable(GL_CULL_FACE);
-    // glCullFace(GL_BACK);  // only for the depth pass
-    // glDisable(GL_POLYGON_OFFSET_FILL);
-    // glPolygonOffset(0.f, 1.f);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        float near_plane = 0.1f, far_plane = 50.0f;
+        glm::vec3 target   = glm::vec3(0.0f, 0.5f, 0.0f);
+        glm::mat4 lightView = glm::lookAt(t.position, target, glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::mat4 lightProjection = glm::ortho(-6.0f, 6.0f, -6.0f, 6.0f, 1.0f, 20.0f);
+        glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+
+        m_depthShader.setMat4("u_lightSpace", lightSpaceMatrix);
+        l.lightSpace = lightSpaceMatrix;
+
+        glCullFace(GL_FRONT);
+        glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+        glBindFramebuffer(GL_FRAMEBUFFER, l.fbo);
+            glClear(GL_DEPTH_BUFFER_BIT);
+            RenderScene(registry, m_depthShader);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glCullFace(GL_BACK);
+    }
+
+    // actual rendering
 
     glViewport(0, 0, Window::GetWidth(), Window::GetHeight());
+
     glClearColor(0x18/255.0f, 0x18/255.0f, 0x18/255.0f, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     m_shader.use();
-    m_shader.setInt("shadowMap", 31);
 
     ApplyLights(registry, m_shader);
     UpdateView(registry, m_shader);
-    m_shader.setMat4("u_lightSpace", lightSpaceMatrix);
-
-    glActiveTexture(GL_TEXTURE31);
-    glBindTexture(GL_TEXTURE_2D, m_depthMap);
 
     RenderScene(registry, m_shader);
 }

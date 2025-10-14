@@ -23,8 +23,8 @@ private:
     Shader m_shader;
     Shader m_depthShader;
 
-    unsigned int m_depth_fbo;
-    unsigned int m_depthMap;
+    // unsigned int m_depth_fbo;
+    // unsigned int m_depthMap;
 
     glm::mat4 m_model;
     glm::mat4 m_proj;
