@@ -16,16 +16,13 @@ public:
 
     void OnWindowResized(int w, int h);
 private:
-    void ApplyLights(entt::registry& registry);
-    void UpdateView(entt::registry& registry);
-    void RenderScene(entt::registry& registry);
-
-    void SwitchShader(Shader* newShader);
+    void ApplyLights(entt::registry& registry, Shader &shader);
+    void UpdateView(entt::registry& registry, Shader &shader);
+    void RenderScene(entt::registry& registry, Shader &shader);
 private:
     Shader m_shader;
     Shader m_depthShader;
 
-    Shader* m_currentShader;
     unsigned int m_depth_fbo;
     unsigned int m_depthMap;
 

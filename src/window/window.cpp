@@ -54,6 +54,7 @@ Window::Window(const char* title, int width, int height) {
 
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
     glDebugMessageCallback(MessageCallback, nullptr);
 
     glViewport(0, 0, m_width, m_height);

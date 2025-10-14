@@ -45,33 +45,65 @@ uniform float opacity;
 #define PI 3.14159265359
 #define LIGHT_COLOR vec3(1.0, 1.0, 1.0)
 
+// float ShadowCalculation(vec4 fragPosLightSpace, vec3 N, vec3 L)
+// {
+//     // transform to [0,1]
+//     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+//     projCoords = projCoords * 0.5 + 0.5;
+
+//     // if outside light's orthographic frustum => not in shadow
+//     if (projCoords.z > 1.0 || projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0)
+//         return 0.0;
+
+//     // get depth from shadow map
+//     float closestDepth = texture(shadowMap, projCoords.xy).r;
+//     float currentDepth = projCoords.z;
+
+//     // bias to prevent self-shadowing (depend on slope)
+//     float bias = max(0.001 * (1.0 - dot(N, L)), 0.0005);
+
+//     // PCF (3x3)
+//     float shadow = 0.0;
+//     vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+//     for(int x = -1; x <= 1; ++x)
+//     {
+//         for(int y = -1; y <= 1; ++y)
+//         {
+//             float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+//             shadow += (currentDepth - bias > pcfDepth ? 1.0 : 0.0);
+//         }
+//     }
+//     shadow /= 9.0;
+
+//     return shadow;
+// }
+
 float ShadowCalculation(vec4 fragPosLightSpace, vec3 N, vec3 L)
 {
     // transform to [0,1]
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
     projCoords = projCoords * 0.5 + 0.5;
-
-    // if outside light's orthographic frustum => not in shadow
-    if (projCoords.z > 1.0 || projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0)
+    if(projCoords.z > 1.0) {
         return 0.0;
+    }
 
     // get depth from shadow map
     float closestDepth = texture(shadowMap, projCoords.xy).r;
     float currentDepth = projCoords.z;
 
     // bias to prevent self-shadowing (depend on slope)
-    float bias = max(0.001 * (1.0 - dot(N, L)), 0.0005);
+    float bias = max(0.001 * (1.0 - dot(N, L)), 0.0005); 
+    // float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
 
-    // PCF (3x3)
     float shadow = 0.0;
     vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
     for(int x = -1; x <= 1; ++x)
     {
         for(int y = -1; y <= 1; ++y)
         {
-            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
-            shadow += (currentDepth - bias > pcfDepth ? 1.0 : 0.0);
-        }
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
+            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;        
+        }    
     }
     shadow /= 9.0;
 

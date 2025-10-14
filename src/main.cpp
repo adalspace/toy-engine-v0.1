@@ -44,8 +44,13 @@ public:
 
         Object* targetObj = Object::LoadFile("./assets/wizard/wizard.obj");
         const auto targetEntity = m_registry.create();
-        m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.5f, 0.f));
+        m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.0f, 0.f));
         m_registry.emplace<mesh>(targetEntity, std::unique_ptr<Object>(targetObj));
+
+        Object* cubeObj = Object::LoadFile("./assets/cube.obj");
+        const auto cubeEntity = m_registry.create();
+        m_registry.emplace<transform>(cubeEntity, glm::vec3(-1.5f, 0.4f, 0.f));
+        m_registry.emplace<mesh>(cubeEntity, std::unique_ptr<Object>(cubeObj));
 
         Object* floorObj = Object::LoadFile("./assets/plane.obj");
         const auto floorEntt = m_registry.create();

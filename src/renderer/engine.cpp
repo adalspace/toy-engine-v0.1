@@ -28,9 +28,6 @@ void Engine::Run(std::unique_ptr<IApplication> app) {
         s_window->ProcessEvents();
 
         s_app->OnUpdate();
-        
-        glClearColor(0x18/255.0f, 0x18/255.0f, 0x18/255.0f, 1);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         s_app->OnRender();
 

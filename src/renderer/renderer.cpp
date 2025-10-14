@@ -38,14 +38,8 @@ Renderer::Renderer()
 
     m_model = glm::mat4(1.f);
 
-    SwitchShader(&m_shader);
-
+    m_shader.use();
     m_shader.setMat4("u_projection", m_proj);
-}
-
-void Renderer::SwitchShader(Shader *newShader) {
-    m_currentShader = newShader;
-    m_currentShader->use();
 }
 
 void Renderer::OnWindowResized(int w, int h) {
@@ -59,24 +53,24 @@ void Renderer::OnWindowResized(int w, int h) {
     m_depthShader.setMat4("u_projection", m_proj);
 }
 
-void Renderer::ApplyLights(entt::registry& registry) {
+void Renderer::ApplyLights(entt::registry& registry, Shader &shader) {
     auto lights = registry.view<light>();
     // TODO: Pass Lights Data to depth shader as well
-    m_shader.setInt("lightsCount", static_cast<int>(lights.size()));
+    shader.setInt("lightsCount", static_cast<int>(lights.size()));
     size_t lightIndex = 0;
     for (auto entity : lights) {
         auto &comp = registry.get<light>(entity);
         auto &transf = registry.get<transform>(entity);
 
-        m_shader.setVec3("lights[" + std::to_string(lightIndex) + "].position", transf.position);
-        m_shader.setVec3("lights[" + std::to_string(lightIndex) + "].color", comp.color);
-        m_shader.setFloat("lights[" + std::to_string(lightIndex) + "].intensity", comp.intensity);
+        shader.setVec3("lights[" + std::to_string(lightIndex) + "].position", transf.position);
+        shader.setVec3("lights[" + std::to_string(lightIndex) + "].color", comp.color);
+        shader.setFloat("lights[" + std::to_string(lightIndex) + "].intensity", comp.intensity);
 
         ++lightIndex;
     }
 }
 
-void Renderer::UpdateView(entt::registry& registry) {
+void Renderer::UpdateView(entt::registry& registry, Shader &shader) {
     auto cam = registry.view<transform, camera>().back();
     auto camTransform = registry.get<transform>(cam);
 
@@ -85,12 +79,12 @@ void Renderer::UpdateView(entt::registry& registry) {
         camTransform.position + camTransform.rotation,
         glm::vec3(0.f, 1.f, 0.f)
     );
-    m_shader.setMat4("u_view", m_view);
+    shader.setMat4("u_view", m_view);
 
-    m_shader.setVec3("viewPos", camTransform.position);
+    shader.setVec3("viewPos", camTransform.position);
 }
 
-void Renderer::RenderScene(entt::registry& registry) {
+void Renderer::RenderScene(entt::registry& registry, Shader &shader) {
     auto view = registry.view<transform, mesh>();
 
     for (auto [entity, transf, mesh] : view.each()) {
@@ -101,31 +95,30 @@ void Renderer::RenderScene(entt::registry& registry) {
 
         if (registry.all_of<light>(entity)) {
             auto &comp = registry.get<light>(entity);
-            m_currentShader->setBool("isLight", true);
-            m_currentShader->setVec3("currentLightColor", comp.color);
+            shader.setBool("isLight", true);
+            shader.setVec3("currentLightColor", comp.color);
         } else {
-            m_currentShader->setBool("isLight", false);
-            m_currentShader->setVec3("currentLightColor", glm::vec3(0.f));
+            shader.setBool("isLight", false);
+            shader.setVec3("currentLightColor", glm::vec3(0.f));
         }
 
         glm::mat4 rotation = glm::yawPitchRoll(transf.rotation.y, transf.rotation.x, transf.rotation.z);
         m_model = glm::translate(glm::mat4(1.f), transf.position) * rotation;
 
-        m_currentShader->setMat4("u_model", m_model);
+        shader.setMat4("u_model", m_model);
 
-        mesh.object->Render(*m_currentShader);
+        mesh.object->Render(shader);
     }
 }
 
 void Renderer::GenerateShadowMaps(entt::registry& registry) {
-    SwitchShader(&m_depthShader);
+    const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 
-    ApplyLights(registry);
-    UpdateView(registry);
+    m_depthShader.use();
+    ApplyLights(registry, m_depthShader);
+    UpdateView(registry, m_depthShader);
     
     glGenFramebuffers(1, &m_depth_fbo);
-
-    const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 
     glGenTextures(1, &m_depthMap);
     glBindTexture(GL_TEXTURE_2D, m_depthMap);
@@ -145,8 +138,6 @@ void Renderer::GenerateShadowMaps(entt::registry& registry) {
     glDrawBuffer(GL_NONE);
     glReadBuffer(GL_NONE);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    m_shader.setInt("shadowMap", 31);
 }
 
 void Renderer::Render(entt::registry& registry) {
@@ -158,52 +149,47 @@ void Renderer::Render(entt::registry& registry) {
     auto shadowLight = registry.view<light, transform>().back();
     auto &comp = registry.get<transform>(shadowLight);
 
-    float near_plane = 0.1f, far_plane = 50.0f; // pick bounds that cover your scene
+    float near_plane = 0.1f, far_plane = 50.0f;
     glm::vec3 lightPos = comp.position;
     glm::vec3 target   = glm::vec3(0.0f, 0.5f, 0.0f);
     glm::mat4 lightView = glm::lookAt(lightPos, target, glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 lightProjection = glm::ortho(-6.0f, 6.0f, -6.0f, 6.0f, 1.0f, 20.0f);
     glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
-    // lightView = glm::lookAt(/*eye*/ -lightDir * distance, /*center*/ vec3(0), up)
+    m_depthShader.use();
+    m_depthShader.setMat4("u_lightSpace", lightSpaceMatrix);
 
-    // glm::mat4 lightSpaceMatrix = lightProjection * lightView;
-    SwitchShader(&m_depthShader);
-    m_currentShader->setMat4("u_lightSpace", lightSpaceMatrix);
+    // glEnable(GL_CULL_FACE);
+    // glCullFace(GL_FRONT);  // only for the depth pass
+    // glEnable(GL_POLYGON_OFFSET_FILL);
+    // glPolygonOffset(2.0f, 4.0f);
 
-    // enable culling and render front faces to the shadow map
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_FRONT);  // only for the depth pass
-    // or use polygon offset:
-    glEnable(GL_POLYGON_OFFSET_FILL);
-    glPolygonOffset(2.0f, 4.0f);
-
+    glCullFace(GL_FRONT);
     glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
     glBindFramebuffer(GL_FRAMEBUFFER, m_depth_fbo);
         glClear(GL_DEPTH_BUFFER_BIT);
-        RenderScene(registry);
+        RenderScene(registry, m_depthShader);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glCullFace(GL_BACK);
 
-    // enable culling and render front faces to the shadow map
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);  // only for the depth pass
-    // or use polygon offset:
-    glDisable(GL_POLYGON_OFFSET_FILL);
-    glPolygonOffset(0.f, 1.f);
+    // glEnable(GL_CULL_FACE);
+    // glCullFace(GL_BACK);  // only for the depth pass
+    // glDisable(GL_POLYGON_OFFSET_FILL);
+    // glPolygonOffset(0.f, 1.f);
 
     glViewport(0, 0, Window::GetWidth(), Window::GetHeight());
+    glClearColor(0x18/255.0f, 0x18/255.0f, 0x18/255.0f, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    SwitchShader(&m_shader);
+    m_shader.use();
+    m_shader.setInt("shadowMap", 31);
 
-    ApplyLights(registry);
-
-    UpdateView(registry);
-
-    m_currentShader->setMat4("u_lightSpace", lightSpaceMatrix);
+    ApplyLights(registry, m_shader);
+    UpdateView(registry, m_shader);
+    m_shader.setMat4("u_lightSpace", lightSpaceMatrix);
 
     glActiveTexture(GL_TEXTURE31);
     glBindTexture(GL_TEXTURE_2D, m_depthMap);
 
-    RenderScene(registry);
+    RenderScene(registry, m_shader);
 }
