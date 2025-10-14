@@ -104,8 +104,13 @@ void Window::ProcessEvents() {
                 if (event.key.scancode == SDL_SCANCODE_ESCAPE) {
                     Dispatch(WindowCloseRequested());
                 }
+                if (event.key.scancode == SDL_SCANCODE_F11) {
+                    bool isFullscreen = SDL_GetWindowFlags(m_handle) & SDL_WINDOW_FULLSCREEN;
+                    SDL_SetWindowFullscreen(m_handle, !isFullscreen);
+                }
                 break;
             case SDL_EVENT_WINDOW_RESIZED:
+            case SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED:
                 int width, height;
                 if (SDL_GetWindowSizeInPixels(m_handle, &width, &height)) {
                     m_width = width;
