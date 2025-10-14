@@ -85,6 +85,7 @@ void Renderer::UpdateView(entt::registry& registry, Shader &shader) {
         glm::vec3(0.f, 1.f, 0.f)
     );
     shader.setMat4("u_view", m_view);
+    shader.setMat4("u_projection", m_proj);
 
     shader.setVec3("viewPos", camTransform.position);
 }
