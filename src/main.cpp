@@ -33,12 +33,6 @@ public:
         m_registry.emplace<light>(lght, light::LightType::DIRECTIONAL, glm::vec3(1.f, 1.f, 1.f), 1.5f);
         m_registry.emplace<mesh>(lght, std::unique_ptr<Object>(lightObj));
 
-        Object* light2Obj = Object::LoadFile("./assets/sphere.obj");
-        const auto lght2 = m_registry.create();
-        m_registry.emplace<transform>(lght2, glm::vec3(-5.f, 5.f, -5.f), glm::vec3(0.f));
-        m_registry.emplace<light>(lght2, light::LightType::DIRECTIONAL, glm::vec3(1.f, 0.5f, 0.2f), 1.5f);
-        m_registry.emplace<mesh>(lght2, std::unique_ptr<Object>(light2Obj));
-
         const auto cameraEntity = m_registry.create();
         m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 2.f, 2.f));
         m_registry.emplace<camera>(cameraEntity);
@@ -137,6 +131,40 @@ public:
             }
         }
 
+        // ---- Day-night simulation ----
+        m_dayTime += deltaTime;
+        if (m_dayTime > m_dayLength)
+            m_dayTime -= m_dayLength; // loop every "day"
+
+        float dayProgress = m_dayTime / m_dayLength; // 0.0 -> 1.0
+        float sunAngle = dayProgress * glm::two_pi<float>(); // radians through the sky
+
+        // Compute sun direction (rotating around X axis)
+        // At t=0.0 sun at east horizon, at π/2 overhead, at π west horizon
+        glm::vec3 sunDir = glm::normalize(glm::vec3(0.0f, sin(sunAngle), cos(sunAngle)));
+
+        // Compute intensity: bright at noon, dim at dusk/dawn, dark at night
+        float intensity = glm::max(sin(sunAngle), (double)0.0f); // 0 at night, 1 at noon
+        intensity = glm::mix(0.05f, 1.5f, intensity);    // keep some ambient even at night
+
+        // Optional: tint color (warm at sunrise/sunset)
+        glm::vec3 dayColor   = glm::vec3(1.0f, 0.95f, 0.9f);
+        glm::vec3 sunsetColor= glm::vec3(1.0f, 0.6f, 0.3f);
+        float sunsetFactor = glm::clamp(1.0f - abs(sin(sunAngle)) * 2.0f, 0.0f, 1.0f);
+        glm::vec3 sunColor = glm::mix(dayColor, sunsetColor, sunsetFactor);
+
+        // Update the directional light in the registry
+        auto lightsView = m_registry.view<light, transform>();
+        for (auto [entity, l, t] : lightsView.each()) {
+            if (l.type == light::LightType::DIRECTIONAL) {
+                // "position" for directional light often stores direction vector
+                // If your system instead uses transform.rotation, adjust accordingly
+                t.position = sunDir * 15.f;       // use this as light direction
+                l.color = sunColor;
+                l.intensity = intensity;
+            }
+        }
+
         // auto rotateEntts = m_registry.view<transform, const mesh>();
         // for (auto [entity, transform, mesh] : rotateEntts.each()) {
         //     // auto targetTransform = rotateEntts.get<transform>(entity);
@@ -166,6 +194,9 @@ private:
 
     float m_angle;
     Uint64 m_lastTicks;
+
+    float m_dayTime = 0.0f;       // accumulates time for day-night cycle
+    float m_dayLength = 60.0f;    // seconds per full day cycle
 
     bool m_paused = false;
 

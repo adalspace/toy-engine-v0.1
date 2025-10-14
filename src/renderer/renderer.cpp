@@ -99,9 +99,9 @@ void Renderer::RenderScene(entt::registry& registry, Shader &shader) {
         }
 
         if (registry.all_of<light>(entity)) {
-            auto &comp = registry.get<light>(entity);
+            auto &l = registry.get<light>(entity);
             shader.setBool("isLight", true);
-            shader.setVec3("currentLightColor", comp.color);
+            shader.setVec3("currentLightColor", l.color);
         } else {
             shader.setBool("isLight", false);
             shader.setVec3("currentLightColor", glm::vec3(0.f));
@@ -160,7 +160,7 @@ void Renderer::Render(entt::registry& registry) {
         // TODO: support other light types when ready
         if (l.type != light::LightType::DIRECTIONAL) return;
 
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0x18/255.0f, 0x18/255.0f, 0x18/255.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         float near_plane = 0.1f, far_plane = 50.0f;
