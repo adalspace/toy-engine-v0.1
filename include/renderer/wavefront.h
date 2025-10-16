@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "shader.h"
+#include "renderer/renderer.h"
 #include "renderer/material.h"
 #include "renderer/mesh.h"
 
@@ -15,6 +16,7 @@ enum ObjElement { OHASH, MTLLIB, USEMTL, O, V, VN, VT, F, OUNKNOWN };
 enum MtlElement { MHASH, NEWMTL, NS, KA, KS, KD, NI, D, ILLUM, MAP_KD, MAP_KA, MUNKNOWN };
 
 class Object {
+    friend class Renderer;
 private:
     static inline int NormalizeIndex(int idx, int baseCount);
 
@@ -34,8 +36,10 @@ private:
     Mesh& GetLastMesh();
     void CreateNewMesh(const std::string& materialName);
 public:
-    void Render(Shader& shader);
+    void Render(Shader& shader, unsigned int count);
     [[nodiscard]] inline const std::string Name() const { return m_name; }
+protected:
+    void EnableBatch(unsigned int instanceVBO);
 private:
     std::string m_name;
     std::vector<glm::vec3> m_vertices;
