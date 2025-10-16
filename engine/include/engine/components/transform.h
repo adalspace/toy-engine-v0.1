@@ -2,8 +2,9 @@
 #define COMPONENTS_TRANSFORM_H_
 
 #include <glm/glm.hpp>
+#include "engine/export.h"
 
-struct transform {
+struct ENGINE_API transform {
     glm::vec3 position;
     glm::vec3 rotation;
     glm::vec3 scale;

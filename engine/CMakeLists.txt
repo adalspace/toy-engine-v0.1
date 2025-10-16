@@ -1,4 +1,4 @@
-add_library(${ENGINE_TARGET} STATIC
+add_library(${ENGINE_TARGET} SHARED
   src/IO/parser.cpp
   src/IO/file_manager.cpp
 
@@ -23,6 +23,8 @@ set_target_properties(${ENGINE_TARGET} PROPERTIES
   CXX_VISIBILITY_PRESET hidden
   VISIBILITY_INLINES_HIDDEN YES
 )
+
+target_compile_definitions(${ENGINE_TARGET} PRIVATE ENGINE_BUILD_SHARED)
 
 target_include_directories(${ENGINE_TARGET} PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include

@@ -1,6 +1,8 @@
 #ifndef COMPONENTS_PLAYER_H_
 #define COMPONENTS_PLAYER_H_
 
-struct camera {};
+#include "engine/export.h"
+
+struct ENGINE_API camera {};
 
 #endif // COMPONENTS_PLAYER_H_

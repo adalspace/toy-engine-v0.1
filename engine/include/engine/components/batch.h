@@ -2,9 +2,10 @@
 #define COMPONENT_BATCH_H_
 
 #include "engine/renderer/renderer.h"
+#include "engine/export.h"
 
 // requires mesh component
-struct batch {
+struct ENGINE_API batch {
     friend class Renderer;
 public:
     // requires transform component

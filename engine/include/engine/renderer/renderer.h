@@ -5,9 +5,10 @@
 #include <entt/entity/registry.hpp>
 
 #include "engine/renderer/shader.h"
+#include "engine/export.h"
 
 // TODO: make static or singleton
-class Renderer {
+class ENGINE_API Renderer {
 public:
     Renderer(entt::registry& registry);
 

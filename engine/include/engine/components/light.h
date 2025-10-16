@@ -2,9 +2,11 @@
 #define COMPONENTS_LIGHT_H_
 
 #include <glm/glm.hpp>
-#include "engine/renderer/renderer.h"
 
-struct light {
+#include "engine/renderer/renderer.h"
+#include "engine/export.h"
+
+struct ENGINE_API light {
     friend class Renderer;
 public:
     enum LightType {

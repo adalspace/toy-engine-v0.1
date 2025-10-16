@@ -2,9 +2,11 @@
 #define COMPONENTS_MESH_H_
 
 #include <memory>
-#include "engine/renderer/wavefront.h"
 
-struct mesh {
+#include "engine/renderer/wavefront.h"
+#include "engine/export.h"
+
+struct ENGINE_API mesh {
     std::shared_ptr<Object> object;
 };
 

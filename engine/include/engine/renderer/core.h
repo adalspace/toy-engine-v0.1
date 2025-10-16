@@ -8,8 +8,9 @@
 #include "engine/window/events/window.h"
 
 #include "engine/app/app.h"
+#include "engine/export.h"
 
-class Engine {
+class ENGINE_API Engine {
 public:
     static void Run(std::unique_ptr<IApplication> app);
 private:

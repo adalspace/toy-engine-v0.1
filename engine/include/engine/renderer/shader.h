@@ -5,7 +5,9 @@
 
 #include <glm/glm.hpp>
 
-class Shader
+#include "engine/export.h"
+
+class ENGINE_API Shader
 {
 public:
     Shader();

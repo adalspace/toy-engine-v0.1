@@ -12,10 +12,12 @@
 #include "engine/renderer/material.h"
 #include "engine/renderer/mesh.h"
 
+#include "engine/export.h"
+
 enum ObjElement { OHASH, MTLLIB, USEMTL, O, V, VN, VT, F, OUNKNOWN };
 enum MtlElement { MHASH, NEWMTL, NS, KA, KS, KD, NI, D, ILLUM, MAP_KD, MAP_KA, MUNKNOWN };
 
-class Object {
+class ENGINE_API Object {
     friend class Renderer;
 private:
     static inline int NormalizeIndex(int idx, int baseCount);

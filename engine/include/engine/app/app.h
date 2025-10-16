@@ -2,8 +2,9 @@
 #define APPLICATION_H_
 
 #include "engine/window/events/window.h"
+#include "engine/export.h"
 
-class IApplication {
+class ENGINE_API IApplication {
 public:
     virtual ~IApplication() = default;
 
