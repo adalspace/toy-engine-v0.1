@@ -21,7 +21,7 @@ public:
 public:
     Mesh();
 public:
-    void Render();
+    void Render(unsigned int count);
 };
 
 #endif // MESH_H_
