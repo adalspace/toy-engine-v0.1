@@ -31,6 +31,8 @@ Window::Window(const char* title, int width, int height) {
     }
 
     SDL_SetWindowRelativeMouseMode(m_handle, true);
+    SDL_Rect boundaries = {0, 0, m_width, m_height};
+    SDL_SetWindowMouseRect(m_handle, &boundaries);
 
     m_context = SDL_GL_CreateContext(m_handle);
 
@@ -121,6 +123,9 @@ void Window::ProcessEvents() {
                         width,
                         height);
                     Dispatch(WindowResized{ m_width, m_height });
+                    SDL_SetWindowRelativeMouseMode(m_handle, true);
+                    SDL_Rect boundaries = {0, 0, m_width, m_height};
+                    SDL_SetWindowMouseRect(m_handle, &boundaries);
                 }
                 break;
             default: break;
