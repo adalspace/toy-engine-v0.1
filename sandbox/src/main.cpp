@@ -1,23 +1,12 @@
-#ifndef WIN32
-#define GLEW_STATIC
-#endif
-
 #include <iostream>
-#include <memory>
 
-#ifdef WIN32
-#include <corecrt_math_defines.h>
-#endif
 #include <glm/glm.hpp>
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/ext/matrix_transform.hpp>
+#include <glm/gtc/constants.hpp>
 
-#include "engine/renderer/shader.h"
 #include "engine/renderer/wavefront.h"
-#include "engine/renderer/core.h"
 #include "engine/renderer/renderer.h"
 
-#include "engine/IO/file_manager.h"
+#include "engine/app/app.h"
 
 #include "engine/components/transform.h"
 #include "engine/components/light.h"
@@ -25,6 +14,8 @@
 #include "engine/components/mesh.h"
 #include "engine/components/rotate.h"
 #include "engine/components/batch.h"
+
+#include "engine/engine.h"
 
 class Game : public IApplication {
 public:
@@ -232,7 +223,6 @@ private:
     Uint64 m_currentTicks;
 };
 
-int main() {
-    Engine::Run(std::make_unique<Game>());
-    return 0;
+IApplication* CreateApplication() {
+    return new Game();
 }
