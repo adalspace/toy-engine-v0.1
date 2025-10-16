@@ -40,8 +40,9 @@ add_executable(CodingGame
 
   src/window/window.cpp
 
+  src/components/batch.cpp
+
   src/renderer/debug.cpp
-  src/renderer/basics.cpp
   src/renderer/mesh.cpp
   src/renderer/shader.cpp
   src/renderer/texture.cpp
