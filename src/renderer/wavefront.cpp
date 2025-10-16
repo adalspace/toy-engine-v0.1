@@ -392,6 +392,24 @@ Object* Object::LoadFile(const std::string& filename) {
     return obj;
 }
 
+void Object::EnableBatch(unsigned int instanceVBO) {
+    for (auto &mesh : m_meshes) {
+        mesh.Bind();
+
+        glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+        std::size_t vec4Size = sizeof(glm::vec4);
+        for (int i = 0; i < 4; ++i) {
+            glEnableVertexAttribArray(3 + i); // use locations 3,4,5,6 for instance matrix
+            glVertexAttribPointer(3 + i, 4, GL_FLOAT, GL_FALSE,
+                                sizeof(glm::mat4), (void*)(i * vec4Size));
+            glVertexAttribDivisor(3 + i, 1); // IMPORTANT: one per instance, not per vertex
+        }
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        
+        mesh.Unbind();
+    }
+}
+
 
 // void Object::Render(Shader& shader)
 // {
@@ -420,7 +438,7 @@ Object* Object::LoadFile(const std::string& filename) {
 //     }
 // }
 
-void Object::Render(Shader& shader)
+void Object::Render(Shader& shader, unsigned int count)
 {
     for (auto &mesh : m_meshes)
     {
@@ -484,7 +502,7 @@ void Object::Render(Shader& shader)
         }
 
         // --- Render mesh ---
-        mesh.Render();
+        mesh.Render(count);
     }
 }
 
