@@ -23,15 +23,17 @@
 #include "components/light.h"
 #include "components/camera.h"
 #include "components/mesh.h"
+#include "components/rotate.h"
+#include "components/batch.h"
 
 class Game : public IApplication {
 public:
-    Game() {
+    Game() : m_renderer(m_registry) {
         Object* lightObj = Object::LoadFile("./assets/sphere.obj");
         const auto lght = m_registry.create();
         m_registry.emplace<transform>(lght, glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
         m_registry.emplace<light>(lght, light::LightType::DIRECTIONAL, glm::vec3(1.f, 1.f, 1.f), 1.5f);
-        m_registry.emplace<mesh>(lght, std::unique_ptr<Object>(lightObj));
+        m_registry.emplace<mesh>(lght, std::shared_ptr<Object>(lightObj));
 
         const auto cameraEntity = m_registry.create();
         m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 2.f, 2.f));
@@ -40,17 +42,36 @@ public:
         Object* targetObj = Object::LoadFile("./assets/wizard/wizard.obj");
         const auto targetEntity = m_registry.create();
         m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.0f, 0.f));
-        m_registry.emplace<mesh>(targetEntity, std::unique_ptr<Object>(targetObj));
+        m_registry.emplace<mesh>(targetEntity, std::shared_ptr<Object>(targetObj));
 
-        Object* cubeObj = Object::LoadFile("./assets/grass_block/grass_block.obj");
+        Object* grass = Object::LoadFile("./assets/grass_block/grass_block.obj");
         const auto cubeEntity = m_registry.create();
         m_registry.emplace<transform>(cubeEntity, glm::vec3(-1.5f, 0.4f, 0.f));
-        m_registry.emplace<mesh>(cubeEntity, std::unique_ptr<Object>(cubeObj));
+        m_registry.emplace<mesh>(cubeEntity, std::shared_ptr<Object>(grass));
+
+        // Cube template (use shared object to avoid reloading 1000 times)
+        std::shared_ptr<Object> cubeObj = std::shared_ptr<Object>(Object::LoadFile("./assets/grass_block/grass_block.obj"));
+        const auto batchEntt = m_registry.create();
+        m_registry.emplace<batch>(batchEntt);
+        m_registry.emplace<mesh>(batchEntt, cubeObj);
+        auto cubeBatch = m_registry.get<batch>(batchEntt);
+        // Generate 1000 random cubes
+        for (int i = 0; i < 1000; ++i) {
+            const auto cubeEntity = m_registry.create();
+
+            float x = static_cast<float>(rand()) / RAND_MAX * 200.f - 100.f; // range [-100, 100]
+            float y = static_cast<float>(rand()) / RAND_MAX * 10.f;          // range [0, 10]
+            float z = static_cast<float>(rand()) / RAND_MAX * 200.f - 100.f; // range [-100, 100]
+
+            m_registry.emplace<transform>(cubeEntity, glm::vec3(x, y, z));
+            m_registry.emplace<rotate>(cubeEntity);
+            m_registry.emplace<batch::item>(cubeEntity, cubeBatch.id());
+        }
 
         Object* floorObj = Object::LoadFile("./assets/plane.obj");
         const auto floorEntt = m_registry.create();
         m_registry.emplace<transform>(floorEntt, glm::vec3(0.f));
-        m_registry.emplace<mesh>(floorEntt, std::unique_ptr<Object>(floorObj));
+        m_registry.emplace<mesh>(floorEntt, std::shared_ptr<Object>(floorObj));
     }
     ~Game() override {}
 
@@ -69,7 +90,8 @@ public:
         m_startTicks = SDL_GetTicks();
         m_frameCount = 0;
 
-        m_renderer.GenerateShadowMaps(m_registry);
+        m_renderer.Init();
+        m_renderer.GenerateShadowMaps();
     }
 
     void OnWindowResized(const WindowResized& event) override {
@@ -165,17 +187,17 @@ public:
             }
         }
 
-        // auto rotateEntts = m_registry.view<transform, const mesh>();
-        // for (auto [entity, transform, mesh] : rotateEntts.each()) {
-        //     // auto targetTransform = rotateEntts.get<transform>(entity);
-        //     if (!m_registry.all_of<light>(entity)) {
-        //         transform.rotation.y = m_angle;
-        //     }
-        // }
+        auto rotateEntts = m_registry.view<transform, rotate>();
+        for (auto [entity, t] : rotateEntts.each()) {
+            // auto targetTransform = rotateEntts.get<transform>(entity);
+            if (!m_registry.all_of<light>(entity)) {
+                t.rotation.y = m_angle;
+            }
+        }
     }
 
     void OnRender() override {
-        m_renderer.Render(m_registry);
+        m_renderer.Render();
 
         m_frameCount++;
         m_currentTicks = SDL_GetTicks();
