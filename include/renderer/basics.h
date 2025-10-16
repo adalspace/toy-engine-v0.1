@@ -3,7 +3,10 @@
 
 #include <glm/glm.hpp>
 
+#include "renderer/mesh.h"
+
 class Vertex {
+    friend class Mesh;
 private:
     glm::vec3 m_position;
     glm::vec3 m_normal;
