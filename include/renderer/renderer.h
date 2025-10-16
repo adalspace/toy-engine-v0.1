@@ -9,19 +9,22 @@
 // TODO: make static or singleton
 class Renderer {
 public:
-    Renderer();
+    Renderer(entt::registry& registry);
 
-    void Render(entt::registry& registry);
-    void GenerateShadowMaps(entt::registry& registry);
+    void Render();
+    void Init();
+    void GenerateShadowMaps();
 
     void OnWindowResized(int w, int h);
 private:
-    void ApplyLights(entt::registry& registry, Shader &shader);
-    void UpdateView(entt::registry& registry, Shader &shader);
-    void RenderScene(entt::registry& registry, Shader &shader);
+    void ApplyLights(Shader &shader);
+    void UpdateView();
+    void RenderScene(Shader &shader);
 private:
     Shader m_shader;
     Shader m_depthShader;
+
+    entt::registry& m_registry;
 
     // unsigned int m_depth_fbo;
     // unsigned int m_depthMap;
