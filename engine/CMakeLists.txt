@@ -11,10 +11,10 @@ add_library(${ENGINE_TARGET} STATIC
   src/renderer/shader.cpp
   src/renderer/texture.cpp
   src/renderer/wavefront.cpp
-  src/renderer/engine.cpp
+  src/renderer/core.cpp
   src/renderer/renderer.cpp
 
-  src/main.cpp
+  # src/main.cpp
 )
 
 set_target_properties(${ENGINE_TARGET} PROPERTIES

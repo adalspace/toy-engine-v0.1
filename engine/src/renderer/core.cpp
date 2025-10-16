@@ -1,6 +1,6 @@
 #include <memory>
 
-#include "engine/renderer/engine.h"
+#include "engine/renderer/core.h"
 #include "engine/window/event.h"
 
 #include "engine/renderer/wavefront.h"

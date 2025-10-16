@@ -29,13 +29,13 @@ Renderer::Renderer(entt::registry& registry) : m_registry(registry)
     );
 
     m_shader.init(
-        FileManager::read("./src/shaders/main.vs"),
-        FileManager::read("./src/shaders/pbr.fs")
+        FileManager::read("./engine/src/shaders/main.vs"),
+        FileManager::read("./engine/src/shaders/pbr.fs")
     );
 
     m_depthShader.init(
-        FileManager::read("./src/shaders/depth.vs"),
-        FileManager::read("./src/shaders/depth.fs")
+        FileManager::read("./engine/src/shaders/depth.vs"),
+        FileManager::read("./engine/src/shaders/depth.fs")
     );
 
     m_model = glm::mat4(1.f);
