@@ -147,7 +147,7 @@ void main()
     for (int i = 0; i < lightsCount; i++)
     {
         // compute light vector L depending on type
-        vec3 L;
+        vec3 L = vec3(0);
         if (lights[i].type == 0) {
             // directional light: convention here is that lights[i].position stores the direction
             // *towards* the light (for example, for sun direction you may upload -sunDir).
