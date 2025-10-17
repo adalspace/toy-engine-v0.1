@@ -11,7 +11,7 @@ In order to configure and run project on windows platform accomplish several ste
 ### Configuring
 
 ```console
-cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B build -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release
 ```
 
 ### Building
@@ -25,7 +25,7 @@ cmake --build build --config Release
 For static linking you just need to modify the configure command as follows:
 
 ```console
-cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B build -G "Visual Studio 17 2022"-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_BUILD_TYPE=Release -DENGINE_BUILD_SHARED=OFF
 ```
 
 ## Multi-GPU Devices
@@ -35,18 +35,5 @@ If you want to use non-primary GPU on your device when launching the game specif
 The run command in that case would look following:
 
 ```console
-__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia ./build/CodingGame
+__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia <executable_path>
 ```
-
-## TODO List
-
-### Optimizations
-
-🚀 Summary of Speedups
-- Replace toElement / toMtlElement string comparisons with char-based switches.
-- Replace std::stoi with a custom fast Parser::TakeIndex.
-- Pre-reserve vectors for vertices, normals, texcoords, meshes.
-- Load whole file into memory before parsing (fastest for large OBJs).
-- Defer texture loading until after parsing.
-- Store material pointers in meshes → no runtime lookups in render.
-- Inline parsing functions.
