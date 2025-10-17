@@ -3,6 +3,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
 
+#ifdef _WIN32
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/extended_min_max.hpp>
+#endif
+
 #include "engine/renderer/wavefront.h"
 #include "engine/renderer/renderer.h"
 
@@ -157,7 +162,7 @@ public:
         glm::vec3 sunDir = glm::normalize(glm::vec3(0.0f, sin(sunAngle), cos(sunAngle)));
 
         // Compute intensity: bright at noon, dim at dusk/dawn, dark at night
-        float intensity = glm::max(sin(sunAngle), (double)0.0f); // 0 at night, 1 at noon
+        float intensity = glm::max(static_cast<double>(sin(sunAngle)), static_cast<double>(0.0f)); // 0 at night, 1 at noon
         intensity = glm::mix(0.05f, 1.5f, intensity);    // keep some ambient even at night
 
         // Optional: tint color (warm at sunrise/sunset)
