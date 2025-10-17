@@ -1,8 +1,7 @@
 #include <iostream>
-#include <cassert>
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
-#ifdef WIN32
+#ifdef _WIN32
 #include <corecrt_math_defines.h>
 #endif
 #include <glm/ext/matrix_transform.hpp>
