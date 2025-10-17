@@ -1,10 +1,12 @@
-#ifndef WIN32
+#pragma once
+
+#ifndef _WIN32
 #define GLEW_STATIC
 #endif
 
 #include <memory>
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <corecrt_math_defines.h>
 #endif
 

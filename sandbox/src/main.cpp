@@ -35,18 +35,18 @@ public:
         m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 2.f, 2.f));
         m_registry.emplace<camera>(cameraEntity);
 
-        Object* targetObj = Object::LoadFile("./assets/wizard/wizard.obj");
+        Object* targetObj = Object::LoadFile("./assets/monkey.obj");
         const auto targetEntity = m_registry.create();
         m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.0f, 0.f));
         m_registry.emplace<mesh>(targetEntity, std::shared_ptr<Object>(targetObj));
 
-        Object* grass = Object::LoadFile("./assets/grass_block/grass_block.obj");
+        Object* grass = Object::LoadFile("./assets/cube.obj");
         const auto cubeEntity = m_registry.create();
         m_registry.emplace<transform>(cubeEntity, glm::vec3(-1.5f, 0.4f, 0.f));
         m_registry.emplace<mesh>(cubeEntity, std::shared_ptr<Object>(grass));
 
         // Cube template (use shared object to avoid reloading 1000 times)
-        std::shared_ptr<Object> cubeObj = std::shared_ptr<Object>(Object::LoadFile("./assets/grass_block/grass_block.obj"));
+        std::shared_ptr<Object> cubeObj = std::shared_ptr<Object>(Object::LoadFile("./assets/cube.obj"));
         const auto batchEntt = m_registry.create();
         m_registry.emplace<batch>(batchEntt);
         m_registry.emplace<mesh>(batchEntt, cubeObj);
