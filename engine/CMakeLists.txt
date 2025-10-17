@@ -1,4 +1,6 @@
-add_library(${ENGINE_TARGET} SHARED
+option(ENGINE_BUILD_SHARED "Build the Engine library as a shared library" ON)
+
+set(SOURCES
   src/IO/parser.cpp
   src/IO/file_manager.cpp
 
@@ -17,14 +19,30 @@ add_library(${ENGINE_TARGET} SHARED
   # src/main.cpp
 )
 
+#if (ENGINE_BUILD_SHARED)
+#  add_library(${ENGINE_TARGET} SHARED ${SOURCES})
+#else()
+#  add_library(${ENGINE_TARGET} STATIC ${SOURCES})
+#endif()
+
+if(ENGINE_BUILD_SHARED)
+  add_library(${ENGINE_TARGET} SHARED ${SOURCES})
+  if(WIN32)
+    target_compile_definitions(${ENGINE_TARGET} PRIVATE ENGINE_BUILD_SHARED ENGINE_EXPORTS)
+  else()
+    target_compile_definitions(${ENGINE_TARGET} PRIVATE ENGINE_BUILD_SHARED)
+  endif()
+else()
+  add_library(${ENGINE_TARGET} STATIC ${SOURCES})
+  target_compile_definitions(${ENGINE_TARGET} PRIVATE ENGINE_STATIC)
+endif()
+
 set_target_properties(${ENGINE_TARGET} PROPERTIES
   CXX_STANDARD 17
   CXX_STANDARD_REQUIRED ON
   CXX_VISIBILITY_PRESET hidden
   VISIBILITY_INLINES_HIDDEN YES
 )
-
-target_compile_definitions(${ENGINE_TARGET} PRIVATE ENGINE_BUILD_SHARED)
 
 target_include_directories(${ENGINE_TARGET} PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -82,10 +100,3 @@ else()
   endif()
 endif()
 
-# ---------- Windows: copy runtime DLLs ----------
-if (WIN32)
-  add_custom_command(TARGET ${ENGINE_TARGET} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      $<TARGET_RUNTIME_DLLS:${ENGINE_TARGET}> $<TARGET_FILE_DIR:${ENGINE_TARGET}>
-    COMMAND_EXPAND_LISTS)
-endif()

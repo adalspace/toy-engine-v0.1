@@ -1,9 +1,5 @@
 #pragma once
 
-#ifndef _WIN32
-#define GLEW_STATIC
-#endif
-
 #include <memory>
 
 #ifdef _WIN32

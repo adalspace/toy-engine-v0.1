@@ -1,9 +1,20 @@
 #pragma once
 
-#if defined(_WIN32) && defined(ENGINE_BUILD_SHARED)
-  #define ENGINE_API __declspec(dllexport)
-#elif defined(_WIN32)
-  #define ENGINE_API __declspec(dllimport)
+// For static libs, ENGINE_API should be empty.
+#if defined(_WIN32)
+  #if defined(ENGINE_BUILD_SHARED)
+    #if defined(ENGINE_EXPORTS)
+      #define ENGINE_API __declspec(dllexport)
+    #else
+      #define ENGINE_API __declspec(dllimport)
+    #endif
+  #else
+    #define ENGINE_API
+  #endif
 #else
-  #define ENGINE_API __attribute__((visibility("default")))
+  #if defined(ENGINE_BUILD_SHARED)
+    #define ENGINE_API __attribute__((visibility("default")))
+  #else
+    #define ENGINE_API
+  #endif
 #endif

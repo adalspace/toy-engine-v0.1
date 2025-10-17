@@ -8,3 +8,12 @@ set_target_properties(${SANDBOX_TARGET} PROPERTIES
 )
 
 target_link_libraries(${SANDBOX_TARGET} PRIVATE ${ENGINE_TARGET})
+
+# --- Copy engine.dll and all dependent DLLs next to sandbox.exe ---
+if (WIN32)
+    add_custom_command(TARGET ${SANDBOX_TARGET} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_RUNTIME_DLLS:${SANDBOX_TARGET}> $<TARGET_FILE_DIR:${SANDBOX_TARGET}>
+        COMMAND_EXPAND_LISTS
+    )
+endif()
