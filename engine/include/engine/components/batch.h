@@ -21,6 +21,7 @@ protected:
 private:
     unsigned int m_id;
     unsigned int m_instance_vbo { 0 };
+    unsigned int m_instance_count { 0 };
 private:
     void prepare(glm::mat4 *instances, unsigned int count);
 };

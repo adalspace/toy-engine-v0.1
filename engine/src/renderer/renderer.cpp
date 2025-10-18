@@ -205,12 +205,9 @@ void Renderer::GenerateShadowMaps() {
 void Renderer::Render() {
     m_depthShader.use();
 
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-
     glCullFace(GL_FRONT);
 
-    auto lights = m_registry.view<light, transform>();
+    const auto lights = m_registry.view<light, transform>();
 
     for (auto [_, l, t] : lights.each()) {
         // TODO: support other light types when ready
@@ -218,10 +215,10 @@ void Renderer::Render() {
 
         EnsureShadowResources(l);
 
-        float near_plane = 0.1f, far_plane = 20.0f;
+        // float near_plane = 0.1f, far_plane = 50.0f;
         glm::vec3 target   = glm::vec3(0.0f, 0.5f, 0.0f);
         glm::mat4 lightView = glm::lookAt(t.position, target, glm::vec3(0.0f, 1.0f, 0.0f));
-        glm::mat4 lightProjection = glm::ortho(-6.0f, 6.0f, -6.0f, 6.0f, near_plane, far_plane);
+        glm::mat4 lightProjection = glm::ortho(-6.0f, 6.0f, -6.0f, 6.0f, 1.0f, 20.0f);
         glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
         m_depthShader.setMat4("u_lightSpace", lightSpaceMatrix);
@@ -237,6 +234,8 @@ void Renderer::Render() {
 
         RenderScene(m_depthShader);
 
+        // glDisable(GL_POLYGON_OFFSET_FILL);
+
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
@@ -246,7 +245,7 @@ void Renderer::Render() {
     glViewport(0, 0, Window::GetWidth(), Window::GetHeight());
     glClearColor(0x18/255.0f, 0x18/255.0f, 0x18/255.0f, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+
     m_shader.use();
     ApplyLights(m_shader);
     UpdateView();

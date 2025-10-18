@@ -35,9 +35,9 @@ public:
         m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 2.f, 2.f));
         m_registry.emplace<camera>(cameraEntity);
 
-        Object* targetObj = Object::LoadFile("./assets/wizard/wizard.obj");
+        Object* targetObj = Object::LoadFile("./assets/car/car.obj");
         const auto targetEntity = m_registry.create();
-        m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.0f, 0.f), glm::vec3(0.f, 0.0f, 0.f), glm::vec3(0.5f, 0.5f, 0.5f));
+        m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.0f, 0.f));
         m_registry.emplace<mesh>(targetEntity, std::shared_ptr<Object>(targetObj));
         m_registry.emplace<rotate>(targetEntity);
 
