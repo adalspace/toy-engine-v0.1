@@ -46,7 +46,7 @@ public:
         m_registry.emplace<mesh>(cubeEntity, std::shared_ptr<Object>(grass));
 
         // Cube template (use shared object to avoid reloading 1000 times)
-        std::shared_ptr<Object> cubeObj = std::shared_ptr<Object>(Object::LoadFile("./assets/cube.obj"));
+        std::shared_ptr<Object> cubeObj = std::shared_ptr<Object>(Object::LoadFile("./assets/grass_block/grass_block.obj"));
         const auto batchEntt = m_registry.create();
         m_registry.emplace<batch>(batchEntt);
         m_registry.emplace<mesh>(batchEntt, cubeObj);

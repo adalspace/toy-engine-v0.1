@@ -1,4 +1,4 @@
-# Blender 4.3.2 MTL File: 'None'
+# Blender 4.3.2 MTL File: 'grass_block.blend'
 # www.blender.org
 
 newmtl Grass_Bottom
@@ -9,7 +9,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/landam/Downloads/minecraft/bottom.jpg
+map_Kd textures/bottom.jpg
 
 newmtl Grass_Side
 Ns 250.000000
@@ -19,7 +19,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/landam/Downloads/minecraft/side.jpg
+map_Kd textures/side.jpg
 
 newmtl Grass_Top
 Ns 250.000000
@@ -29,4 +29,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/landam/Downloads/minecraft/top.jpg
+map_Kd textures/top.jpg
