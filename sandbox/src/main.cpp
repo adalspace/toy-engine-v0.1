@@ -25,7 +25,7 @@
 class Game : public IApplication {
 public:
     Game() : m_renderer(m_registry) {
-        Object* lightObj = Object::LoadFile("./assets/sphere.obj");
+        Object* lightObj = Object::LoadFile("./assets/common/sphere/sphere.obj");
         const auto lght = m_registry.create();
         m_registry.emplace<transform>(lght, glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
         m_registry.emplace<light>(lght, light::LightType::DIRECTIONAL, glm::vec3(1.f, 1.f, 1.f), 1.5f);
@@ -35,12 +35,12 @@ public:
         m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 2.f, 2.f));
         m_registry.emplace<camera>(cameraEntity);
 
-        Object* targetObj = Object::LoadFile("./assets/monkey.obj");
+        Object* targetObj = Object::LoadFile("./assets/wizard/wizard.obj");
         const auto targetEntity = m_registry.create();
         m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.0f, 0.f));
         m_registry.emplace<mesh>(targetEntity, std::shared_ptr<Object>(targetObj));
 
-        Object* grass = Object::LoadFile("./assets/cube.obj");
+        Object* grass = Object::LoadFile("./assets/common/cube/cube.obj");
         const auto cubeEntity = m_registry.create();
         m_registry.emplace<transform>(cubeEntity, glm::vec3(-1.5f, 0.4f, 0.f));
         m_registry.emplace<mesh>(cubeEntity, std::shared_ptr<Object>(grass));
@@ -64,7 +64,7 @@ public:
             m_registry.emplace<batch::item>(cubeEntity, cubeBatch.id());
         }
 
-        Object* floorObj = Object::LoadFile("./assets/plane.obj");
+        Object* floorObj = Object::LoadFile("./assets/common/plane/plane.obj");
         const auto floorEntt = m_registry.create();
         m_registry.emplace<transform>(floorEntt, glm::vec3(0.f));
         m_registry.emplace<mesh>(floorEntt, std::shared_ptr<Object>(floorObj));
