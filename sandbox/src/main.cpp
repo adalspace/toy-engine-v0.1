@@ -37,8 +37,9 @@ public:
 
         Object* targetObj = Object::LoadFile("./assets/wizard/wizard.obj");
         const auto targetEntity = m_registry.create();
-        m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.0f, 0.f));
+        m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.0f, 0.f), glm::vec3(0.f, 0.0f, 0.f), glm::vec3(0.5f, 0.5f, 0.5f));
         m_registry.emplace<mesh>(targetEntity, std::shared_ptr<Object>(targetObj));
+        m_registry.emplace<rotate>(targetEntity);
 
         Object* grass = Object::LoadFile("./assets/common/cube/cube.obj");
         const auto cubeEntity = m_registry.create();

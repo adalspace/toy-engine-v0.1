@@ -86,6 +86,32 @@ void Renderer::ApplyLights(Shader &shader) {
     }
 }
 
+void Renderer::EnsureShadowResources(light& l) {
+    if (l.fbo != 0 && l.shadowMap != 0) return;  // already created
+
+    glGenFramebuffers(1, &l.fbo);
+    glGenTextures(1, &l.shadowMap);
+
+    glBindTexture(GL_TEXTURE_2D, l.shadowMap);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24,
+                 l.shadowRes, l.shadowRes, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+
+    // NEAREST is fine to start; switch to LINEAR + PCF later if you want
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    const float borderColor[] = {1.f, 1.f, 1.f, 1.f};
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, l.fbo);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, l.shadowMap, 0);
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
 void Renderer::UpdateView() {
     auto cam = m_registry.view<transform, camera>().back();
     auto camTransform = m_registry.get<transform>(cam);
@@ -165,81 +191,64 @@ void Renderer::RenderScene(Shader &shader) {
 }
 
 void Renderer::GenerateShadowMaps() {
-    const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
-
     m_depthShader.use();
 
     auto lights = m_registry.view<light>();
 
-    for (auto [lEntt, l] : lights.each()) {
+    for (auto [_, l] : lights.each()) {
         // TODO: support other light types when ready
-        if (l.type != light::LightType::DIRECTIONAL) return;
-
-        glGenFramebuffers(1, &l.fbo);
-        glGenTextures(1, &l.shadowMap);
-        glBindTexture(GL_TEXTURE_2D, l.shadowMap);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, 
-                    SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER); 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-
-        float borderColor[] = {1.0f, 1.0f, 1.0f, 1.0f};
-        glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-
-        glBindFramebuffer(GL_FRAMEBUFFER, l.fbo);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, l.shadowMap, 0);
-        glDrawBuffer(GL_NONE);
-        glReadBuffer(GL_NONE);
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        if (l.type != light::LightType::DIRECTIONAL) continue;
+        EnsureShadowResources(l);
     }
 }
 
 void Renderer::Render() {
-    const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
-
     m_depthShader.use();
+
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+
+    glCullFace(GL_FRONT);
 
     auto lights = m_registry.view<light, transform>();
 
-    for (auto [lEntt, l, t] : lights.each()) {
+    for (auto [_, l, t] : lights.each()) {
         // TODO: support other light types when ready
-        if (l.type != light::LightType::DIRECTIONAL) return;
+        if (l.type != light::LightType::DIRECTIONAL) continue;
 
-        glClearColor(0x18/255.0f, 0x18/255.0f, 0x18/255.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        EnsureShadowResources(l);
 
-        float near_plane = 0.1f, far_plane = 50.0f;
+        float near_plane = 0.1f, far_plane = 20.0f;
         glm::vec3 target   = glm::vec3(0.0f, 0.5f, 0.0f);
         glm::mat4 lightView = glm::lookAt(t.position, target, glm::vec3(0.0f, 1.0f, 0.0f));
-        glm::mat4 lightProjection = glm::ortho(-6.0f, 6.0f, -6.0f, 6.0f, 1.0f, 20.0f);
+        glm::mat4 lightProjection = glm::ortho(-6.0f, 6.0f, -6.0f, 6.0f, near_plane, far_plane);
         glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
         m_depthShader.setMat4("u_lightSpace", lightSpaceMatrix);
         l.lightSpace = lightSpaceMatrix;
 
-        glCullFace(GL_FRONT);
-        glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+        glViewport(0, 0, l.shadowRes, l.shadowRes);
         glBindFramebuffer(GL_FRAMEBUFFER, l.fbo);
-            glClear(GL_DEPTH_BUFFER_BIT);
-            RenderScene(m_depthShader);
+        glClear(GL_DEPTH_BUFFER_BIT);
+
+        // Optional: further stabilize acne
+        // glEnable(GL_POLYGON_OFFSET_FILL);
+        // glPolygonOffset(2.0f, 4.0f);
+
+        RenderScene(m_depthShader);
+
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glCullFace(GL_BACK);
     }
 
-    // actual rendering
+    glCullFace(GL_BACK);
 
+    // ---- MAIN PASS -----
     glViewport(0, 0, Window::GetWidth(), Window::GetHeight());
-
     glClearColor(0x18/255.0f, 0x18/255.0f, 0x18/255.0f, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     m_shader.use();
-
     ApplyLights(m_shader);
     UpdateView();
-
     RenderScene(m_shader);
 }

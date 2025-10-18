@@ -23,6 +23,7 @@ private:
     unsigned int shadowMap;
     unsigned int fbo;
     glm::mat4 lightSpace;
+    int shadowRes{1024};
 };
 
 #endif // COMPONENTS_LIGHT_H_

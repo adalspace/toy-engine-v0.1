@@ -6,6 +6,7 @@
 
 #include "engine/renderer/shader.h"
 #include "engine/export.h"
+#include "engine/components/light.h"
 
 // TODO: make static or singleton
 class ENGINE_API Renderer {
@@ -21,6 +22,7 @@ private:
     void ApplyLights(Shader &shader);
     void UpdateView();
     void RenderScene(Shader &shader);
+    void EnsureShadowResources(light& l);
 private:
     Shader m_shader;
     Shader m_depthShader;

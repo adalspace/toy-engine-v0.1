@@ -196,10 +196,9 @@ void Object::LoadMaterials(const std::filesystem::path& filename) {
                 while (len > 0 && (texPath[len - 1] == ' ' || texPath[len - 1] == '\t'))
                     texPath[--len] = '\0';
 
-                std::filesystem::path fullPath = filename;
-                std::filesystem::path texturePath = fullPath.parent_path() / texPath;
+                std::filesystem::path texturePath = filename.parent_path() / texPath;
 
-                currentMaterial->SetDiffuseTexture(Texture::LoadFile(texturePath));
+                currentMaterial->SetDiffuseTexture(Texture::LoadFile(texturePath.string()));
             }
             break;
         }
