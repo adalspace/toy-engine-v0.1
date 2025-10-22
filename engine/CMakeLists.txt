@@ -12,18 +12,10 @@ set(SOURCES
   src/renderer/mesh.cpp
   src/renderer/shader.cpp
   src/renderer/texture.cpp
-  src/renderer/wavefront.cpp
   src/renderer/core.cpp
   src/renderer/renderer.cpp
-
-  # src/main.cpp
+  src/renderer/wavefront.cpp
 )
-
-#if (ENGINE_BUILD_SHARED)
-#  add_library(${ENGINE_TARGET} SHARED ${SOURCES})
-#else()
-#  add_library(${ENGINE_TARGET} STATIC ${SOURCES})
-#endif()
 
 if(ENGINE_BUILD_SHARED)
   add_library(${ENGINE_TARGET} SHARED ${SOURCES})

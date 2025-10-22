@@ -20,7 +20,7 @@
 #include "engine/components/rotate.h"
 #include "engine/components/batch.h"
 
-#include "engine/engine.h"
+#include "engine/api.h"
 
 class Game : public IApplication {
 public:
