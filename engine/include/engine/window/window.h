@@ -3,7 +3,7 @@
 #include <SDL3/SDL.h>
 #include <memory>
 
-#include "engine/window/event.h"
+#include "engine/window/event.hpp"
 
 #define ENGINE_GL_MAJOR_VERSION 4
 #define ENGINE_GL_MINOR_VERSION 6
@@ -13,7 +13,7 @@
 #define DEFAULT_WIDTH 1024
 #define DEFAULT_HEIGHT 768
 
-class Window : public EventDispatcher {
+class Window : public EventEmitter {
     friend class Engine;
 private:
     Window();

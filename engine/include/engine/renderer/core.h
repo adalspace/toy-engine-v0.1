@@ -13,15 +13,22 @@
 #include "engine/app/app.h"
 #include "engine/export.h"
 
-class ENGINE_API Engine {
+class ENGINE_API Engine : public EventHandler {
 public:
-    static void Run(std::unique_ptr<IApplication> app);
+    static Engine* GetInstance();    
+
+    void Run(std::unique_ptr<IApplication> app);
 private:
-    static std::unique_ptr<IApplication> s_app;
-    static std::shared_ptr<Window> s_window;
-    static std::unique_ptr<Renderer> s_renderer;
-    static std::shared_ptr<Scene> s_scene;
-    static bool s_running;
+    Engine() {}
+    static Engine* s_instance;
+
+    void OnEvent(const Event& event) override;
+private:
+    std::unique_ptr<IApplication> m_app;
+    std::shared_ptr<Window> m_window;
+    std::unique_ptr<Renderer> m_renderer;
+    std::shared_ptr<Scene> m_scene;
+    bool m_running;
 };
 
 

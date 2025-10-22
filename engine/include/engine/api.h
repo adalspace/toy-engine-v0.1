@@ -12,6 +12,7 @@
 extern IApplication* CreateApplication();
 
 int main() {
-    Engine::Run(std::unique_ptr<IApplication>(CreateApplication()));
+    auto engine = Engine::GetInstance();
+    engine->Run(std::unique_ptr<IApplication>(CreateApplication()));
     return 0;
 }

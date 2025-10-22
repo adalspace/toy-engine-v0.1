@@ -2,48 +2,67 @@
 
 #include "engine/renderer/core.h"
 
-#include "engine/window/event.h"
+#include "engine/window/event.hpp"
 #include "engine/renderer/wavefront.h"
 
-std::unique_ptr<IApplication> Engine::s_app = nullptr;
-std::shared_ptr<Window> Engine::s_window = nullptr;
-std::unique_ptr<Renderer> Engine::s_renderer = nullptr;
-std::shared_ptr<Scene> Engine::s_scene = nullptr;
-bool Engine::s_running = false;
+Engine* Engine::s_instance = nullptr;
 
 void Engine::Run(std::unique_ptr<IApplication> app) {
-    s_scene = std::make_shared<Scene>();
-    s_renderer = std::make_unique<Renderer>(s_scene);
-    s_window = Window::GetInstance();
-    s_app = std::move(app);
-    s_running = true;
+    m_scene = std::make_shared<Scene>();
+    m_renderer = std::make_unique<Renderer>(m_scene);
+    m_window = Window::GetInstance();
+    m_app = std::move(app);
+    m_running = true;
 
-    s_app->OnInit(s_scene);
-    s_renderer->Init();
+    m_app->OnInit(m_scene);
+    m_renderer->Init();
 
-    s_window->Subscribe<WindowCloseEvent>([&](const WindowCloseEvent& e) {
-        s_running = false;
-        s_app->OnEvent(e);
-    });
+    // m_window->Subscribe<WindowCloseEvent>([&](const WindowCloseEvent& e) {
+        
+    //     m_app->OnEvent(e);
+    // });
 
-    s_window->Subscribe<WindowResizeEvent>([&](const WindowResizeEvent& e) {
-        s_renderer->OnWindowResized(e.GetWidth(), e.GetHeight());
-        s_app->OnEvent(e);
-    });
+    // m_window->Subscribe<WindowResizeEvent>([&](const WindowResizeEvent& e) {
+    //     m_renderer->OnWindowResized(e.GetWidth(), e.GetHeight());
+    //     m_app->OnEvent(e);
+    // });
 
-    while (s_running) {
-        s_window->ProcessEvents();
+    m_window->Subscribe2(this);
 
-        s_app->OnUpdate();
+    while (m_running) {
+        m_window->ProcessEvents();
 
-        s_renderer->Render();
+        m_app->OnUpdate();
 
-        s_window->SwapBuffers();
+        m_renderer->Render();
+
+        m_window->SwapBuffers();
     }
 
-    s_app->OnShutdown();
+    m_app->OnShutdown();
 
-    s_window->Destroy();
-    s_app.reset();
+    m_window->Destroy();
+    m_app.reset();
+}
+
+void Engine::OnEvent(const Event& event) {
+    m_app->OnEvent(event);
+    if (event.GetCategory() == Event::EventCategory::WINDOW) {
+        if (event.GetType() == EventType::WINDOW_RESIZE) {
+            auto e = static_cast<const WindowResizeEvent&>(event);
+            m_renderer->OnWindowResized(e.GetWidth(), e.GetHeight());
+        }
+        if (event.GetType() == EventType::WINDOW_CLOSE) {
+            m_running = false;
+        }
+    }
+}
+
+Engine* Engine::GetInstance() {
+    if (!s_instance) {
+        s_instance = new Engine();
+    }
+
+    return s_instance;
 }
 

@@ -1,7 +1,7 @@
 #ifndef WINDOW_EVENTS_H_
 #define WINDOW_EVENTS_H_
 
-#include "engine/window/event.h"
+#include "engine/window/event.hpp"
 
 class WindowEvent : public Event {
 public:
