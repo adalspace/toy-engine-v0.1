@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 
 #include "engine/window/window.h"
-#include "engine/window/events/window.h"
+#include "engine/window/events/window_events.h"
 
 #include "engine/renderer/renderer.h"
 #include "engine/scene/scene.h"

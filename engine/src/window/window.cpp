@@ -1,7 +1,7 @@
 #include <SDL3/SDL.h>
 
 #include "engine/window/window.h"
-#include "engine/window/events/window.h"
+#include "engine/window/events/window_events.h"
 
 #include <iostream>
 #include <GL/glew.h>
