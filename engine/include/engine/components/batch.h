@@ -1,7 +1,7 @@
 #ifndef COMPONENT_BATCH_H_
 #define COMPONENT_BATCH_H_
 
-#include "engine/renderer/renderer.h"
+#include <glm/mat4x4.hpp>
 #include "engine/export.h"
 
 // requires mesh component

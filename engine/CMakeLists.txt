@@ -3,18 +3,21 @@ option(ENGINE_BUILD_SHARED "Build the Engine library as a shared library" ON)
 set(SOURCES
   src/IO/parser.cpp
   src/IO/file_manager.cpp
+  src/renderer/debug.cpp
 
   src/window/window.cpp
 
-  src/components/batch.cpp
+  src/scene/scene.cpp
 
-  src/renderer/debug.cpp
+  src/components/batch.cpp
   src/renderer/mesh.cpp
   src/renderer/shader.cpp
   src/renderer/texture.cpp
-  src/renderer/core.cpp
   src/renderer/renderer.cpp
+
   src/renderer/wavefront.cpp
+
+  src/renderer/core.cpp
 )
 
 if(ENGINE_BUILD_SHARED)

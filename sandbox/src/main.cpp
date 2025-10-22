@@ -9,7 +9,6 @@
 #endif
 
 #include "engine/renderer/wavefront.h"
-#include "engine/renderer/renderer.h"
 
 #include "engine/app/app.h"
 
@@ -24,55 +23,57 @@
 
 class Game : public IApplication {
 public:
-    Game() : m_renderer(m_registry) {
+    Game() {}
+    ~Game() override {}
+
+    void OnInit(std::shared_ptr<Scene> scene) override {
+        m_scene = scene;
+
         Object* lightObj = Object::LoadFile("./assets/common/sphere/sphere.obj");
-        const auto lght = m_registry.create();
-        m_registry.emplace<transform>(lght, glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
-        m_registry.emplace<light>(lght, light::LightType::DIRECTIONAL, glm::vec3(1.f, 1.f, 1.f), 1.5f);
-        m_registry.emplace<mesh>(lght, std::shared_ptr<Object>(lightObj));
+        const auto lght = scene->m_registry.create();
+        scene->m_registry.emplace<transform>(lght, glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
+        scene->m_registry.emplace<light>(lght, light::LightType::DIRECTIONAL, glm::vec3(1.f, 1.f, 1.f), 1.5f);
+        scene->m_registry.emplace<mesh>(lght, std::shared_ptr<Object>(lightObj));
 
-        const auto cameraEntity = m_registry.create();
-        m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 2.f, 2.f));
-        m_registry.emplace<camera>(cameraEntity);
+        const auto cameraEntity = scene->m_registry.create();
+        scene->m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 2.f, 2.f));
+        scene->m_registry.emplace<camera>(cameraEntity);
 
-        Object* targetObj = Object::LoadFile("./assets/car/car.obj");
-        const auto targetEntity = m_registry.create();
-        m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.0f, 0.f));
-        m_registry.emplace<mesh>(targetEntity, std::shared_ptr<Object>(targetObj));
-        m_registry.emplace<rotate>(targetEntity);
+        Object* targetObj = Object::LoadFile("./assets/wizard/wizard.obj");
+        const auto targetEntity = scene->m_registry.create();
+        scene->m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.0f, 0.f));
+        scene->m_registry.emplace<mesh>(targetEntity, std::shared_ptr<Object>(targetObj));
+        scene->m_registry.emplace<rotate>(targetEntity);
 
         Object* grass = Object::LoadFile("./assets/common/cube/cube.obj");
-        const auto cubeEntity = m_registry.create();
-        m_registry.emplace<transform>(cubeEntity, glm::vec3(-1.5f, 0.4f, 0.f));
-        m_registry.emplace<mesh>(cubeEntity, std::shared_ptr<Object>(grass));
+        const auto cubeEntity = scene->m_registry.create();
+        scene->m_registry.emplace<transform>(cubeEntity, glm::vec3(-1.5f, 0.4f, 0.f));
+        scene->m_registry.emplace<mesh>(cubeEntity, std::shared_ptr<Object>(grass));
 
         // Cube template (use shared object to avoid reloading 1000 times)
         std::shared_ptr<Object> cubeObj = std::shared_ptr<Object>(Object::LoadFile("./assets/grass_block/grass_block.obj"));
-        const auto batchEntt = m_registry.create();
-        m_registry.emplace<batch>(batchEntt);
-        m_registry.emplace<mesh>(batchEntt, cubeObj);
-        auto cubeBatch = m_registry.get<batch>(batchEntt);
+        const auto batchEntt = scene->m_registry.create();
+        scene->m_registry.emplace<batch>(batchEntt);
+        scene->m_registry.emplace<mesh>(batchEntt, cubeObj);
+        auto cubeBatch = scene->m_registry.get<batch>(batchEntt);
         // Generate 1000 random cubes
         for (int i = 0; i < 1000; ++i) {
-            const auto cubeEntity = m_registry.create();
+            const auto cubeEntity = scene->m_registry.create();
 
             float x = static_cast<float>(rand()) / RAND_MAX * 200.f - 100.f; // range [-100, 100]
             float y = static_cast<float>(rand()) / RAND_MAX * 10.f;          // range [0, 10]
             float z = static_cast<float>(rand()) / RAND_MAX * 200.f - 100.f; // range [-100, 100]
 
-            m_registry.emplace<transform>(cubeEntity, glm::vec3(x, y, z));
-            m_registry.emplace<rotate>(cubeEntity);
-            m_registry.emplace<batch::item>(cubeEntity, cubeBatch.id());
+            scene->m_registry.emplace<transform>(cubeEntity, glm::vec3(x, y, z));
+            scene->m_registry.emplace<rotate>(cubeEntity);
+            scene->m_registry.emplace<batch::item>(cubeEntity, cubeBatch.id());
         }
 
         Object* floorObj = Object::LoadFile("./assets/common/plane/plane.obj");
-        const auto floorEntt = m_registry.create();
-        m_registry.emplace<transform>(floorEntt, glm::vec3(0.f));
-        m_registry.emplace<mesh>(floorEntt, std::shared_ptr<Object>(floorObj));
-    }
-    ~Game() override {}
+        const auto floorEntt = scene->m_registry.create();
+        scene->m_registry.emplace<transform>(floorEntt, glm::vec3(0.f));
+        scene->m_registry.emplace<mesh>(floorEntt, std::shared_ptr<Object>(floorObj));
 
-    void OnInit() override {
         std::cout << "Game initialized" << std::endl;
 
         m_angle = 3.45f;
@@ -86,13 +87,6 @@ public:
         // FPS tracking
         m_startTicks = SDL_GetTicks();
         m_frameCount = 0;
-
-        m_renderer.Init();
-        m_renderer.GenerateShadowMaps();
-    }
-
-    void OnWindowResized(const WindowResized& event) override {
-        m_renderer.OnWindowResized(event.w, event.h);
     }
 
     void OnUpdate() override {
@@ -136,7 +130,7 @@ public:
         if (state[SDL_SCANCODE_SPACE]) velocity.y += 1.f;
         if (state[SDL_SCANCODE_LSHIFT]) velocity.y -= 1.f;
 
-        auto view = m_registry.view<camera, transform>();
+        auto view = m_scene->m_registry.view<camera, transform>();
         for (auto [cam, camTransform] : view.each()) {
             camTransform.position += velocity * deltaTime * 2.5f; // speed is e.g. 2.5f
             camTransform.rotation = cameraViewDirection;
@@ -173,7 +167,7 @@ public:
         glm::vec3 sunColor = glm::mix(dayColor, sunsetColor, sunsetFactor);
 
         // Update the directional light in the registry
-        auto lightsView = m_registry.view<light, transform>();
+        auto lightsView = m_scene->m_registry.view<light, transform>();
         for (auto [entity, l, t] : lightsView.each()) {
             if (l.type == light::LightType::DIRECTIONAL) {
                 // "position" for directional light often stores direction vector
@@ -184,17 +178,13 @@ public:
             }
         }
 
-        auto rotateEntts = m_registry.view<transform, rotate>();
+        auto rotateEntts = m_scene->m_registry.view<transform, rotate>();
         for (auto [entity, t] : rotateEntts.each()) {
             // auto targetTransform = rotateEntts.get<transform>(entity);
-            if (!m_registry.all_of<light>(entity)) {
+            if (!m_scene->m_registry.all_of<light>(entity)) {
                 t.rotation.y = m_angle;
             }
         }
-    }
-
-    void OnRender() override {
-        m_renderer.Render();
 
         m_frameCount++;
         m_currentTicks = SDL_GetTicks();
@@ -207,9 +197,18 @@ public:
             m_startTicks = m_currentTicks;
         }
     }
+
+    void OnEvent(const Event& event) override {
+        if (event.GetType() == EventType::WINDOW_RESIZE) {
+            auto resizeEvent = static_cast<const WindowResizeEvent&>(event);
+            std::cout << "[DEBUG] <EVENT> Window resized to " << resizeEvent.GetWidth() << "x" << resizeEvent.GetHeight() << std::endl;
+        }
+        else if (event.GetType() == EventType::WINDOW_CLOSE) {
+            std::cout << "[DEBUG] <EVENT> Window closing" << std::endl;
+        }
+    }
 private:
-    Renderer m_renderer;
-    entt::registry m_registry;
+    std::shared_ptr<Scene> m_scene;
 
     float m_angle;
     Uint64 m_lastTicks;

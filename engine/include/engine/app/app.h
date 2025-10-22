@@ -1,20 +1,19 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
-#include "engine/window/events/window.h"
+#include "engine/scene/scene.h"
+#include "engine/window/event.h"
 #include "engine/export.h"
 
 class ENGINE_API IApplication {
 public:
     virtual ~IApplication() = default;
 
-    virtual void OnInit() {};
+    virtual void OnInit(std::shared_ptr<Scene> scene) {};
     virtual void OnUpdate() {};
-    virtual void OnRender() {};
     virtual void OnShutdown() {};
     
-    virtual void OnEvent() {};
-    virtual void OnWindowResized(const WindowResized& e) {};
+    virtual void OnEvent(const Event& event) {};
 };
 
 #endif // APPLICATION_H_

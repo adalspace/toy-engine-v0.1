@@ -7,6 +7,30 @@
 #include <unordered_map>
 #include <vector>
 
+enum class EventType {
+    WINDOW_RESIZE,
+    WINDOW_CLOSE,
+};
+
+class Event {
+public:
+    enum EventCategory {
+        WINDOW,
+        // KEYBOARD ...
+    };
+
+    Event(EventCategory category) : m_category(category) {}
+    virtual ~Event() {}
+
+    Event(const Event& event) = default;
+
+    inline const EventCategory GetCategory() const { return m_category; }
+
+    inline const virtual EventType GetType() const = 0;
+private:
+    EventCategory m_category;
+};
+
 class EventDispatcher {
     using Type = std::type_index;
     using RawFn = std::function<void(const void*)>;

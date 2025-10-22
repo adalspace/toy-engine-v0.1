@@ -5,9 +5,10 @@
 #include <filesystem>
 #include <GL/glew.h>
 
+#include "engine/renderer/wavefront.h"
+
 #include "engine/IO/parser.h"
 #include "engine/renderer/mesh.h"
-#include "engine/renderer/wavefront.h"
 
 #define DEFAULT_MATERIAL_NAME "default"
 

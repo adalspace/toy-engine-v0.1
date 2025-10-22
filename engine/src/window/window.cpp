@@ -100,11 +100,11 @@ void Window::ProcessEvents() {
         switch (event.type) {
             case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
             case SDL_EVENT_QUIT:
-                Dispatch(WindowCloseRequested());
+                Dispatch(WindowCloseEvent());
                 break;
             case SDL_EVENT_KEY_DOWN:
                 if (event.key.scancode == SDL_SCANCODE_ESCAPE) {
-                    Dispatch(WindowCloseRequested());
+                    Dispatch(WindowCloseEvent());
                 }
                 if (event.key.scancode == SDL_SCANCODE_F11) {
                     bool isFullscreen = SDL_GetWindowFlags(m_handle) & SDL_WINDOW_FULLSCREEN;
@@ -122,7 +122,7 @@ void Window::ProcessEvents() {
                         0,
                         width,
                         height);
-                    Dispatch(WindowResized{ m_width, m_height });
+                    Dispatch(WindowResizeEvent(static_cast<unsigned int>(m_width), static_cast<unsigned int>(m_height)));
                     SDL_SetWindowRelativeMouseMode(m_handle, true);
                     SDL_Rect boundaries = {0, 0, m_width, m_height};
                     SDL_SetWindowMouseRect(m_handle, &boundaries);

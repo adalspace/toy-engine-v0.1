@@ -18,7 +18,7 @@
 #include "engine/components/mesh.h"
 #include "engine/components/batch.h"
 
-Renderer::Renderer(entt::registry& registry) : m_registry(registry)
+Renderer::Renderer(std::shared_ptr<Scene> scene) : m_scene(scene)
 {
     m_proj = glm::perspective(
         static_cast<float>(M_PI_2),
@@ -44,15 +44,7 @@ Renderer::Renderer(entt::registry& registry) : m_registry(registry)
 }
 
 void Renderer::Init() {
-    // auto view = m_registry.view<batch, mesh>();
-    // for (auto [_, b, m] : m_registry.view<batch, mesh>().each()) {
-    //     unsigned int items = 0;
-    //     for (auto [entt, item] : m_registry.view<batch::item>().each()) {
-    //         if (item.batchId == b.id()) ++items;
-    //     }
-    //     b.prepare()
-    //     m.object->EnableBatch(b.m_instance_vbo);
-    // }
+    GenerateShadowMaps();
 }
 
 void Renderer::OnWindowResized(int w, int h) {
@@ -65,13 +57,13 @@ void Renderer::OnWindowResized(int w, int h) {
 }
 
 void Renderer::ApplyLights(Shader &shader) {
-    auto lights = m_registry.view<light>();
+    auto lights = m_scene->m_registry.view<light>();
     // TODO: Pass Lights Data to depth shader as well
     shader.setInt("lightsCount", static_cast<int>(lights.size()));
     size_t lightIndex = 0;
     for (auto entity : lights) {
-        auto &l = m_registry.get<light>(entity);
-        auto &transf = m_registry.get<transform>(entity);
+        auto &l = m_scene->m_registry.get<light>(entity);
+        auto &transf = m_scene->m_registry.get<transform>(entity);
         
         shader.setInt("lights[" + std::to_string(lightIndex) + "].type", static_cast<int>(l.type));
         shader.setVec3("lights[" + std::to_string(lightIndex) + "].position", transf.position);
@@ -113,24 +105,27 @@ void Renderer::EnsureShadowResources(light& l) {
 }
 
 void Renderer::UpdateView() {
-    auto cam = m_registry.view<transform, camera>().back();
-    auto camTransform = m_registry.get<transform>(cam);
+    auto camView = m_scene->m_registry.view<camera>();
+    auto camTransform = camView.size() > 0 ?
+        m_scene->m_registry.get<transform>(camView.back()) :
+        transform {glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f)};
 
     m_view = glm::lookAt(
         camTransform.position,
         camTransform.position + camTransform.rotation,
         glm::vec3(0.f, 1.f, 0.f)
     );
-    m_shader.setMat4("u_view", m_view);
-    m_shader.setMat4("u_projection", m_proj);
 
     m_shader.setVec3("viewPos", camTransform.position);
+
+    m_shader.setMat4("u_view", m_view);
+    m_shader.setMat4("u_projection", m_proj);
 }
 
 void Renderer::RenderScene(Shader &shader) {
     std::unordered_map<unsigned int, std::vector<entt::entity>> batches;
 
-    for (auto [entt, item] : m_registry.view<batch::item>().each()) {
+    for (auto [entt, item] : m_scene->m_registry.view<batch::item>().each()) {
         if (batches.find(item.batchId) == batches.end())
             batches.insert(std::make_pair(item.batchId, std::vector<entt::entity>()));
 
@@ -140,7 +135,7 @@ void Renderer::RenderScene(Shader &shader) {
     shader.setBool("u_isInstanced", true);
     shader.setBool("isLight", false);
     shader.setVec3("currentLightColor", glm::vec3(0.f));
-    for (auto [entt, b, m] : m_registry.view<batch, mesh>().each()) {
+    for (auto [entt, b, m] : m_scene->m_registry.view<batch, mesh>().each()) {
         // check if have items for batch render
         if (batches.find(b.id()) == batches.end()) continue;
 
@@ -150,7 +145,7 @@ void Renderer::RenderScene(Shader &shader) {
         models.reserve(batchItems.size());
 
         for (auto item : batchItems) {
-            auto &t = m_registry.get<transform>(item);
+            auto &t = m_scene->m_registry.get<transform>(item);
             glm::mat4 rotation = glm::yawPitchRoll(t.rotation.y, t.rotation.x, t.rotation.z);
             auto itemModel = glm::translate(glm::mat4(1.f), t.position) * rotation;
             models.push_back(itemModel);
@@ -166,14 +161,14 @@ void Renderer::RenderScene(Shader &shader) {
     }
     shader.setBool("u_isInstanced", false);
 
-    for (auto [entity, transf, mesh] : m_registry.view<transform, mesh>(entt::exclude<batch, batch::item>).each()) {
+    for (auto [entity, transf, mesh] : m_scene->m_registry.view<transform, mesh>(entt::exclude<batch, batch::item>).each()) {
         if (mesh.object == nullptr) {
             std::cerr << "WARN: Entity doesn't have a mesh to render" << std::endl;
             return;
         }
 
-        if (m_registry.all_of<light>(entity)) {
-            auto &l = m_registry.get<light>(entity);
+        if (m_scene->m_registry.all_of<light>(entity)) {
+            auto &l = m_scene->m_registry.get<light>(entity);
             shader.setBool("isLight", true);
             shader.setVec3("currentLightColor", l.color);
         } else {
@@ -193,7 +188,7 @@ void Renderer::RenderScene(Shader &shader) {
 void Renderer::GenerateShadowMaps() {
     m_depthShader.use();
 
-    auto lights = m_registry.view<light>();
+    auto lights = m_scene->m_registry.view<light>();
 
     for (auto [_, l] : lights.each()) {
         // TODO: support other light types when ready
@@ -207,7 +202,7 @@ void Renderer::Render() {
 
     glCullFace(GL_FRONT);
 
-    const auto lights = m_registry.view<light, transform>();
+    const auto lights = m_scene->m_registry.view<light, transform>();
 
     for (auto [_, l, t] : lights.each()) {
         // TODO: support other light types when ready

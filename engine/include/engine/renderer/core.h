@@ -7,6 +7,9 @@
 #include "engine/window/window.h"
 #include "engine/window/events/window.h"
 
+#include "engine/renderer/renderer.h"
+#include "engine/scene/scene.h"
+
 #include "engine/app/app.h"
 #include "engine/export.h"
 
@@ -16,6 +19,8 @@ public:
 private:
     static std::unique_ptr<IApplication> s_app;
     static std::shared_ptr<Window> s_window;
+    static std::unique_ptr<Renderer> s_renderer;
+    static std::shared_ptr<Scene> s_scene;
     static bool s_running;
 };
 
