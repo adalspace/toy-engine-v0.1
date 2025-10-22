@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include <vector>
 
+namespace Engine {
+
 enum class EventType {
     WINDOW_RESIZE,
     WINDOW_CLOSE,
@@ -70,5 +72,7 @@ private:
     std::vector<Slot> m_subs;
     std::size_t m_next_id = 1;
 };
+
+}
 
 #endif // EVENT_H_

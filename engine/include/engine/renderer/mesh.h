@@ -7,6 +7,8 @@
 
 #include "engine/renderer/basics.h"
 
+namespace Engine {
+
 class Mesh {
 public: // TODO: abstract away
     unsigned int m_vao, m_vbo, m_ebo;
@@ -23,5 +25,7 @@ public:
 public:
     void Render(unsigned int count);
 };
+
+}
 
 #endif // MESH_H_

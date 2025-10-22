@@ -12,6 +12,8 @@
 
 #define DEFAULT_MATERIAL_NAME "default"
 
+namespace Engine {
+
 // ObjElement toElement(const std::string &s) {
 //     if (s == "#") return ObjElement::OHASH;
 //     if (s == "mtllib") return ObjElement::MTLLIB;
@@ -509,4 +511,4 @@ void Object::Render(Shader& shader, unsigned int count)
     }
 }
 
-
+}

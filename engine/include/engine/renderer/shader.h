@@ -7,6 +7,8 @@
 
 #include "engine/export.h"
 
+namespace Engine {
+
 class ENGINE_API Shader
 {
 public:
@@ -44,5 +46,7 @@ private:
     void checkCompileError(unsigned int shader, const std::string type);
     void checkLinkingError();
 };
+
+}
 
 #endif // SHADER_H

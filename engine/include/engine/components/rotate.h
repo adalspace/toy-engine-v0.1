@@ -3,6 +3,8 @@
 
 #include "engine/export.h"
 
+namespace Engine {
 struct ENGINE_API rotate {};
+}
 
 #endif // COMPONENT_ROTATE_H_

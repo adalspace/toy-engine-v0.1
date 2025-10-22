@@ -6,6 +6,8 @@
 
 #include "engine/renderer/texture.h"
 
+namespace Engine {
+
 class Material {
 private:
     glm::vec3 m_ambient { 0.2f, 0.2f, 0.2f };
@@ -38,5 +40,7 @@ public:
     inline void SetOpacity(float opacity) { m_opacity = opacity; }
     inline void SetIllumination(float illum) { m_illum = illum; }
 };
+
+}
 
 #endif // MATERIAL_H_

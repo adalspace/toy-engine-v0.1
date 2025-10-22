@@ -2,6 +2,8 @@
 
 #include "engine/renderer/mesh.h"
 
+namespace Engine {
+
 Mesh::Mesh() {
     m_vao = 0;
     m_vbo = 0;
@@ -57,4 +59,6 @@ void Mesh::Render(unsigned int count)
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indexBuffer.size()), GL_UNSIGNED_INT, 0);
     }
     Unbind();
+}
+
 }

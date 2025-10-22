@@ -6,6 +6,7 @@
 #include "engine/renderer/renderer.h"
 #include "engine/export.h"
 
+namespace Engine {
 struct ENGINE_API light {
     friend class Renderer;
 public:
@@ -25,5 +26,6 @@ private:
     glm::mat4 lightSpace;
     int shadowRes{1024};
 };
+}
 
 #endif // COMPONENTS_LIGHT_H_

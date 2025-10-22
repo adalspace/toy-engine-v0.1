@@ -9,10 +9,10 @@
 #include "engine/app/app.h"
 #include "engine/renderer/core.h"
 
-extern IApplication* CreateApplication();
+extern Engine::IApplication* CreateApplication();
 
 int main() {
-    auto engine = Engine::GetInstance();
-    engine->Run(std::unique_ptr<IApplication>(CreateApplication()));
+    auto engine = Engine::Engine::GetInstance();
+    engine->Run(std::unique_ptr<Engine::IApplication>(CreateApplication()));
     return 0;
 }

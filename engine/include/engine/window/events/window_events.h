@@ -3,6 +3,8 @@
 
 #include "engine/window/event.hpp"
 
+namespace Engine {
+
 class WindowEvent : public Event {
 public:
     WindowEvent() : Event(Event::EventCategory::WINDOW) {}
@@ -26,5 +28,7 @@ class WindowCloseEvent : public WindowEvent {
 public:
     WindowCloseEvent() {}
 };
+
+}
 
 #endif // WINDOW_EVENTS_H_

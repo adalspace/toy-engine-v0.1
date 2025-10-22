@@ -19,7 +19,11 @@
 #include "engine/components/rotate.h"
 #include "engine/components/batch.h"
 
+#include "engine/scene/scene.h"
+
 #include "engine/api.h"
+
+using namespace Engine;
 
 class Game : public IApplication {
 public:
@@ -30,49 +34,49 @@ public:
         m_scene = scene;
 
         Object* lightObj = Object::LoadFile("./assets/common/sphere/sphere.obj");
-        const auto lght = scene->m_registry.create();
-        scene->m_registry.emplace<transform>(lght, glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
-        scene->m_registry.emplace<light>(lght, light::LightType::DIRECTIONAL, glm::vec3(1.f, 1.f, 1.f), 1.5f);
-        scene->m_registry.emplace<mesh>(lght, std::shared_ptr<Object>(lightObj));
+        lightEntity = scene->CreateEntity();
+        lightEntity->AddComponent<transform>(glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
+        lightEntity->AddComponent<light>(light::LightType::DIRECTIONAL, glm::vec3(1.f, 1.f, 1.f), 1.5f);
+        lightEntity->AddComponent<mesh>(std::shared_ptr<Object>(lightObj));
 
-        const auto cameraEntity = scene->m_registry.create();
-        scene->m_registry.emplace<transform>(cameraEntity, glm::vec3(0.f, 2.f, 2.f));
-        scene->m_registry.emplace<camera>(cameraEntity);
+        cameraEntity = scene->CreateEntity();
+        cameraEntity->AddComponent<camera>();
+        cameraEntity->AddComponent<transform>(glm::vec3(0.f, 2.f, 2.f));
 
         Object* targetObj = Object::LoadFile("./assets/wizard/wizard.obj");
-        const auto targetEntity = scene->m_registry.create();
-        scene->m_registry.emplace<transform>(targetEntity, glm::vec3(0.f, 0.0f, 0.f));
-        scene->m_registry.emplace<mesh>(targetEntity, std::shared_ptr<Object>(targetObj));
-        scene->m_registry.emplace<rotate>(targetEntity);
+        modelEntity = scene->CreateEntity();
+        modelEntity->AddComponent<transform>(glm::vec3(0.f, 0.0f, 0.f));
+        modelEntity->AddComponent<mesh>(std::shared_ptr<Object>(targetObj));
+        modelEntity->AddComponent<rotate>();
 
-        Object* grass = Object::LoadFile("./assets/common/cube/cube.obj");
-        const auto cubeEntity = scene->m_registry.create();
-        scene->m_registry.emplace<transform>(cubeEntity, glm::vec3(-1.5f, 0.4f, 0.f));
-        scene->m_registry.emplace<mesh>(cubeEntity, std::shared_ptr<Object>(grass));
+        // Object* grass = Object::LoadFile("./assets/common/cube/cube.obj");
+        // const auto cubeEntity = scene->m_registry.create();
+        // scene->m_registry.emplace<transform>(cubeEntity, glm::vec3(-1.5f, 0.4f, 0.f));
+        // scene->m_registry.emplace<mesh>(cubeEntity, std::shared_ptr<Object>(grass));
 
         // Cube template (use shared object to avoid reloading 1000 times)
         std::shared_ptr<Object> cubeObj = std::shared_ptr<Object>(Object::LoadFile("./assets/grass_block/grass_block.obj"));
-        const auto batchEntt = scene->m_registry.create();
-        scene->m_registry.emplace<batch>(batchEntt);
-        scene->m_registry.emplace<mesh>(batchEntt, cubeObj);
-        auto cubeBatch = scene->m_registry.get<batch>(batchEntt);
+        const auto batchEntt = scene->CreateEntity();
+        auto cubeBatch = batchEntt->AddComponent<batch>();
+        batchEntt->AddComponent<mesh>(cubeObj);
+        // auto cubeBatch = scene->m_registry.get<batch>(batchEntt);
         // Generate 1000 random cubes
         for (int i = 0; i < 1000; ++i) {
-            const auto cubeEntity = scene->m_registry.create();
+            const auto cubeEntity = scene->CreateEntity();
 
             float x = static_cast<float>(rand()) / RAND_MAX * 200.f - 100.f; // range [-100, 100]
             float y = static_cast<float>(rand()) / RAND_MAX * 10.f;          // range [0, 10]
             float z = static_cast<float>(rand()) / RAND_MAX * 200.f - 100.f; // range [-100, 100]
 
-            scene->m_registry.emplace<transform>(cubeEntity, glm::vec3(x, y, z));
-            scene->m_registry.emplace<rotate>(cubeEntity);
-            scene->m_registry.emplace<batch::item>(cubeEntity, cubeBatch.id());
+            cubeEntity->AddComponent<transform>(glm::vec3(x, y, z));
+            cubeEntity->AddComponent<rotate>();
+            cubeEntity->AddComponent<batch::item>(cubeBatch.id());
         }
 
         Object* floorObj = Object::LoadFile("./assets/common/plane/plane.obj");
-        const auto floorEntt = scene->m_registry.create();
-        scene->m_registry.emplace<transform>(floorEntt, glm::vec3(0.f));
-        scene->m_registry.emplace<mesh>(floorEntt, std::shared_ptr<Object>(floorObj));
+        const auto floorEntt = scene->CreateEntity();
+        floorEntt->AddComponent<transform>(glm::vec3(0.f));
+        floorEntt->AddComponent<mesh>(std::shared_ptr<Object>(floorObj));
 
         std::cout << "Game initialized" << std::endl;
 
@@ -130,11 +134,9 @@ public:
         if (state[SDL_SCANCODE_SPACE]) velocity.y += 1.f;
         if (state[SDL_SCANCODE_LSHIFT]) velocity.y -= 1.f;
 
-        auto view = m_scene->m_registry.view<camera, transform>();
-        for (auto [cam, camTransform] : view.each()) {
-            camTransform.position += velocity * deltaTime * 2.5f; // speed is e.g. 2.5f
-            camTransform.rotation = cameraViewDirection;
-        }
+        auto camTransform = cameraEntity->GetComponent<transform>();
+        camTransform.position += velocity * deltaTime * 2.5f; // speed is e.g. 2.5f
+        camTransform.rotation = cameraViewDirection;
 
         // update rotation
         if (!m_paused) {
@@ -167,24 +169,23 @@ public:
         glm::vec3 sunColor = glm::mix(dayColor, sunsetColor, sunsetFactor);
 
         // Update the directional light in the registry
-        auto lightsView = m_scene->m_registry.view<light, transform>();
-        for (auto [entity, l, t] : lightsView.each()) {
-            if (l.type == light::LightType::DIRECTIONAL) {
-                // "position" for directional light often stores direction vector
-                // If your system instead uses transform.rotation, adjust accordingly
-                t.position = sunDir * 15.f;       // use this as light direction
-                l.color = sunColor;
-                l.intensity = intensity;
-            }
+        auto l = lightEntity->GetComponent<light>();
+        auto t = lightEntity->GetComponent<transform>();
+        if (l.type == light::LightType::DIRECTIONAL) {
+            // "position" for directional light often stores direction vector
+            // If your system instead uses transform.rotation, adjust accordingly
+            t.position = sunDir * 15.f;       // use this as light direction
+            l.color = sunColor;
+            l.intensity = intensity;
         }
 
-        auto rotateEntts = m_scene->m_registry.view<transform, rotate>();
-        for (auto [entity, t] : rotateEntts.each()) {
-            // auto targetTransform = rotateEntts.get<transform>(entity);
-            if (!m_scene->m_registry.all_of<light>(entity)) {
-                t.rotation.y = m_angle;
-            }
-        }
+        // auto rotateEntts = m_scene->m_registry.view<transform, rotate>();
+        // for (auto [entity, t] : rotateEntts.each()) {
+        //     // auto targetTransform = rotateEntts.get<transform>(entity);
+        //     if (!m_scene->m_registry.all_of<light>(entity)) {
+        //         t.rotation.y = m_angle;
+        //     }
+        // }
 
         m_frameCount++;
         m_currentTicks = SDL_GetTicks();
@@ -209,6 +210,10 @@ public:
     }
 private:
     std::shared_ptr<Scene> m_scene;
+
+    std::unique_ptr<Entity> lightEntity;
+    std::unique_ptr<Entity> cameraEntity;
+    std::unique_ptr<Entity> modelEntity;
 
     float m_angle;
     Uint64 m_lastTicks;

@@ -5,6 +5,8 @@
 #include "engine/window/event.hpp"
 #include "engine/renderer/wavefront.h"
 
+namespace Engine {
+
 Engine* Engine::s_instance = nullptr;
 
 void Engine::Run(std::unique_ptr<IApplication> app) {
@@ -66,3 +68,4 @@ Engine* Engine::GetInstance() {
     return s_instance;
 }
 
+}

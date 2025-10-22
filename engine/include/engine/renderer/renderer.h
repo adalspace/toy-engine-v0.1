@@ -8,6 +8,8 @@
 #include "engine/export.h"
 #include "engine/components/light.h"
 
+namespace Engine {
+
 // TODO: make static or singleton
 class ENGINE_API Renderer {
 public:
@@ -36,5 +38,7 @@ private:
     glm::mat4 m_proj;
     glm::mat4 m_view;
 };
+
+}
 
 #endif // RENDERER_H_

@@ -3,6 +3,8 @@
 
 #include <GL/glew.h>
 
+namespace Engine {
+
 void MessageCallback(GLenum source,
                      GLenum type,
                      GLuint id,
@@ -10,5 +12,7 @@ void MessageCallback(GLenum source,
                      GLsizei length,
                      const GLchar* message,
                      const void* userParam);
+
+}
 
 #endif // RENDERER_DEBUG_

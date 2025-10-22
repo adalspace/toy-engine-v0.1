@@ -4,6 +4,8 @@
 
 #include "engine/IO/parser.h"
 
+namespace Engine {
+
 // Skip whitespace
 void Parser::SkipSpaces() {
     while (*m_sv == ' ' || *m_sv == '\t') ++m_sv;
@@ -120,4 +122,6 @@ bool Parser::TakeFaceIndices(int &vi, int &ti, int &ni) {
     // At this point m_sv is either at whitespace, end, or next token char.
     // Do NOT mutate indices (leave them raw). Let NormalizeIndex handle conversion.
     return true;
+}
+
 }

@@ -3,6 +3,8 @@
 
 #include <string>
 
+namespace Engine {
+
 class FileManager
 {
 public:
@@ -11,5 +13,7 @@ public:
 
     static std::string read(const std::string &filename);
 };
+
+}
 
 #endif // FILE_MANAGER_H

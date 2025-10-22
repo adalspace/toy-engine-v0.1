@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sstream>
 
+namespace Engine {
+
 FileManager::FileManager()
 {
 }
@@ -30,4 +32,6 @@ std::string FileManager::read(const std::string &filename)
     }
 
     return fileStream.str();
+}
+
 }

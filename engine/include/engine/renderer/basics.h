@@ -3,6 +3,8 @@
 
 #include <glm/glm.hpp>
 
+namespace Engine {
+
 class Vertex {
     friend class Mesh;
 private:
@@ -13,5 +15,7 @@ public:
     Vertex(glm::vec3 position, glm::vec3 normal, glm::vec2 texCoord)
         : m_position(position), m_normal(normal), m_texCoord(texCoord) {}
 };
+
+}
 
 #endif // RENDERER_BASICS_H

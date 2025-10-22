@@ -18,6 +18,8 @@
 #include "engine/components/mesh.h"
 #include "engine/components/batch.h"
 
+namespace Engine {
+
 Renderer::Renderer(std::shared_ptr<Scene> scene) : m_scene(scene)
 {
     m_proj = glm::perspective(
@@ -245,4 +247,6 @@ void Renderer::Render() {
     ApplyLights(m_shader);
     UpdateView();
     RenderScene(m_shader);
+}
+
 }

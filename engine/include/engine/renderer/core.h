@@ -13,6 +13,8 @@
 #include "engine/app/app.h"
 #include "engine/export.h"
 
+namespace Engine {
+
 class ENGINE_API Engine : public EventHandler {
 public:
     static Engine* GetInstance();    
@@ -31,5 +33,6 @@ private:
     bool m_running;
 };
 
+}
 
 #endif // ENGINE_H_

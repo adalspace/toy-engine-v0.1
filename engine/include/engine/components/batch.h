@@ -4,6 +4,7 @@
 #include <glm/mat4x4.hpp>
 #include "engine/export.h"
 
+namespace Engine {
 // requires mesh component
 struct ENGINE_API batch {
     friend class Renderer;
@@ -25,5 +26,6 @@ private:
 private:
     void prepare(glm::mat4 *instances, unsigned int count);
 };
+}
 
 #endif // COMPONENT_BATCH_H_

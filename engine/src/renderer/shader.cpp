@@ -2,6 +2,8 @@
 #include <GL/glew.h>
 #include "engine/renderer/shader.h"
 
+namespace Engine {
+
 Shader::Shader()
 {
 }
@@ -132,4 +134,6 @@ void Shader::checkLinkingError()
                   << infoLog
                   << std::endl;
     }
+}
+
 }

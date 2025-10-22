@@ -2,6 +2,8 @@
 
 #include "engine/components/batch.h"
 
+namespace Engine {
+
 unsigned int batch::LastID = 0;
 
 batch::batch() {
@@ -27,4 +29,6 @@ void batch::prepare(glm::mat4 *instances, unsigned int count) {
     // Just update the data region — much cheaper
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(glm::mat4) * count, instances);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
 }

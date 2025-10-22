@@ -13,6 +13,8 @@
 #define DEFAULT_WIDTH 1024
 #define DEFAULT_HEIGHT 768
 
+namespace Engine {
+
 class Window : public EventEmitter {
     friend class Engine;
 private:
@@ -47,5 +49,7 @@ private:
     int m_width;
     int m_height;
 };
+
+}
 
 #endif //WINDOW_H_

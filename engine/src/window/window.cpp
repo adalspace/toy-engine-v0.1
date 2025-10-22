@@ -8,6 +8,8 @@
 
 #include "engine/renderer/debug.h"
 
+namespace Engine {
+
 std::shared_ptr<Window> Window::s_instance = nullptr;
 
 Window::Window(const char* title, int width, int height) {
@@ -100,12 +102,10 @@ void Window::ProcessEvents() {
         switch (event.type) {
             case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
             case SDL_EVENT_QUIT:
-                Dispatch(WindowCloseEvent());
                 EmitEvent(WindowCloseEvent{});
                 break;
             case SDL_EVENT_KEY_DOWN:
                 if (event.key.scancode == SDL_SCANCODE_ESCAPE) {
-                    Dispatch(WindowCloseEvent());
                     EmitEvent(WindowCloseEvent{});
                 }
                 if (event.key.scancode == SDL_SCANCODE_F11) {
@@ -125,7 +125,6 @@ void Window::ProcessEvents() {
                         width,
                         height);
                     auto event = WindowResizeEvent(static_cast<unsigned int>(m_width), static_cast<unsigned int>(m_height));
-                    Dispatch(event);
                     EmitEvent(event);
                     SDL_SetWindowRelativeMouseMode(m_handle, true);
                     SDL_Rect boundaries = {0, 0, m_width, m_height};
@@ -152,3 +151,4 @@ void Window::Destroy() const {
         SDL_DestroyWindow(m_handle);
 }
 
+}

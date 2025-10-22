@@ -5,15 +5,17 @@
 #include "engine/window/event.hpp"
 #include "engine/export.h"
 
-class ENGINE_API IApplication {
-public:
-    virtual ~IApplication() = default;
+namespace Engine {
+    class ENGINE_API IApplication {
+    public:
+        virtual ~IApplication() = default;
 
-    virtual void OnInit(std::shared_ptr<Scene> scene) {};
-    virtual void OnUpdate() {};
-    virtual void OnShutdown() {};
-    
-    virtual void OnEvent(const Event& event) {};
-};
+        virtual void OnInit(std::shared_ptr<Scene> scene) {};
+        virtual void OnUpdate() {};
+        virtual void OnShutdown() {};
+        
+        virtual void OnEvent(const Event& event) {};
+    };
+}
 
 #endif // APPLICATION_H_

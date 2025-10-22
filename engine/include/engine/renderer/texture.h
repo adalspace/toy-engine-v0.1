@@ -3,6 +3,8 @@
 #include <string>
 #include <memory>
 
+namespace Engine {
+
 class Texture {
 public:
     Texture() : m_id(0) {}
@@ -12,5 +14,7 @@ public:
 private:
     unsigned int m_id;
 };
+
+}
 
 #endif // TEXTURE_H_
