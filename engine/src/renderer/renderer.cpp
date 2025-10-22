@@ -110,7 +110,7 @@ void Renderer::UpdateView() {
     auto camView = m_scene->m_registry.view<camera>();
     auto camTransform = camView.size() > 0 ?
         m_scene->m_registry.get<transform>(camView.back()) :
-        transform {glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f)};
+        transform {glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(1.f, 1.f, 1.f)};
 
     m_view = glm::lookAt(
         camTransform.position,

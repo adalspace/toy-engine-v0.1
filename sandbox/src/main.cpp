@@ -27,7 +27,6 @@ using namespace Engine;
 
 class Game : public IApplication {
 public:
-    Game() {}
     ~Game() override {}
 
     void OnInit(std::shared_ptr<Scene> scene) override {
@@ -38,6 +37,7 @@ public:
         lightEntity.AddComponent<transform>(glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
         lightEntity.AddComponent<light>(light::LightType::DIRECTIONAL, glm::vec3(1.f, 1.f, 1.f), 1.5f);
         lightEntity.AddComponent<mesh>(std::shared_ptr<Object>(lightObj));
+        assert(lightEntity.HasComponent<mesh>() && "light doesn't have any mesh!");
 
         cameraEntity = scene->CreateEntity();
         cameraEntity.AddComponent<camera>();
@@ -48,6 +48,7 @@ public:
         modelEntity.AddComponent<transform>(glm::vec3(0.f, 0.0f, 0.f));
         modelEntity.AddComponent<mesh>(std::shared_ptr<Object>(targetObj));
         modelEntity.AddComponent<rotate>();
+        assert(modelEntity.HasComponent<mesh>() && "model doesn't have any mesh!");
 
         // Object* grass = Object::LoadFile("./assets/common/cube/cube.obj");
         // const auto cubeEntity = scene->m_registry.create();
@@ -59,6 +60,8 @@ public:
         auto batchEntt = scene->CreateEntity();
         auto cubeBatch = batchEntt.AddComponent<batch>();
         batchEntt.AddComponent<mesh>(cubeObj);
+        assert(batchEntt.HasComponent<batch>() && "batch doesn't have any batch component!");
+        assert(batchEntt.HasComponent<mesh>() && "batch doesn't have any mesh component!");
         // auto cubeBatch = scene->m_registry.get<batch>(batchEntt);
         // Generate 1000 random cubes
         for (int i = 0; i < 1000; ++i) {
@@ -77,6 +80,7 @@ public:
         auto floorEntt = scene->CreateEntity();
         floorEntt.AddComponent<transform>(glm::vec3(0.f));
         floorEntt.AddComponent<mesh>(std::shared_ptr<Object>(floorObj));
+        assert(floorEntt.HasComponent<mesh>() && "floor doesn't have any mesh component!");
 
         std::cout << "Game initialized" << std::endl;
 

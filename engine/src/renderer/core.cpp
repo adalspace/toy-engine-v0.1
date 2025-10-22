@@ -11,8 +11,8 @@ Engine* Engine::s_instance = nullptr;
 
 void Engine::Run(std::unique_ptr<IApplication> app) {
     m_scene = std::make_shared<Scene>();
-    m_renderer = std::make_unique<Renderer>(m_scene);
     m_window = Window::GetInstance();
+    m_renderer = std::make_unique<Renderer>(m_scene);
     m_app = std::move(app);
     m_running = true;
 
@@ -51,7 +51,7 @@ void Engine::OnEvent(const Event& event) {
     m_app->OnEvent(event);
     if (event.GetCategory() == Event::EventCategory::WINDOW) {
         if (event.GetType() == EventType::WINDOW_RESIZE) {
-            auto e = static_cast<const WindowResizeEvent&>(event);
+            const auto e = dynamic_cast<const WindowResizeEvent&>(event);
             m_renderer->OnWindowResized(e.GetWidth(), e.GetHeight());
         }
         if (event.GetType() == EventType::WINDOW_CLOSE) {
