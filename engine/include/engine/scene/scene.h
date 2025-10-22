@@ -1,18 +1,30 @@
-#ifndef ENGINE_SCENE_H_
-#define ENGINE_SCENE_H_
+#pragma once
 
 #include <entt/entt.hpp>
 #include <memory>
 
 namespace Engine {
 
-class Scene;
+class Entity;
+
+class Scene {
+private:
+    friend class Entity;
+public:
+    Scene() = default;
+
+    Entity CreateEntity();
+private:
+    entt::registry m_registry;
+    friend class Renderer;
+};
 
 class Entity {
-    friend class Scene;
-private:
-    Entity(entt::entity entity, Scene* scene) : m_entity(entity), m_scene(scene) {}
 public:
+    Entity() = default;
+    Entity(entt::entity entity, Scene* scene) : m_entity(entity), m_scene(scene) {}
+    Entity(const Entity& other) = default;
+
     template<typename Type, typename... Args>
     inline auto AddComponent(Args &&...args) {
         assert(this->m_scene != nullptr && "Scene has not been assigned to the entity");
@@ -25,22 +37,8 @@ public:
         return m_scene->m_registry.get<Type>(m_entity);
     }
 private:
-    entt::entity m_entity;
-    Scene *m_scene;
-};
-
-class Scene {
-private:
-    friend class Entity;
-public:
-    Scene();
-
-    std::unique_ptr<Entity> CreateEntity();
-private:
-    entt::registry m_registry;
-    friend class Renderer;
+    entt::entity m_entity { 0 };
+    Scene *m_scene = nullptr;
 };
 
 } // namespace Engine
-
-#endif // ENGINE_SCENE_H_

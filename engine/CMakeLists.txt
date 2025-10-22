@@ -5,9 +5,8 @@ set(SOURCES
   src/IO/file_manager.cpp
   src/renderer/debug.cpp
 
-  src/window/window.cpp
-
   src/scene/scene.cpp
+  src/window/window.cpp
 
   src/components/batch.cpp
   src/renderer/mesh.cpp
