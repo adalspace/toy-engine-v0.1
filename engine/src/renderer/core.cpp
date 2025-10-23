@@ -5,7 +5,7 @@
 #include "engine/window/event.hpp"
 #include "engine/renderer/wavefront.h"
 
-namespace Engine {
+namespace Core {
 
 Engine* Engine::s_instance = nullptr;
 
@@ -19,17 +19,7 @@ void Engine::Run(std::unique_ptr<IApplication> app) {
     m_app->OnInit(m_scene);
     m_renderer->Init();
 
-    // m_window->Subscribe<WindowCloseEvent>([&](const WindowCloseEvent& e) {
-        
-    //     m_app->OnEvent(e);
-    // });
-
-    // m_window->Subscribe<WindowResizeEvent>([&](const WindowResizeEvent& e) {
-    //     m_renderer->OnWindowResized(e.GetWidth(), e.GetHeight());
-    //     m_app->OnEvent(e);
-    // });
-
-    m_window->Subscribe2(this);
+    m_window->Subscribe(this);
 
     while (m_running) {
         m_window->ProcessEvents();

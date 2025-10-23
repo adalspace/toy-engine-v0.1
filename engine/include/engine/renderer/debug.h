@@ -3,7 +3,7 @@
 
 #include <GL/glew.h>
 
-namespace Engine {
+namespace Core {
 
 void MessageCallback(GLenum source,
                      GLenum type,

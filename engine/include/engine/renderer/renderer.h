@@ -8,7 +8,7 @@
 #include "engine/export.h"
 #include "engine/components/light.h"
 
-namespace Engine {
+namespace Core {
 
 // TODO: make static or singleton
 class ENGINE_API Renderer {

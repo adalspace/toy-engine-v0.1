@@ -14,7 +14,7 @@
 
 #include "engine/export.h"
 
-namespace Engine {
+namespace Core {
 
 enum ObjElement { OHASH, MTLLIB, USEMTL, O, V, VN, VT, F, OUNKNOWN };
 enum MtlElement { MHASH, NEWMTL, NS, KA, KS, KD, NI, D, ILLUM, MAP_KD, MAP_KA, MUNKNOWN };

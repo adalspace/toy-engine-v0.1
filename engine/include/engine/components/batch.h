@@ -4,7 +4,7 @@
 #include <glm/mat4x4.hpp>
 #include "engine/export.h"
 
-namespace Engine {
+namespace Core {
 // requires mesh component
 struct ENGINE_API batch {
     friend class Renderer;

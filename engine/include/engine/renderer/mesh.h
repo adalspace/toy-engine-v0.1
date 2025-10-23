@@ -7,7 +7,7 @@
 
 #include "engine/renderer/basics.h"
 
-namespace Engine {
+namespace Core {
 
 class Mesh {
 public: // TODO: abstract away

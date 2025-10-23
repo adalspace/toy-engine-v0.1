@@ -3,7 +3,7 @@
 
 #include "engine/export.h"
 
-namespace Engine {
+namespace Core {
 struct ENGINE_API camera {};
 }
 

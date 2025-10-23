@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace Engine {
+namespace Core {
 
 Entity Scene::CreateEntity() {
     Entity entity = { m_registry.create(), this };

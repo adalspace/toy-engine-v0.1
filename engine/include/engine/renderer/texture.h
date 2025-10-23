@@ -3,7 +3,7 @@
 #include <string>
 #include <memory>
 
-namespace Engine {
+namespace Core {
 
 class Texture {
 public:

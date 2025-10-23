@@ -5,7 +5,7 @@
 #include "engine/window/event.hpp"
 #include "engine/export.h"
 
-namespace Engine {
+namespace Core {
     class ENGINE_API IApplication {
     public:
         virtual ~IApplication() = default;

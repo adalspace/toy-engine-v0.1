@@ -4,7 +4,7 @@
 #include <iostream>
 #include <sstream>
 
-namespace Engine {
+namespace Core {
 
 FileManager::FileManager()
 {

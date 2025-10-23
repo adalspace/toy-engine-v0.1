@@ -2,7 +2,7 @@
 #include <GL/glew.h>
 #include "engine/renderer/shader.h"
 
-namespace Engine {
+namespace Core {
 
 Shader::Shader()
 {

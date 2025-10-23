@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include "engine/export.h"
 
-namespace Engine {
+namespace Core {
 struct ENGINE_API transform {
     glm::vec3 position;
     glm::vec3 rotation;

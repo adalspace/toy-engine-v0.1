@@ -8,7 +8,7 @@
 
 #include "engine/renderer/debug.h"
 
-namespace Engine {
+namespace Core {
 
 std::shared_ptr<Window> Window::s_instance = nullptr;
 

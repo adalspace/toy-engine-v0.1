@@ -2,7 +2,7 @@
 
 #include "engine/renderer/mesh.h"
 
-namespace Engine {
+namespace Core {
 
 Mesh::Mesh() {
     m_vao = 0;

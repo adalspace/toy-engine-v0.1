@@ -6,7 +6,7 @@
 
 #include "engine/renderer/texture.h"
 
-namespace Engine {
+namespace Core {
 
 class Material {
 private:

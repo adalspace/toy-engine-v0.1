@@ -3,7 +3,7 @@
 
 #include "engine/window/event.hpp"
 
-namespace Engine {
+namespace Core {
 
 class WindowEvent : public Event {
 public:

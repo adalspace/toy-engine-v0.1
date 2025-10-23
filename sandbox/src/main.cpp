@@ -23,10 +23,11 @@
 
 #include "engine/api.h"
 
-using namespace Engine;
+using namespace Core;
 
 class Game : public IApplication {
 public:
+    Game() = default;
     ~Game() override {}
 
     void OnInit(std::shared_ptr<Scene> scene) override {
@@ -42,6 +43,8 @@ public:
         cameraEntity = scene->CreateEntity();
         cameraEntity.AddComponent<camera>();
         cameraEntity.AddComponent<transform>(glm::vec3(0.f, 2.f, 2.f));
+        assert(cameraEntity.HasComponent<camera>() && "Camera doesn't have required 'camera' component");
+        assert(cameraEntity.HasComponent<transform>() && "Camera doesn't have 'transform' component");
 
         Object* targetObj = Object::LoadFile("./assets/wizard/wizard.obj");
         modelEntity = scene->CreateEntity();
@@ -58,7 +61,8 @@ public:
         // Cube template (use shared object to avoid reloading 1000 times)
         std::shared_ptr<Object> cubeObj = std::shared_ptr<Object>(Object::LoadFile("./assets/grass_block/grass_block.obj"));
         auto batchEntt = scene->CreateEntity();
-        auto cubeBatch = batchEntt.AddComponent<batch>();
+        batchEntt.AddComponent<batch>();
+        auto& cubeBatch = batchEntt.GetComponent<batch>();
         batchEntt.AddComponent<mesh>(cubeObj);
         assert(batchEntt.HasComponent<batch>() && "batch doesn't have any batch component!");
         assert(batchEntt.HasComponent<mesh>() && "batch doesn't have any mesh component!");
@@ -138,7 +142,7 @@ public:
         if (state[SDL_SCANCODE_SPACE]) velocity.y += 1.f;
         if (state[SDL_SCANCODE_LSHIFT]) velocity.y -= 1.f;
 
-        auto camTransform = cameraEntity.GetComponent<transform>();
+        auto& camTransform = cameraEntity.GetComponent<transform>();
         camTransform.position += velocity * deltaTime * 2.5f; // speed is e.g. 2.5f
         camTransform.rotation = cameraViewDirection;
 
@@ -173,8 +177,8 @@ public:
         glm::vec3 sunColor = glm::mix(dayColor, sunsetColor, sunsetFactor);
 
         // Update the directional light in the registry
-        auto l = lightEntity.GetComponent<light>();
-        auto t = lightEntity.GetComponent<transform>();
+        auto& l = lightEntity.GetComponent<light>();
+        auto& t = lightEntity.GetComponent<transform>();
         if (l.type == light::LightType::DIRECTIONAL) {
             // "position" for directional light often stores direction vector
             // If your system instead uses transform.rotation, adjust accordingly

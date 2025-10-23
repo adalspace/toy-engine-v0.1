@@ -7,7 +7,7 @@
 
 #include "engine/export.h"
 
-namespace Engine {
+namespace Core {
 
 class ENGINE_API Shader
 {

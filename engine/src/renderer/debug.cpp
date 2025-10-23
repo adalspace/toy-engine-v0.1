@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace Engine {
+namespace Core {
 
 void MessageCallback(GLenum source,
                      GLenum type,

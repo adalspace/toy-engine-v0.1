@@ -3,7 +3,7 @@
 
 #include <glm/glm.hpp>
 
-namespace Engine {
+namespace Core {
 
 class Vertex {
     friend class Mesh;

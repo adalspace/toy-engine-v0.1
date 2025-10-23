@@ -4,7 +4,7 @@
 
 #include "engine/IO/parser.h"
 
-namespace Engine {
+namespace Core {
 
 // Skip whitespace
 void Parser::SkipSpaces() {

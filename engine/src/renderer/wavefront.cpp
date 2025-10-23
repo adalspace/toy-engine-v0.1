@@ -12,7 +12,7 @@
 
 #define DEFAULT_MATERIAL_NAME "default"
 
-namespace Engine {
+namespace Core {
 
 // ObjElement toElement(const std::string &s) {
 //     if (s == "#") return ObjElement::OHASH;

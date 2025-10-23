@@ -13,7 +13,7 @@
 #include "engine/app/app.h"
 #include "engine/export.h"
 
-namespace Engine {
+namespace Core {
 
 class ENGINE_API Engine : public EventHandler {
 public:

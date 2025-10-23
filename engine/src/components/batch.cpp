@@ -2,7 +2,7 @@
 
 #include "engine/components/batch.h"
 
-namespace Engine {
+namespace Core {
 
 unsigned int batch::LastID = 0;
 

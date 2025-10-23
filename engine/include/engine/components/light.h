@@ -6,7 +6,7 @@
 #include "engine/renderer/renderer.h"
 #include "engine/export.h"
 
-namespace Engine {
+namespace Core {
 struct ENGINE_API light {
     friend class Renderer;
 public:

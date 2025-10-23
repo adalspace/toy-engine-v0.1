@@ -8,6 +8,8 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/euler_angles.hpp>
 
+#include <glm/gtx/string_cast.hpp>
+
 #include "engine/renderer/renderer.h"
 #include "engine/window/window.h"
 #include "engine/IO/file_manager.h"
@@ -18,7 +20,7 @@
 #include "engine/components/mesh.h"
 #include "engine/components/batch.h"
 
-namespace Engine {
+namespace Core {
 
 Renderer::Renderer(std::shared_ptr<Scene> scene) : m_scene(scene)
 {
@@ -117,7 +119,7 @@ void Renderer::UpdateView() {
         camTransform.position + camTransform.rotation,
         glm::vec3(0.f, 1.f, 0.f)
     );
-
+    
     m_shader.setVec3("viewPos", camTransform.position);
 
     m_shader.setMat4("u_view", m_view);
@@ -156,7 +158,7 @@ void Renderer::RenderScene(Shader &shader) {
         auto prevInstanceVBO = b.m_instance_vbo;
         b.prepare(models.data(), models.size());
         if (prevInstanceVBO <= 0) {
-            std::cout << "[DEBUG] enabling batch"<<std::endl;
+            std::cout << "[DEBUG] enabling batch" << std::endl;
             m.object->EnableBatch(b.m_instance_vbo);
         }
         m.object->Render(shader, batchItems.size());

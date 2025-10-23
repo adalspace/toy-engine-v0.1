@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace Engine {
+namespace Core {
 
 enum class EventType {
     WINDOW_RESIZE,
@@ -49,13 +49,13 @@ public:
 
     EventEmitter() = default;
 
-    Handle Subscribe2(EventHandler* handler) {
+    Handle Subscribe(EventHandler* handler) {
         auto slot = Slot{ m_next_id++, handler };
         m_subs.push_back(slot);
         return Handle{ slot.id };
     }
 
-    void Unsubscribe2(const Handle& h) {
+    void UnSubscribe(const Handle& h) {
         m_subs.erase(std::remove_if(m_subs.begin(), m_subs.end(),
                   [&](const Slot& s){ return s.id == h.id; }),
                   m_subs.end());

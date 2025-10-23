@@ -6,7 +6,7 @@
 #include "engine/renderer/wavefront.h"
 #include "engine/export.h"
 
-namespace Engine {
+namespace Core {
 struct ENGINE_API mesh {
     std::shared_ptr<Object> object;
 };

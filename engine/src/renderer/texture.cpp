@@ -7,7 +7,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-namespace Engine {
+namespace Core {
 
 std::unique_ptr<Texture> Texture::LoadFile(const std::string& filename) {
     auto texture = std::make_unique<Texture>();
