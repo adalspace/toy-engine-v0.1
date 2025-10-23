@@ -67,7 +67,7 @@ void Renderer::ApplyLights(Shader &shader) {
     size_t lightIndex = 0;
     for (auto entity : lights) {
         auto &l = m_scene->m_registry.get<light>(entity);
-        auto &transf = m_scene->m_registry.get<transform>(entity);
+        auto &transf = m_scene->m_registry.get<Transform>(entity);
         
         shader.setInt("lights[" + std::to_string(lightIndex) + "].type", static_cast<int>(l.type));
         shader.setVec3("lights[" + std::to_string(lightIndex) + "].position", transf.position);
@@ -111,8 +111,8 @@ void Renderer::EnsureShadowResources(light& l) {
 void Renderer::UpdateView() {
     auto camView = m_scene->m_registry.view<camera>();
     auto camTransform = camView.size() > 0 ?
-        m_scene->m_registry.get<transform>(camView.back()) :
-        transform {glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(1.f, 1.f, 1.f)};
+        m_scene->m_registry.get<Transform>(camView.back()) :
+        Transform {glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(1.f, 1.f, 1.f)};
 
     m_view = glm::lookAt(
         camTransform.position,
@@ -149,7 +149,7 @@ void Renderer::RenderScene(Shader &shader) {
         models.reserve(batchItems.size());
 
         for (auto item : batchItems) {
-            auto &t = m_scene->m_registry.get<transform>(item);
+            auto &t = m_scene->m_registry.get<Transform>(item);
             glm::mat4 rotation = glm::yawPitchRoll(t.rotation.y, t.rotation.x, t.rotation.z);
             auto itemModel = glm::translate(glm::mat4(1.f), t.position) * rotation;
             models.push_back(itemModel);
@@ -165,7 +165,7 @@ void Renderer::RenderScene(Shader &shader) {
     }
     shader.setBool("u_isInstanced", false);
 
-    for (auto [entity, transf, mesh] : m_scene->m_registry.view<transform, mesh>(entt::exclude<batch, batch::item>).each()) {
+    for (auto [entity, transf, mesh] : m_scene->m_registry.view<Transform, mesh>(entt::exclude<batch, batch::item>).each()) {
         if (mesh.object == nullptr) {
             std::cerr << "WARN: Entity doesn't have a mesh to render" << std::endl;
             return;
@@ -206,7 +206,7 @@ void Renderer::Render() {
 
     glCullFace(GL_FRONT);
 
-    const auto lights = m_scene->m_registry.view<light, transform>();
+    const auto lights = m_scene->m_registry.view<light, Transform>();
 
     for (auto [_, l, t] : lights.each()) {
         // TODO: support other light types when ready

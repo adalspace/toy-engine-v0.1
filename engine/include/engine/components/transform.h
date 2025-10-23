@@ -5,7 +5,7 @@
 #include "engine/export.h"
 
 namespace Core {
-struct ENGINE_API transform {
+struct ENGINE_API Transform {
     glm::vec3 position;
     glm::vec3 rotation;
     glm::vec3 scale;

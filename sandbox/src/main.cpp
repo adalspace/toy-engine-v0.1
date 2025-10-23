@@ -36,20 +36,20 @@ public:
 
         Object* lightObj = Object::LoadFile("./assets/common/sphere/sphere.obj");
         lightEntity = scene->CreateEntity();
-        lightEntity.AddComponent<transform>(glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
+        lightEntity.AddComponent<Transform>(glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
         lightEntity.AddComponent<light>(light::LightType::DIRECTIONAL, glm::vec3(1.f, 1.f, 1.f), 1.5f);
         lightEntity.AddComponent<mesh>(std::shared_ptr<Object>(lightObj));
         assert(lightEntity.HasComponent<mesh>() && "light doesn't have any mesh!");
 
         cameraEntity = scene->CreateEntity();
         cameraEntity.AddComponent<camera>();
-        cameraEntity.AddComponent<transform>(glm::vec3(0.f, 2.f, 2.f));
+        cameraEntity.AddComponent<Transform>(glm::vec3(0.f, 2.f, 2.f));
         assert(cameraEntity.HasComponent<camera>() && "Camera doesn't have required 'camera' component");
-        assert(cameraEntity.HasComponent<transform>() && "Camera doesn't have 'transform' component");
+        assert(cameraEntity.HasComponent<Transform>() && "Camera doesn't have 'transform' component");
 
         Object* targetObj = Object::LoadFile("./assets/wizard/wizard.obj");
         modelEntity = scene->CreateEntity();
-        modelEntity.AddComponent<transform>(glm::vec3(0.f, 0.0f, 0.f));
+        modelEntity.AddComponent<Transform>(glm::vec3(0.f, 0.0f, 0.f));
         modelEntity.AddComponent<mesh>(std::shared_ptr<Object>(targetObj));
         modelEntity.AddComponent<rotate>();
         assert(modelEntity.HasComponent<mesh>() && "model doesn't have any mesh!");
@@ -70,14 +70,14 @@ public:
             float y = static_cast<float>(rand()) / RAND_MAX * 10.f;          // range [0, 10]
             float z = static_cast<float>(rand()) / RAND_MAX * 200.f - 100.f; // range [-100, 100]
 
-            cubeEntity.AddComponent<transform>(glm::vec3(x, y, z));
+            cubeEntity.AddComponent<Transform>(glm::vec3(x, y, z));
             cubeEntity.AddComponent<rotate>();
             cubeEntity.AddComponent<batch::item>(cubeBatch.id());
         }
 
         Object* floorObj = Object::LoadFile("./assets/common/plane/plane.obj");
         auto floorEntt = scene->CreateEntity();
-        floorEntt.AddComponent<transform>(glm::vec3(0.f));
+        floorEntt.AddComponent<Transform>(glm::vec3(0.f));
         floorEntt.AddComponent<mesh>(std::shared_ptr<Object>(floorObj));
         assert(floorEntt.HasComponent<mesh>() && "floor doesn't have any mesh component!");
 
@@ -120,7 +120,7 @@ public:
         if (Input::IsKeyPressed(SDL_SCANCODE_SPACE)) velocity.y += 1.f;
         if (Input::IsKeyPressed(SDL_SCANCODE_LSHIFT)) velocity.y -= 1.f;
 
-        auto& camTransform = cameraEntity.GetComponent<transform>();
+        auto& camTransform = cameraEntity.GetComponent<Transform>();
         camTransform.position += velocity * (float)dt * 2.5f; // speed is e.g. 2.5f
         camTransform.rotation = cameraViewDirection;
 
@@ -154,7 +154,7 @@ public:
 
         // Update the directional light in the registry
         auto& l = lightEntity.GetComponent<light>();
-        auto& t = lightEntity.GetComponent<transform>();
+        auto& t = lightEntity.GetComponent<Transform>();
         if (l.type == light::LightType::DIRECTIONAL) {
             // "position" for directional light often stores direction vector
             // If your system instead uses transform.rotation, adjust accordingly

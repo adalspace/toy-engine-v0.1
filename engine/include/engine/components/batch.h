@@ -9,7 +9,7 @@ namespace Core {
 struct ENGINE_API batch {
     friend class Renderer;
 public:
-    // requires transform component
+    // requires Transform component
     struct item {
         unsigned int batchId;
     };
