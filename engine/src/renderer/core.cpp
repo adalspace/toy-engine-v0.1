@@ -6,6 +6,7 @@
 #include "engine/renderer/wavefront.h"
 
 #include "engine/time/timestep.h"
+#include "engine/input/input.h"
 
 namespace Core {
 
@@ -34,6 +35,7 @@ void Engine::Run(std::unique_ptr<IApplication> app) {
 
         m_window->ProcessEvents();
 
+        Input::Update(dt);
         m_app->OnUpdate(dt);
 
         m_renderer->Render();

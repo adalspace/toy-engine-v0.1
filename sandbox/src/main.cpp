@@ -20,6 +20,7 @@
 #include "engine/components/batch.h"
 
 #include "engine/scene/scene.h"
+#include "engine/input/input.h"
 
 #include "engine/api.h"
 
@@ -84,19 +85,16 @@ public:
 
         m_angle = 3.45f;
 
-        m_paused = false;
-
         m_yaw   = -90.0f; // looking along -Z initially
         m_pitch = 0.0f;   // no vertical tilt
     }
 
     void OnUpdate(Timestep dt) override {
-        float mouseXRel, mouseYRel;
-        SDL_GetRelativeMouseState(&mouseXRel, &mouseYRel);
+        glm::vec2 mouseRel = Input::GetRelativeMouse();
 
         float sensitivity = 0.1f; // tweak as needed
-        m_yaw   += mouseXRel * sensitivity;
-        m_pitch -= mouseYRel * sensitivity; // invert Y for typical FPS control
+        m_yaw   += mouseRel.x * sensitivity;
+        m_pitch -= mouseRel.y * sensitivity; // invert Y for typical FPS control
 
         // clamp pitch to avoid flipping
         // if (pitch > 89.0f)  pitch = 89.0f;
@@ -112,30 +110,24 @@ public:
 
         glm::vec3 velocity(0.f);
 
-        const bool* state = SDL_GetKeyboardState(nullptr);
-
-        if (state[SDL_SCANCODE_P]) m_paused = !m_paused;
-
         glm::vec3 front = glm::normalize(glm::vec3(cameraViewDirection.x, 0.f, cameraViewDirection.z));
         glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0.f, 1.f, 0.f)));
 
-        if (state[SDL_SCANCODE_W]) velocity += front;
-        if (state[SDL_SCANCODE_S]) velocity -= front;
-        if (state[SDL_SCANCODE_A]) velocity -= right;
-        if (state[SDL_SCANCODE_D]) velocity += right;
-        if (state[SDL_SCANCODE_SPACE]) velocity.y += 1.f;
-        if (state[SDL_SCANCODE_LSHIFT]) velocity.y -= 1.f;
+        if (Input::IsKeyPressed(SDL_SCANCODE_W)) velocity += front;
+        if (Input::IsKeyPressed(SDL_SCANCODE_S)) velocity -= front;
+        if (Input::IsKeyPressed(SDL_SCANCODE_A)) velocity -= right;
+        if (Input::IsKeyPressed(SDL_SCANCODE_D)) velocity += right;
+        if (Input::IsKeyPressed(SDL_SCANCODE_SPACE)) velocity.y += 1.f;
+        if (Input::IsKeyPressed(SDL_SCANCODE_LSHIFT)) velocity.y -= 1.f;
 
         auto& camTransform = cameraEntity.GetComponent<transform>();
         camTransform.position += velocity * (float)dt * 2.5f; // speed is e.g. 2.5f
         camTransform.rotation = cameraViewDirection;
 
         // update rotation
-        if (!m_paused) {
-            m_angle += glm::radians(45.0f) * dt; // 72° per second
-            if (m_angle > glm::two_pi<float>()) {
-                m_angle -= glm::two_pi<float>(); // keep value small
-            }
+        m_angle += glm::radians(45.0f) * dt; // 72° per second
+        if (m_angle > glm::two_pi<float>()) {
+            m_angle -= glm::two_pi<float>(); // keep value small
         }
 
         // ---- Day-night simulation ----
@@ -190,6 +182,7 @@ public:
         }
     }
 private:
+    // for internal 1-second timer
     int m_elapsed;
 
     std::shared_ptr<Scene> m_scene;
@@ -202,8 +195,6 @@ private:
 
     float m_dayTime = 0.0f;       // accumulates time for day-night cycle
     float m_dayLength = 60.0f;    // seconds per full day cycle
-
-    bool m_paused = false;
 
     float m_yaw   = -90.0f; // looking along -Z initially
     float m_pitch = 0.0f;   // no vertical tilt
