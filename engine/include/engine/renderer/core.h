@@ -30,6 +30,7 @@ private:
     std::shared_ptr<Window> m_window;
     std::unique_ptr<Renderer> m_renderer;
     std::shared_ptr<Scene> m_scene;
+    uint64_t m_elapsed;
     bool m_running;
 };
 

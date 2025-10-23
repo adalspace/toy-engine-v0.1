@@ -5,6 +5,8 @@
 #include "engine/window/event.hpp"
 #include "engine/renderer/wavefront.h"
 
+#include "engine/time/timestep.h"
+
 namespace Core {
 
 Engine* Engine::s_instance = nullptr;
@@ -21,10 +23,18 @@ void Engine::Run(std::unique_ptr<IApplication> app) {
 
     m_window->Subscribe(this);
 
+    uint64_t now = SDL_GetPerformanceCounter();
+    m_elapsed = 0;
+
     while (m_running) {
+        m_elapsed = now;
+        now = SDL_GetPerformanceCounter();
+
+        auto dt = Timestep::FromMilliseconds((float)((now - m_elapsed)*1000 / (float)SDL_GetPerformanceFrequency()));
+
         m_window->ProcessEvents();
 
-        m_app->OnUpdate();
+        m_app->OnUpdate(dt);
 
         m_renderer->Render();
 

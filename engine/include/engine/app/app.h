@@ -3,6 +3,8 @@
 
 #include "engine/scene/scene.h"
 #include "engine/window/event.hpp"
+#include "engine/time/timestep.h"
+
 #include "engine/export.h"
 
 namespace Core {
@@ -11,7 +13,7 @@ namespace Core {
         virtual ~IApplication() = default;
 
         virtual void OnInit(std::shared_ptr<Scene> scene) {};
-        virtual void OnUpdate() {};
+        virtual void OnUpdate(Timestep dt) {};
         virtual void OnShutdown() {};
         
         virtual void OnEvent(const Event& event) {};

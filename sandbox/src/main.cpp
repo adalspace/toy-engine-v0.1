@@ -83,24 +83,14 @@ public:
         std::cout << "Game initialized" << std::endl;
 
         m_angle = 3.45f;
-        m_lastTicks = SDL_GetTicks();
 
         m_paused = false;
 
         m_yaw   = -90.0f; // looking along -Z initially
         m_pitch = 0.0f;   // no vertical tilt
-
-        // FPS tracking
-        m_startTicks = SDL_GetTicks();
-        m_frameCount = 0;
     }
 
-    void OnUpdate() override {
-        m_currentTicks = SDL_GetTicks();
-        float deltaTime = static_cast<float>(m_currentTicks - m_lastTicks) / 1000.0f; // seconds
-
-        m_lastTicks = m_currentTicks;
-
+    void OnUpdate(Timestep dt) override {
         float mouseXRel, mouseYRel;
         SDL_GetRelativeMouseState(&mouseXRel, &mouseYRel);
 
@@ -137,19 +127,19 @@ public:
         if (state[SDL_SCANCODE_LSHIFT]) velocity.y -= 1.f;
 
         auto& camTransform = cameraEntity.GetComponent<transform>();
-        camTransform.position += velocity * deltaTime * 2.5f; // speed is e.g. 2.5f
+        camTransform.position += velocity * (float)dt * 2.5f; // speed is e.g. 2.5f
         camTransform.rotation = cameraViewDirection;
 
         // update rotation
         if (!m_paused) {
-            m_angle += glm::radians(45.0f) * deltaTime; // 72° per second
+            m_angle += glm::radians(45.0f) * dt; // 72° per second
             if (m_angle > glm::two_pi<float>()) {
                 m_angle -= glm::two_pi<float>(); // keep value small
             }
         }
 
         // ---- Day-night simulation ----
-        m_dayTime += deltaTime;
+        m_dayTime += dt;
         if (m_dayTime > m_dayLength)
             m_dayTime -= m_dayLength; // loop every "day"
 
@@ -181,23 +171,12 @@ public:
             l.intensity = intensity;
         }
 
-        // auto rotateEntts = m_scene->m_registry.view<transform, rotate>();
-        // for (auto [entity, t] : rotateEntts.each()) {
-        //     // auto targetTransform = rotateEntts.get<transform>(entity);
-        //     if (!m_scene->m_registry.all_of<light>(entity)) {
-        //         t.rotation.y = m_angle;
-        //     }
-        // }
+        m_elapsed += dt.GetMilliseconds();
 
-        m_frameCount++;
-        m_currentTicks = SDL_GetTicks();
-        Uint64 elapsed = m_currentTicks - m_startTicks;
-
-        if (elapsed >= 1000) { // one second passed
-            double fps = static_cast<double>(m_frameCount) / (static_cast<double>(elapsed) / 1000.0);
+        if (m_elapsed >= 1000) { // one second passed
+            m_elapsed = 0;
+            double fps = 1 / dt;
             std::cout << "FPS: " << fps << std::endl;
-            m_frameCount = 0;
-            m_startTicks = m_currentTicks;
         }
     }
 
@@ -211,6 +190,8 @@ public:
         }
     }
 private:
+    int m_elapsed;
+
     std::shared_ptr<Scene> m_scene;
 
     Entity lightEntity;
@@ -218,7 +199,6 @@ private:
     Entity modelEntity;
 
     float m_angle;
-    Uint64 m_lastTicks;
 
     float m_dayTime = 0.0f;       // accumulates time for day-night cycle
     float m_dayLength = 60.0f;    // seconds per full day cycle
@@ -227,12 +207,6 @@ private:
 
     float m_yaw   = -90.0f; // looking along -Z initially
     float m_pitch = 0.0f;   // no vertical tilt
-
-    // FPS tracking
-    Uint64 m_startTicks;
-    int m_frameCount;
-
-    Uint64 m_currentTicks;
 };
 
 IApplication* CreateApplication() {
