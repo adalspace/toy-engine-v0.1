@@ -6,6 +6,12 @@ layout (location = 1) in vec3 normal;    // vertex normal
 layout (location = 2) in vec2 texCoord;     // Vertex texture uv
 layout (location = 3) in mat4 instanceModel;     // Vertex texture uv
 
+layout (std140, binding = 1) uniform Matrices
+{
+    mat4 projection;
+    mat4 view;
+};
+
 // Output to fragment shader
 out vec3 vertexPos;
 out vec3 vertexNormal;
@@ -14,8 +20,8 @@ out vec4 fragPosLightSpace;
 
 // Uniforms for transformation matrices
 uniform mat4 u_model;       // Model matrix: transforms from local space to world space
-uniform mat4 u_view;        // View matrix: transforms from world space to camera space (view space)
-uniform mat4 u_projection;  // Projection matrix: transforms from camera space to clip space
+// uniform mat4 u_view;
+// uniform mat4 u_projection;
 uniform bool u_isInstanced;
 
 void main()
@@ -32,5 +38,5 @@ void main()
 
     // fragPosLightSpace = u_lightSpace * vec4(vertexPos, 1.0);
 
-    gl_Position = u_projection * u_view * vec4(vertexPos, 1.0);
+    gl_Position = projection * view * vec4(vertexPos, 1.0);
 }
