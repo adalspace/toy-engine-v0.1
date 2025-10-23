@@ -53,20 +53,14 @@ public:
         modelEntity.AddComponent<rotate>();
         assert(modelEntity.HasComponent<mesh>() && "model doesn't have any mesh!");
 
-        // Object* grass = Object::LoadFile("./assets/common/cube/cube.obj");
-        // const auto cubeEntity = scene->m_registry.create();
-        // scene->m_registry.emplace<transform>(cubeEntity, glm::vec3(-1.5f, 0.4f, 0.f));
-        // scene->m_registry.emplace<mesh>(cubeEntity, std::shared_ptr<Object>(grass));
-
         // Cube template (use shared object to avoid reloading 1000 times)
         std::shared_ptr<Object> cubeObj = std::shared_ptr<Object>(Object::LoadFile("./assets/grass_block/grass_block.obj"));
         auto batchEntt = scene->CreateEntity();
-        batchEntt.AddComponent<batch>();
-        auto& cubeBatch = batchEntt.GetComponent<batch>();
+        auto& cubeBatch = batchEntt.AddComponent<batch>();
+        // auto& cubeBatch = batchEntt.GetComponent<batch>();
         batchEntt.AddComponent<mesh>(cubeObj);
         assert(batchEntt.HasComponent<batch>() && "batch doesn't have any batch component!");
         assert(batchEntt.HasComponent<mesh>() && "batch doesn't have any mesh component!");
-        // auto cubeBatch = scene->m_registry.get<batch>(batchEntt);
         // Generate 1000 random cubes
         for (int i = 0; i < 1000; ++i) {
             auto cubeEntity = scene->CreateEntity();

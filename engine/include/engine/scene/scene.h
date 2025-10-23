@@ -25,11 +25,15 @@ public:
     Entity(const Entity& other) = default;
 
     template<typename Type, typename... Args>
-    void AddComponent(Args&&... args) {
+    decltype(auto) AddComponent(Args&&... args) {
         assert(m_entity != entt::null && "Entity is empty");
         assert(m_scene && "Scene has not been assigned to the entity");
 
-        m_scene->m_registry.emplace<Type>(m_entity, std::forward<Args>(args)...);
+        if constexpr (std::is_void_v<decltype(m_scene->m_registry.emplace<Type>(m_entity, std::forward<Args>(args)...))>) {
+            m_scene->m_registry.emplace<Type>(m_entity, std::forward<Args>(args)...);
+        } else {
+            return m_scene->m_registry.emplace<Type>(m_entity, std::forward<Args>(args)...);
+        }
     }
 
     template<typename Type>
