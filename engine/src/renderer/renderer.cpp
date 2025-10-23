@@ -9,6 +9,7 @@
 #include <glm/gtx/euler_angles.hpp>
 
 #include <glm/gtx/string_cast.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "engine/renderer/renderer.h"
 #include "engine/window/window.h"
@@ -22,15 +23,9 @@
 
 namespace Core {
 
-Renderer::Renderer(std::shared_ptr<Scene> scene) : m_scene(scene)
+Renderer::Renderer(std::shared_ptr<Scene> scene)
+    : m_scene(scene), m_uniform_matrices(2 * sizeof(glm::mat4), 1)
 {
-    m_proj = glm::perspective(
-        static_cast<float>(M_PI_2),
-        static_cast<float>(Window::GetWidth()) / static_cast<float>(Window::GetHeight()),
-        0.01f,
-        100.0f
-    );
-
     m_shader.init(
         FileManager::read("./engine/src/shaders/main.vs"),
         FileManager::read("./engine/src/shaders/pbr.fs")
@@ -40,6 +35,18 @@ Renderer::Renderer(std::shared_ptr<Scene> scene) : m_scene(scene)
         FileManager::read("./engine/src/shaders/depth.vs"),
         FileManager::read("./engine/src/shaders/depth.fs")
     );
+
+    glUniformBlockBinding(m_shader.m_id, glGetUniformBlockIndex(m_shader.m_id, "Matrices"), 1);
+    // glUniformBlockBinding(m_depthShader.m_id, glGetUniformBlockIndex(m_depthShader.m_id, "Matrices"), 1);
+
+    m_proj = glm::perspective(
+        static_cast<float>(M_PI_2),
+        static_cast<float>(Window::GetWidth()) / static_cast<float>(Window::GetHeight()),
+        0.01f,
+        100.0f
+    );
+
+    m_uniform_matrices.SubData(glm::value_ptr(m_proj), sizeof(glm::mat4), 0);
 
     m_model = glm::mat4(1.f);
 
@@ -58,6 +65,7 @@ void Renderer::OnWindowResized(int w, int h) {
         0.01f,
         100.0f
     );
+    m_uniform_matrices.SubData(glm::value_ptr(m_proj), sizeof(glm::mat4), 0);
 }
 
 void Renderer::ApplyLights(Shader &shader) {
@@ -119,6 +127,8 @@ void Renderer::UpdateView() {
         camTransform.position + camTransform.rotation,
         glm::vec3(0.f, 1.f, 0.f)
     );
+
+    m_uniform_matrices.SubData(glm::value_ptr(m_view), sizeof(glm::mat4), sizeof(glm::mat4));
     
     m_shader.setVec3("viewPos", camTransform.position);
 

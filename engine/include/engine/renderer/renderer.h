@@ -8,6 +8,8 @@
 #include "engine/export.h"
 #include "engine/components/light.h"
 
+#include "engine/opengl/buffers.h"
+
 namespace Core {
 
 // TODO: make static or singleton
@@ -26,6 +28,8 @@ private:
     void GenerateShadowMaps();
     void EnsureShadowResources(light& l);
 private:
+    OpenGL::UniformBuffer m_uniform_matrices;
+
     Shader m_shader;
     Shader m_depthShader;
 
