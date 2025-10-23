@@ -7,6 +7,8 @@ set(SOURCES
 
   src/input/input.cpp
 
+  src/opengl/buffers.cpp
+
   src/scene/scene.cpp
   src/window/window.cpp
 
