@@ -36,8 +36,9 @@ Renderer::Renderer(std::shared_ptr<Scene> scene)
         FileManager::read("./engine/src/shaders/depth.fs")
     );
 
-    glUniformBlockBinding(m_shader.m_id, glGetUniformBlockIndex(m_shader.m_id, "Matrices"), 1);
-    // glUniformBlockBinding(m_depthShader.m_id, glGetUniformBlockIndex(m_depthShader.m_id, "Matrices"), 1);
+    // glUniformBlockBinding(m_shader.m_id, glGetUniformBlockIndex(m_shader.m_id, "Matrices"), 1);
+
+    m_uniform_matrices.ConfigureShader(m_shader, "Matrices");
 
     m_proj = glm::perspective(
         static_cast<float>(M_PI_2),
@@ -46,7 +47,7 @@ Renderer::Renderer(std::shared_ptr<Scene> scene)
         100.0f
     );
 
-    m_uniform_matrices.SubData(glm::value_ptr(m_proj), sizeof(glm::mat4), 0);
+    m_uniform_matrices.UpdateUniform<glm::mat4>(glm::value_ptr(m_proj), 0);
 
     m_model = glm::mat4(1.f);
 
@@ -65,7 +66,7 @@ void Renderer::OnWindowResized(int w, int h) {
         0.01f,
         100.0f
     );
-    m_uniform_matrices.SubData(glm::value_ptr(m_proj), sizeof(glm::mat4), 0);
+    m_uniform_matrices.UpdateUniform<glm::mat4>(glm::value_ptr(m_proj), 0);
 }
 
 void Renderer::ApplyLights(Shader &shader) {
@@ -128,7 +129,7 @@ void Renderer::UpdateView() {
         glm::vec3(0.f, 1.f, 0.f)
     );
 
-    m_uniform_matrices.SubData(glm::value_ptr(m_view), sizeof(glm::mat4), sizeof(glm::mat4));
+    m_uniform_matrices.UpdateUniform<glm::mat4>(glm::value_ptr(m_view), sizeof(glm::mat4));
     
     m_shader.setVec3("viewPos", camTransform.position);
 

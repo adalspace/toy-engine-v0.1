@@ -15,10 +15,10 @@ public:
     Shader();
     ~Shader();
 
-    unsigned int m_id;
-
     void init(const std::string &vertexCode, const std::string &fragmentCode);
     void use();
+
+    const unsigned int GetID() const { return m_id; }
 
     void setBool(const std::string &name, bool value) const;
     void setInt(const std::string &name, int value) const;
@@ -32,8 +32,8 @@ public:
     void setMat2(const std::string &name, const glm::mat2 &mat) const;
     void setMat3(const std::string &name, const glm::mat3 &mat) const;
     void setMat4(const std::string &name, const glm::mat4 &mat) const;
-
 private:
+    unsigned int m_id;
     unsigned int m_vertexId;
     unsigned int m_fragmentId;
 

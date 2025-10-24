@@ -45,12 +45,19 @@ namespace OpenGL {
         Unbind();
     }
 
+    unsigned int UniformBuffer::s_bufferNextId = 1;
+
     UniformBuffer::UniformBuffer(size_t size, unsigned int index)
-        : Buffer(GL_UNIFORM_BUFFER, GL_STATIC_DRAW)
+        : Buffer(GL_UNIFORM_BUFFER, GL_STATIC_DRAW), m_uniformBinding(s_bufferNextId++)
     {
         Data(nullptr, size);
 
-        BindBuffer(index);
+        BindBuffer(m_uniformBinding);
+    }
+
+    void UniformBuffer::ConfigureShader(Shader& shader, const char* uniformName) {
+        auto uniformIndex = glGetUniformBlockIndex(shader.GetID(), uniformName);
+        glUniformBlockBinding(shader.GetID(), uniformIndex, m_uniformBinding);
     }
 
 } // namespace OpenGL

@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>
 
+#include "engine/renderer/shader.h"
 #include "engine/export.h"
 
 namespace Core {
@@ -16,6 +17,7 @@ namespace OpenGL {
     public:
         Buffer(BufferTarget target, BufferUsage usage);
 
+    protected:
         void Data(void* data, size_t size);
         void SubData(void *data, size_t size, size_t offset);
         
@@ -33,8 +35,17 @@ namespace OpenGL {
     class ENGINE_API UniformBuffer : public Buffer {
     public:
         UniformBuffer(size_t size, unsigned int index);
-    public:
-        
+
+        void ConfigureShader(Shader& shader, const char* uniformName);
+
+        template<typename T, typename S = size_t>
+        void UpdateUniform(void* data, S offset) {
+            SubData(data, sizeof(T), offset);
+        }
+    private:
+        unsigned int m_uniformBinding;
+    private:
+        static unsigned int s_bufferNextId;
     };
 } // namespace OpenGL
 
