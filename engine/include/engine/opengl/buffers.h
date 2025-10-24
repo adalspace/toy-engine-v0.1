@@ -16,6 +16,8 @@ namespace OpenGL {
     class ENGINE_API Buffer {
     public:
         Buffer(BufferTarget target, BufferUsage usage);
+        Buffer(BufferTarget target);
+        ~Buffer();
 
         inline const BufferID GetID() const { return m_buffer; }
     protected:

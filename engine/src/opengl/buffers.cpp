@@ -13,6 +13,13 @@ namespace OpenGL {
         Unbind();
     }
 
+    Buffer::Buffer(BufferTarget target)
+        : Buffer(target, GL_STATIC_DRAW) {}
+    
+    Buffer::~Buffer() {
+        glDeleteBuffers(1, &m_buffer);
+    }
+
     void Buffer::Bind() const {
         glBindBuffer(m_target, m_buffer);
     }
