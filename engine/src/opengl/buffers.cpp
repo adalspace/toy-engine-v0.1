@@ -13,11 +13,11 @@ namespace OpenGL {
         Unbind();
     }
 
-    void Buffer::Bind() {
+    void Buffer::Bind() const {
         glBindBuffer(m_target, m_buffer);
     }
 
-    void Buffer::Unbind() {
+    void Buffer::Unbind() const {
         glBindBuffer(m_target, 0);
     }
 
@@ -33,13 +33,13 @@ namespace OpenGL {
         Unbind();
     }
 
-    void Buffer::BindBuffer(unsigned int index) {
+    void Buffer::BindBuffer(unsigned int index) const {
         Bind();
         glBindBufferBase(m_target, index, m_buffer);
         Unbind();
     }
 
-    void Buffer::BindBufferRanged(unsigned int index, size_t offset, size_t size) {
+    void Buffer::BindBufferRanged(unsigned int index, size_t offset, size_t size) const {
         Bind();
         glBindBufferRange(m_target, index, m_buffer, offset, size);
         Unbind();
@@ -55,10 +55,16 @@ namespace OpenGL {
         BindBuffer(m_uniformBinding);
     }
 
-    void UniformBuffer::ConfigureShader(Shader& shader, const char* uniformName) {
+    void UniformBuffer::ConfigureShader(Shader& shader, const char* uniformName) const {
         auto uniformIndex = glGetUniformBlockIndex(shader.GetID(), uniformName);
         glUniformBlockBinding(shader.GetID(), uniformIndex, m_uniformBinding);
     }
+
+    ArrayBuffer::ArrayBuffer(BufferUsage usage)
+        : Buffer(GL_ARRAY_BUFFER, usage) {}
+    
+    InstanceBuffer::InstanceBuffer(BufferUsage usage)
+        : ArrayBuffer(usage) {}
 
 } // namespace OpenGL
 

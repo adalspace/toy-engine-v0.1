@@ -11,6 +11,7 @@
 #include "engine/renderer/renderer.h"
 #include "engine/renderer/material.h"
 #include "engine/renderer/mesh.h"
+#include "engine/opengl/buffers.h"
 
 #include "engine/export.h"
 
@@ -43,7 +44,7 @@ public:
     void Render(Shader& shader, unsigned int count);
     [[nodiscard]] inline const std::string Name() const { return m_name; }
 protected:
-    void EnableBatch(unsigned int instanceVBO);
+    void EnableBatch(const OpenGL::InstanceBuffer* instanceBuffer);
 private:
     std::string m_name;
     std::vector<glm::vec3> m_vertices;

@@ -166,11 +166,11 @@ void Renderer::RenderScene(Shader &shader) {
             models.push_back(itemModel);
         }
 
-        auto prevInstanceVBO = b.m_instance_vbo;
+        auto prevState = b.Initialized();
         b.prepare(models.data(), models.size());
-        if (prevInstanceVBO <= 0) {
+        if (!prevState) {
             std::cout << "[DEBUG] enabling batch" << std::endl;
-            m.object->EnableBatch(b.m_instance_vbo);
+            m.object->EnableBatch(b.m_instanceBuffer.get());
         }
         m.object->Render(shader, batchItems.size());
     }
