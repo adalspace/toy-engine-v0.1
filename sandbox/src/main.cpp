@@ -63,7 +63,7 @@ public:
         assert(batchEntt.HasComponent<batch>() && "batch doesn't have any batch component!");
         assert(batchEntt.HasComponent<mesh>() && "batch doesn't have any mesh component!");
         // Generate 1000 random cubes
-        for (int i = 0; i < 1000; ++i) {
+        for (int i = 0; i < 10000; ++i) {
             auto cubeEntity = scene->CreateEntity();
 
             float x = static_cast<float>(rand()) / RAND_MAX * 200.f - 100.f; // range [-100, 100]
