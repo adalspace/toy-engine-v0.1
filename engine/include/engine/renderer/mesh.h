@@ -6,18 +6,17 @@
 #include <GL/glew.h>
 
 #include "engine/renderer/basics.h"
+#include "engine/opengl/buffers.h"
 
 namespace Core {
 
-class Mesh {
+class Mesh : public OpenGL::VertexArray {
 public: // TODO: abstract away
-    unsigned int m_vao, m_vbo, m_ebo;
+    unsigned int m_vbo, m_ebo;
     std::vector<Vertex> m_vertexBuffer;
     std::vector<unsigned int> m_indexBuffer;
-public: // TODO: abstract away
-    void Bind() const { glBindVertexArray(m_vao); }
-    void Unbind() { glBindVertexArray(0); }
-    void Upload() const;
+public:
+    void Upload();
 public:
     std::string materialName;
 public:

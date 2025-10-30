@@ -35,6 +35,7 @@ namespace OpenGL {
         BufferUsage m_usage;
     };
 
+    // TODO: Implement custom fields structuring via ordered_map?
     class ENGINE_API UniformBuffer : public Buffer {
     public:
         UniformBuffer(size_t size, unsigned int index);
@@ -70,6 +71,16 @@ namespace OpenGL {
 
         inline void StartConfigure() const { Bind(); }
         inline void EndConfigure() const { Unbind(); }
+    };
+
+    class ENGINE_API VertexArray {
+    public:
+        VertexArray();
+
+        void Bind();
+        void Unbind();
+    private:
+        unsigned int m_id;
     };
 } // namespace OpenGL
 

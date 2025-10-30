@@ -5,15 +5,15 @@
 namespace Core {
 
 Mesh::Mesh() {
-    m_vao = 0;
+    // m_vao = 0;
     m_vbo = 0;
     m_ebo = 0;
     
-    glGenVertexArrays(1, &m_vao);
+    // glGenVertexArrays(1, &m_vao);
     glGenBuffers(1, &m_vbo);
     glGenBuffers(1, &m_ebo);
 
-    glBindVertexArray(m_vao);
+    Bind();
 
     // VBO (vertex buffer)
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
@@ -34,11 +34,11 @@ Mesh::Mesh() {
     glEnableVertexAttribArray(2);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    Unbind();
 }
 
-void Mesh::Upload() const {
-    glBindVertexArray(m_vao);
+void Mesh::Upload() {
+    Bind();
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
     glBufferData(GL_ARRAY_BUFFER, m_vertexBuffer.size() * sizeof(Vertex), m_vertexBuffer.data(), GL_DYNAMIC_DRAW);
@@ -47,7 +47,7 @@ void Mesh::Upload() const {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer.size() * sizeof(unsigned int), m_indexBuffer.data(), GL_DYNAMIC_DRAW);
 
-    glBindVertexArray(0);
+    Unbind();
 }
 
 void Mesh::Render(unsigned int count)

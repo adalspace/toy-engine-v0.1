@@ -1,3 +1,4 @@
+#include <cassert>
 #include "engine/opengl/buffers.h"
 
 namespace Core {
@@ -72,6 +73,22 @@ namespace OpenGL {
     
     InstanceBuffer::InstanceBuffer(BufferUsage usage)
         : ArrayBuffer(usage) {}
+
+    VertexArray::VertexArray() : m_id(0) {
+        glGenVertexArrays(1, &m_id);
+    }
+
+    void VertexArray::Bind() {
+        assert(m_id != 0 && "Vertex Array wasn't initialized.");
+
+        glBindVertexArray(m_id);
+    }
+
+    void VertexArray::Unbind() {
+        assert(m_id != 0 && "Vertex Array wasn't initialized.");
+
+        glBindVertexArray(0);
+    }
 
 } // namespace OpenGL
 
