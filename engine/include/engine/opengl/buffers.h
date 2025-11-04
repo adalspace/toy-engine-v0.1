@@ -20,19 +20,25 @@ namespace OpenGL {
         ~Buffer();
 
         inline const BufferID GetID() const { return m_buffer; }
+        inline const BufferTarget GetTarget() const { return m_target; }
+    public:
+        static inline const bool IsBound(const Buffer& buffer) { return m_bound == buffer.GetID(); }
+        static inline const bool IsBound(const Buffer* buffer) { return buffer && m_bound == buffer->GetID(); }
+        // static inline void Bind(const Buffer& buffer) { glBindBuffer(buffer.GetTarget(), buffer.GetID()); }
+        static inline void Bind(const Buffer* buffer) { glBindBuffer(buffer->GetTarget(), buffer->GetID()); m_bound = buffer->GetID(); }
+        static inline void Unbind(const Buffer* buffer) { glBindBuffer(buffer->GetTarget(), 0); m_bound = 0; }
+
+        static void Data(const Buffer* buffer, const void* data, size_t size);
+        static void SubData(const Buffer* buffer, const void *data, size_t size, size_t offset);
     protected:
-        void Data(void* data, size_t size);
-        void SubData(void *data, size_t size, size_t offset);
-        
         void BindBuffer(unsigned int index) const;
         void BindBufferRanged(unsigned int index, size_t offset, size_t size) const;
-    protected:
-        void Bind() const;
-        void Unbind() const;
     private:
         BufferID m_buffer;
         BufferTarget m_target;
         BufferUsage m_usage;
+    private:
+        static BufferID m_bound;
     };
 
     // TODO: Implement custom fields structuring via ordered_map?
@@ -44,7 +50,7 @@ namespace OpenGL {
 
         template<typename T, typename S = size_t>
         void UpdateUniform(void* data, S offset) {
-            SubData(data, sizeof(T), offset);
+            SubData(this, data, sizeof(T), offset);
         }
     private:
         unsigned int m_uniformBinding;
@@ -61,26 +67,24 @@ namespace OpenGL {
     public:
         InstanceBuffer(BufferUsage usage);
 
-        void Data(void *data, size_t size) {
-            Buffer::Data(data, size);
-        }
-
-        void SubData(void *data, size_t size, size_t offset) {
-            Buffer::SubData(data, size, offset);
-        }
-
-        inline void StartConfigure() const { Bind(); }
-        inline void EndConfigure() const { Unbind(); }
+        inline void StartConfigure() const { Buffer::Bind(this); }
+        inline void EndConfigure() const { Buffer::Unbind(this); }
     };
 
     class ENGINE_API VertexArray {
     public:
         VertexArray();
+        ~VertexArray();
 
         void Bind();
         void Unbind();
+
+        void SetupVertexBuffer(BufferUsage usage);
+    public:
+        void VertexBufferData(size_t size, const void* data);
     private:
-        unsigned int m_id;
+        unsigned int m_id { 0 };
+        ArrayBuffer* m_vbo { nullptr };
     };
 } // namespace OpenGL
 
