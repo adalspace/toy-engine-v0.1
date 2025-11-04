@@ -1,7 +1,7 @@
 #pragma once
 
 #include "engine/3d/array.hpp"
-#include "engine/3d/vertex.h"
+#include "engine/3d/vertex.hpp"
 #include "engine/3d/material.hpp"
 
 #include "engine/export.h"
