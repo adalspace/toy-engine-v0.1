@@ -8,7 +8,7 @@ namespace Core {
 class Texture {
 public:
     Texture() : m_id(0) {}
-    static std::unique_ptr<Texture> LoadFile(const std::string& filename);
+    static Texture* LoadFile(const std::string& filename);
 public:
     [[nodiscard]] unsigned int GetID() const { return m_id; }
 private:

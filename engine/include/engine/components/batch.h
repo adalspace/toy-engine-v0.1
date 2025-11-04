@@ -29,7 +29,7 @@ private:
     unsigned int m_instance_count { 0 };
 
     // TODO: use static draw when possible
-    std::unique_ptr<OpenGL::InstanceBuffer> m_instanceBuffer = nullptr;
+    OpenGL::InstanceBuffer* m_instanceBuffer = nullptr;
 private:
     friend class Renderer;
     void prepare(glm::mat4 *instances, unsigned int count);
