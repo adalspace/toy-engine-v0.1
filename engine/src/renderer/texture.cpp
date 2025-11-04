@@ -9,8 +9,8 @@
 
 namespace Core {
 
-std::unique_ptr<Texture> Texture::LoadFile(const std::string& filename) {
-    auto texture = std::make_unique<Texture>();
+Texture* Texture::LoadFile(const std::string& filename) {
+    auto texture = new Texture();
 
     int w, h, c;
     unsigned char *data = stbi_load(filename.c_str(), &w, &h, &c, 4);
@@ -19,8 +19,8 @@ std::unique_ptr<Texture> Texture::LoadFile(const std::string& filename) {
         std::exit(1);
     }
 
-    glGenTextures(1, &texture.get()->m_id);
-    glBindTexture(GL_TEXTURE_2D, texture.get()->m_id);
+    glGenTextures(1, &texture->m_id);
+    glBindTexture(GL_TEXTURE_2D, texture->m_id);
 
     // TODO: configure properly
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
@@ -34,7 +34,7 @@ std::unique_ptr<Texture> Texture::LoadFile(const std::string& filename) {
     std::cout << "Loaded texture under '" << filename << "' with size of " << sizeof(data) << " bytes" << std::endl;
     stbi_image_free(data);
 
-    return std::move(texture);
+    return texture;
 }
 
 }
