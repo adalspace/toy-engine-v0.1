@@ -1,52 +1,55 @@
+#include <iostream>
 #include <cstddef>
 
 #include "engine/renderer/mesh.h"
 
 namespace Core {
 
-Mesh::Mesh() {
+Mesh::Mesh(const std::string& name) : m_materialName(name.c_str()) {
+    std::cout << "Mesh init" << std::endl;
+
     // m_vao = 0;
-    m_vbo = 0;
+    // m_vbo = 0;
     m_ebo = 0;
     
     // glGenVertexArrays(1, &m_vao);
-    glGenBuffers(1, &m_vbo);
+    // glGenBuffers(1, &m_vbo);
     glGenBuffers(1, &m_ebo);
 
     Bind();
 
-    // VBO (vertex buffer)
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_DYNAMIC_DRAW);
+    SetupVertexBuffer(GL_DYNAMIC_DRAW);
 
     // EBO (index buffer)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 0, nullptr, GL_DYNAMIC_DRAW);
 
     // attributes
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, m_position)));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, position)));
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, m_normal)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, normal)));
     glEnableVertexAttribArray(1);
     
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, m_texCoord)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, uv)));
     glEnableVertexAttribArray(2);
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    // TODO: delete after ebo moved in VertexArray
+    // glBindBuffer(GL_DYNAMIC_DRAW, 0);
     Unbind();
 }
 
 void Mesh::Upload() {
     Bind();
 
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, m_vertexBuffer.size() * sizeof(Vertex), m_vertexBuffer.data(), GL_DYNAMIC_DRAW);
+    VertexBufferData(m_vertexBuffer.size() * sizeof(Vertex), m_vertexBuffer.data());
 
     // Upload indices
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer.size() * sizeof(unsigned int), m_indexBuffer.data(), GL_DYNAMIC_DRAW);
 
+    // TODO: delete after ebo moved in VertexArray
+    // glBindBuffer(GL_DYNAMIC_DRAW, 0);
     Unbind();
 }
 
