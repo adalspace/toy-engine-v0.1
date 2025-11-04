@@ -8,23 +8,9 @@
 #include "engine/renderer/wavefront.h"
 
 #include "engine/IO/parser.h"
-#include "engine/renderer/mesh.h"
-
-#define DEFAULT_MATERIAL_NAME "default"
+#include "engine/3d/mesh.hpp"
 
 namespace Core {
-
-// ObjElement toElement(const std::string &s) {
-//     if (s == "#") return ObjElement::OHASH;
-//     if (s == "mtllib") return ObjElement::MTLLIB;
-//     if (s == "usemtl") return ObjElement::USEMTL;
-//     if (s == "o") return ObjElement::O;
-//     if (s == "v") return ObjElement::V;
-//     if (s == "vn") return ObjElement::VN;
-//     if (s == "vt") return ObjElement::VT;
-//     if (s == "f") return ObjElement::F;
-//     return ObjElement::OUNKNOWN;
-// }
 
 inline ObjElement toElement(const char* s) {
     switch (s[0]) {
@@ -41,22 +27,6 @@ inline ObjElement toElement(const char* s) {
     }
     return ObjElement::OUNKNOWN;
 }
-
-// MtlElement toMtlElement(const std::string &s) {
-//     if (s == "#") return MtlElement::MHASH;
-//     if (s == "newmtl") return MtlElement::NEWMTL;
-//     if (s == "Ns") return MtlElement::NS;
-//     if (s == "Ka") return MtlElement::KA;
-//     if (s == "Ks") return MtlElement::KS;
-//     if (s == "Kd") return MtlElement::KD;
-//     if (s == "Ni") return MtlElement::NI;
-//     if (s == "d") return MtlElement::D;
-//     if (s == "illum") return MtlElement::ILLUM;
-//     if (s == "map_Kd") return MtlElement::MAP_KD;
-//     if (s == "map_Ka") return MtlElement::MAP_KA;
-//     // if (s == "map_Ke") return MtlElement::MAP_KE;
-//     return MtlElement::MUNKNOWN;
-// }
 
 inline MtlElement toMtlElement(const char* s) {
     switch (s[0]) {
@@ -104,7 +74,11 @@ Object::Object() {
     m_texCoords = std::vector<glm::vec2>();
 }
 
-void Object::LoadMaterials(const std::filesystem::path& filename) {
+void Object::AddMaterial(MaterialID id, const Material& material) {
+    m_materials.insert(std::make_pair(id, material));
+}
+
+void Object::LoadMTL(const std::filesystem::path& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Failed to open MTL file: " << filename << std::endl;
@@ -112,7 +86,8 @@ void Object::LoadMaterials(const std::filesystem::path& filename) {
     }
 
     std::string currentMaterialName;
-    std::shared_ptr<Material> currentMaterial;
+    Material currentMaterial;
+    bool hasCurrent = false;
 
     char line[1024]; // buffer per line
 
@@ -128,15 +103,15 @@ void Object::LoadMaterials(const std::filesystem::path& filename) {
         case MtlElement::NEWMTL:
         {
             // If a material was being built, commit it first
-            if (currentMaterial) {
-                AddMaterial(currentMaterialName, std::move(currentMaterial));
-                currentMaterial = nullptr;
+            if (hasCurrent) {
+                AddMaterial(currentMaterialName, currentMaterial);
             }
 
             char* materialName = p.TakeWord();
             if (materialName) {
                 currentMaterialName = materialName;
-                currentMaterial = std::make_shared<Material>();
+                currentMaterial = Material(currentMaterialName);
+                hasCurrent = true;
             }
             break;
         }
@@ -144,7 +119,7 @@ void Object::LoadMaterials(const std::filesystem::path& filename) {
         case MtlElement::NS: // specular weight
         {
             float weight = p.TakeFloat();
-            if (currentMaterial) currentMaterial->SetSpecularWeight(weight);
+            if (hasCurrent) currentMaterial.SetSpecularWeight(weight);
             break;
         }
 
@@ -153,7 +128,7 @@ void Object::LoadMaterials(const std::filesystem::path& filename) {
             float r = p.TakeFloat();
             float g = p.TakeFloat();
             float b = p.TakeFloat();
-            if (currentMaterial) currentMaterial->SetAmbientColor(glm::vec3(r, g, b));
+            if (hasCurrent) currentMaterial.SetAmbientColor(glm::vec3(r, g, b));
             break;
         }
 
@@ -162,7 +137,7 @@ void Object::LoadMaterials(const std::filesystem::path& filename) {
             float r = p.TakeFloat();
             float g = p.TakeFloat();
             float b = p.TakeFloat();
-            if (currentMaterial) currentMaterial->SetSpecularColor(glm::vec3(r, g, b));
+            if (hasCurrent) currentMaterial.SetSpecularColor(glm::vec3(r, g, b));
             break;
         }
 
@@ -171,21 +146,21 @@ void Object::LoadMaterials(const std::filesystem::path& filename) {
             float r = p.TakeFloat();
             float g = p.TakeFloat();
             float b = p.TakeFloat();
-            if (currentMaterial) currentMaterial->SetDiffuseColor(glm::vec3(r, g, b));
+            if (hasCurrent) currentMaterial.SetDiffuseColor(glm::vec3(r, g, b));
             break;
         }
 
         case MtlElement::D: // opacity
         {
             float d = p.TakeFloat();
-            if (currentMaterial) currentMaterial->SetOpacity(d);
+            if (hasCurrent) currentMaterial.SetOpacity(d);
             break;
         }
 
         case MtlElement::ILLUM: // illumination model
         {
             int illum = p.TakeInt();
-            if (currentMaterial) currentMaterial->SetIllumination(illum);
+            if (hasCurrent) currentMaterial.SetIllumination(illum);
             break;
         }
 
@@ -193,7 +168,7 @@ void Object::LoadMaterials(const std::filesystem::path& filename) {
         {
             // take rest of line as texture path (can contain spaces)
             char* texPath = p.TakeUntil('\0');
-            if (texPath && currentMaterial) {
+            if (texPath && hasCurrent) {
                 // trim trailing spaces
                 size_t len = std::strlen(texPath);
                 while (len > 0 && (texPath[len - 1] == ' ' || texPath[len - 1] == '\t'))
@@ -201,7 +176,7 @@ void Object::LoadMaterials(const std::filesystem::path& filename) {
 
                 std::filesystem::path texturePath = filename.parent_path() / texPath;
 
-                currentMaterial->SetDiffuseTexture(Texture::LoadFile(texturePath.string()));
+                currentMaterial.SetDiffuseTexture(Texture::LoadFile(texturePath.string()));
             }
             break;
         }
@@ -209,13 +184,13 @@ void Object::LoadMaterials(const std::filesystem::path& filename) {
         case MtlElement::MAP_KA: // ambient texture map
         {
             char* texPath = p.TakeUntil('\0');
-            if (texPath && currentMaterial) {
+            if (texPath && hasCurrent) {
                 size_t len = std::strlen(texPath);
                 while (len > 0 && (texPath[len - 1] == ' ' || texPath[len - 1] == '\t'))
                     texPath[--len] = '\0';
 
                 // optional: handle ambient texture
-                // currentMaterial->SetAmbientTexture(Texture::LoadFile(texPath));
+                // currentMaterial.SetAmbientTexture(Texture::LoadFile(texPath));
             }
             break;
         }
@@ -227,41 +202,36 @@ void Object::LoadMaterials(const std::filesystem::path& filename) {
     }
 
     // Commit last material if pending
-    if (currentMaterial) {
-        AddMaterial(currentMaterialName, std::move(currentMaterial));
+    if (hasCurrent) {
+        AddMaterial(currentMaterialName, currentMaterial);
     }
 
     file.close();
 }
 
-void Object::AddMaterial(std::string name, std::shared_ptr<Material> material)
+Material* Object::GetMaterial(const MaterialID& id)
 {
-    m_materials.insert(std::make_pair(std::move(name), std::move(material)));
-}
-
-std::shared_ptr<Material> Object::GetMaterial(std::string name)
-{
-    auto material = m_materials.find(name);
+    auto material = m_materials.find(id);
     if (material == m_materials.end()) return nullptr;
-    return material->second;
+    return &material->second;
 }
 
-void Object::CreateNewMesh(const std::string& materialName)
+void Object::CreateNewMesh(const Material& material)
 {
-    Mesh mesh;
-    mesh.materialName = materialName;
-    m_meshes.push_back(mesh);
+    EmplaceBack(material);
+}
+
+void Object::CreateNewMesh()
+{
+    EmplaceBack();
 }
 
 Mesh& Object::GetLastMesh()
 {
-    if (m_meshes.empty()) {
-        auto material = std::make_shared<Material>();
-        material->SetAmbientColor(glm::vec3(0.52f, 0.52f, 0.52f));
-        AddMaterial(DEFAULT_MATERIAL_NAME, std::move(material));
-        CreateNewMesh(DEFAULT_MATERIAL_NAME);
+    if (Empty()) {
+        CreateNewMesh(Material::Default());
     }
-    return m_meshes.back();
+    return Back();
 }
 
 Object* Object::LoadFile(const std::string& filename) {
@@ -289,7 +259,7 @@ Object* Object::LoadFile(const std::string& filename) {
             if (mtlFile) {
                 std::filesystem::path fullPath = filename;
                 std::filesystem::path mtlPath = fullPath.replace_filename(mtlFile);
-                obj->LoadMaterials(mtlPath);
+                obj->LoadMTL(mtlPath);
             }
             break;
         }
@@ -298,11 +268,16 @@ Object* Object::LoadFile(const std::string& filename) {
         {
             char* materialName = p.TakeWord();
             if (materialName) {
-                auto& mesh = obj->GetLastMesh();
-                if (mesh.materialName != materialName) {
-                    Mesh newMesh;
-                    newMesh.materialName = materialName;
-                    obj->m_meshes.push_back(newMesh);
+                auto material = obj->GetMaterial(materialName);
+                if (!material) {
+                    // Not defined material being used.
+                    std::cerr << "[WARN] WavefrontError: use of undefined material '"
+                              << materialName << "'" << std::endl;
+                    material = new Material();
+                }
+                auto mesh = obj->FindMeshByMaterial(material);
+                if (mesh == obj->End()) {
+                    obj->CreateNewMesh(*material);
                 }
             }
             break;
@@ -349,8 +324,11 @@ Object* Object::LoadFile(const std::string& filename) {
         case ObjElement::F: // face
         {
             auto& mesh = obj->GetLastMesh();
-            int raw_vi, raw_ti, raw_ni;
 
+            std::vector<uint32_t> faceIndices;
+            faceIndices.reserve(8);
+
+            int raw_vi, raw_ti, raw_ni;
             while (p.TakeFaceIndices(raw_vi, raw_ti, raw_ni)) {
                 // Convert raw OBJ indices to 0-based / -1 sentinel
                 int vi = Object::NormalizeIndex(raw_vi, (int)obj->m_vertices.size());
@@ -362,15 +340,22 @@ Object* Object::LoadFile(const std::string& filename) {
                     continue;
                 }
 
-                glm::vec3 vert = obj->m_vertices[vi];
-                glm::vec3 norm(0.0f);
-                glm::vec2 texCoord(0.0f);
+                Vertex v;
+                v.position = obj->m_vertices[vi];
+                v.normal = (ni >= 0) ? obj->m_normals[ni] : glm::vec3(0.0f);
+                v.uv = (ti >= 0) ? obj->m_texCoords[ti] : glm::vec3(0.0f);
 
-                if (ni >= 0) norm = obj->m_normals[ni];
-                if (ti >= 0) texCoord = obj->m_texCoords[ti];
+                uint32_t idx = mesh.PushVertex(v);
+                faceIndices.push_back(idx);
+                // mesh.m_vertexBuffer.emplace_back(vert, norm, texCoord);
+                // mesh.m_indexBuffer.push_back(mesh.m_vertexBuffer.size() - 1);
+            }
 
-                mesh.m_vertexBuffer.emplace_back(vert, norm, texCoord);
-                mesh.m_indexBuffer.push_back(mesh.m_vertexBuffer.size() - 1);
+            // triangulate polygon (fan)
+            if (faceIndices.size() >= 3) {
+                for (size_t i = 1; i + 1 < faceIndices.size(); ++i) {
+                    mesh.PushTriangle(faceIndices[0], faceIndices[i], faceIndices[i+1]);
+                }
             }
             break;
         }
@@ -385,130 +370,108 @@ Object* Object::LoadFile(const std::string& filename) {
     std::cout << "Vertices count: " << obj->m_vertices.size() << std::endl;
     std::cout << "Normals count: " << obj->m_normals.size() << std::endl;
     std::cout << "TexCoords count: " << obj->m_texCoords.size() << std::endl;
-    std::cout << "Meshes count: " << obj->m_meshes.size() << std::endl;
+    std::cout << "Meshes count: " << obj->GetSize() << std::endl;
     std::cout << "Materials count: " << obj->m_materials.size() << std::endl;
 
     file.close();
 
-    for (auto &mesh : obj->m_meshes) {
-        mesh.Upload();
-    }
+    // FIXME:
+
+    // for (auto it = obj->Begin(); it != obj->End(); ++it) {
+    //     it->Upload();
+    // }
 
     return obj;
 }
 
 void Object::EnableBatch(const OpenGL::InstanceBuffer* instanceBuffer) {
-    for (auto &mesh : m_meshes) {
-        mesh.Bind();
+    // FIXME:
 
-        instanceBuffer->StartConfigure();
-            std::size_t vec4Size = sizeof(glm::vec4);
-            for (int i = 0; i < 4; ++i) {
-                glEnableVertexAttribArray(3 + i); // use locations 3,4,5,6 for instance matrix
-                glVertexAttribPointer(3 + i, 4, GL_FLOAT, GL_FALSE,
-                                    sizeof(glm::mat4), (void*)(i * vec4Size));
-                glVertexAttribDivisor(3 + i, 1); // IMPORTANT: one per instance, not per vertex
-            }
-        instanceBuffer->EndConfigure();
+    // for (auto &mesh : m_meshes) {
+    //     mesh.Bind();
+
+    //     instanceBuffer->StartConfigure();
+    //         std::size_t vec4Size = sizeof(glm::vec4);
+    //         for (int i = 0; i < 4; ++i) {
+    //             glEnableVertexAttribArray(3 + i); // use locations 3,4,5,6 for instance matrix
+    //             glVertexAttribPointer(3 + i, 4, GL_FLOAT, GL_FALSE,
+    //                                 sizeof(glm::mat4), (void*)(i * vec4Size));
+    //             glVertexAttribDivisor(3 + i, 1); // IMPORTANT: one per instance, not per vertex
+    //         }
+    //     instanceBuffer->EndConfigure();
         
-        mesh.Unbind();
-    }
+    //     mesh.Unbind();
+    // }
 }
-
-
-// void Object::Render(Shader& shader)
-// {
-//     for (auto &mesh : m_meshes) {
-//         auto material = GetMaterial(mesh.materialName);
-        
-//         shader.setFloat("ambientStrength", 0.2f);
-//         shader.setFloat("shininess", material->GetSpecularWeight());
-//         shader.setFloat("opacity", material->GetOpacity());
-//         shader.setBool("useSpecular", material->GetIllumination() >= 2);
-//         shader.setFloat("specularStrength", 1.0f);
-//         shader.setVec3("ambientColor", material->GetAmbientColor());
-//         shader.setVec3("diffuseColor", material->GetDiffuseColor());
-//         shader.setVec3("specularColor", material->GetSpecularColor());
-
-//         if (material->HasDiffuseTexture()) {
-//             shader.setBool("useTexture", true);
-//             glActiveTexture(GL_TEXTURE0);
-//             glBindTexture(GL_TEXTURE_2D, material->GetDiffuseTexture()->GetID());
-//             shader.setInt("diffuseTex", 0);
-//         } else {
-//             shader.setBool("useTexture", false);
-//         }
-
-//         mesh.Render();
-//     }
-// }
 
 void Object::Render(Shader& shader, unsigned int count)
 {
-    for (auto &mesh : m_meshes)
-    {
-        auto material = GetMaterial(mesh.materialName);
+    // FIXME:
 
-        // --- Basic material properties ---
-        shader.setFloat("opacity", material->GetOpacity());
+    // for (auto &mesh : m_meshes)
+    // {
+    //     auto material = GetMaterial(mesh.GetMaterialName());
 
-        // Albedo (base color)
-        shader.setVec3("albedo", material->GetDiffuseColor());
+    //     // --- Basic material properties ---
+    //     shader.setFloat("opacity", material->GetOpacity());
 
-        // Metallic and roughness (defaults)
-        shader.setFloat("metallic", 0.8f);
-        shader.setFloat("roughness", 0.5f);
-        shader.setFloat("ao", 1.0f); // default ambient occlusion if none
+    //     // Albedo (base color)
+    //     shader.setVec3("albedo", material->GetDiffuseColor());
 
-        // --- Optional textures ---
-        int texUnit = 0;
+    //     // Metallic and roughness (defaults)
+    //     shader.setFloat("metallic", 0.8f);
+    //     shader.setFloat("roughness", 0.5f);
+    //     shader.setFloat("ao", 1.0f); // default ambient occlusion if none
 
-        // Albedo texture
-        if (material->HasDiffuseTexture()) {
-            shader.setBool("useAlbedoMap", true);
-            glActiveTexture(GL_TEXTURE0 + texUnit);
-            glBindTexture(GL_TEXTURE_2D, material->GetDiffuseTexture()->GetID());
-            shader.setInt("albedoTex", texUnit++);
-        } else {
-            shader.setBool("useAlbedoMap", false);
-        }
+    //     // --- Optional textures ---
+    //     int texUnit = 0;
 
-        // Metallic texture
-        // if (material->HasMetallicTexture()) {
-        if (false) {
-            shader.setBool("useMetallicMap", true);
-            glActiveTexture(GL_TEXTURE0 + texUnit);
-            // glBindTexture(GL_TEXTURE_2D, material->GetMetallicTexture()->GetID());
-            shader.setInt("metallicTex", texUnit++);
-        } else {
-            shader.setBool("useMetallicMap", false);
-        }
+    //     // Albedo texture
+    //     if (material->HasDiffuseTexture()) {
+    //         shader.setBool("useAlbedoMap", true);
+    //         glActiveTexture(GL_TEXTURE0 + texUnit);
+    //         glBindTexture(GL_TEXTURE_2D, material->GetDiffuseTexture()->GetID());
+    //         shader.setInt("albedoTex", texUnit++);
+    //     } else {
+    //         shader.setBool("useAlbedoMap", false);
+    //     }
 
-        // Roughness texture
-        // if (material->HasRoughnessTexture()) {
-        if (false) {
-            shader.setBool("useRoughnessMap", true);
-            glActiveTexture(GL_TEXTURE0 + texUnit);
-            // glBindTexture(GL_TEXTURE_2D, material->GetRoughnessTexture()->GetID());
-            shader.setInt("roughnessTex", texUnit++);
-        } else {
-            shader.setBool("useRoughnessMap", false);
-        }
+    //     // Metallic texture
+    //     // if (material->HasMetallicTexture()) {
+    //     if (false) {
+    //         shader.setBool("useMetallicMap", true);
+    //         glActiveTexture(GL_TEXTURE0 + texUnit);
+    //         // glBindTexture(GL_TEXTURE_2D, material->GetMetallicTexture()->GetID());
+    //         shader.setInt("metallicTex", texUnit++);
+    //     } else {
+    //         shader.setBool("useMetallicMap", false);
+    //     }
 
-        // AO texture
-        // if (material->HasAoTexture()) {
-        if (false) {
-            shader.setBool("useAoMap", true);
-            glActiveTexture(GL_TEXTURE0 + texUnit);
-            // glBindTexture(GL_TEXTURE_2D, material->GetAoTexture()->GetID());
-            shader.setInt("aoTex", texUnit++);
-        } else {
-            shader.setBool("useAoMap", false);
-        }
+    //     // Roughness texture
+    //     // if (material->HasRoughnessTexture()) {
+    //     if (false) {
+    //         shader.setBool("useRoughnessMap", true);
+    //         glActiveTexture(GL_TEXTURE0 + texUnit);
+    //         // glBindTexture(GL_TEXTURE_2D, material->GetRoughnessTexture()->GetID());
+    //         shader.setInt("roughnessTex", texUnit++);
+    //     } else {
+    //         shader.setBool("useRoughnessMap", false);
+    //     }
 
-        // --- Render mesh ---
-        mesh.Render(count);
-    }
+    //     // AO texture
+    //     // if (material->HasAoTexture()) {
+    //     if (false) {
+    //         shader.setBool("useAoMap", true);
+    //         glActiveTexture(GL_TEXTURE0 + texUnit);
+    //         // glBindTexture(GL_TEXTURE_2D, material->GetAoTexture()->GetID());
+    //         shader.setInt("aoTex", texUnit++);
+    //     } else {
+    //         shader.setBool("useAoMap", false);
+    //     }
+
+    //     // --- Render mesh ---
+    //     mesh.Render(count);
+    // }
 }
 
 }
