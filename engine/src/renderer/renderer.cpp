@@ -170,7 +170,7 @@ void Renderer::RenderScene(Shader &shader) {
         b.prepare(models.data(), models.size());
         if (!prevState) {
             std::cout << "[DEBUG] enabling batch" << std::endl;
-            m.object->EnableBatch(b.m_instanceBuffer.get());
+            m.object->EnableBatch(b.m_instanceBuffer);
         }
         m.object->Render(shader, batchItems.size());
     }
