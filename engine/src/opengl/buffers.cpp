@@ -67,9 +67,7 @@ namespace OpenGL {
         : ArrayBuffer(usage) {}
 
     VertexArray::VertexArray() : m_id(0) {
-        std::cout << "Vertex Array init" << std::endl;
         glGenVertexArrays(1, &m_id);
-        std::cout << "m_id: " << m_id << std::endl;
     }
 
     VertexArray::~VertexArray() {
@@ -81,7 +79,6 @@ namespace OpenGL {
     }
 
     void VertexArray::Bind() {
-        std::cout << "Binding VAO" << std::endl;
         assert(m_id != 0 && "Vertex Array wasn't initialized.");
 
         glBindVertexArray(m_id);
