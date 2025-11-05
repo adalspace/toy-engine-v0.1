@@ -38,7 +38,7 @@ public:
         lightEntity = scene->CreateEntity();
         lightEntity.AddComponent<Transform>(glm::vec3(5.f, 5.f, 5.f), glm::vec3(0.f));
         lightEntity.AddComponent<light>(light::LightType::DIRECTIONAL, glm::vec3(1.f, 1.f, 1.f), 1.5f);
-        lightEntity.AddComponent<mesh>(std::shared_ptr<Object>(lightObj));
+        lightEntity.AddComponent<mesh>(std::shared_ptr<Renderable>(lightObj));
         assert(lightEntity.HasComponent<mesh>() && "light doesn't have any mesh!");
 
         cameraEntity = scene->CreateEntity();
@@ -50,7 +50,7 @@ public:
         Object* targetObj = Object::LoadFile("./assets/wizard/wizard.obj");
         modelEntity = scene->CreateEntity();
         modelEntity.AddComponent<Transform>(glm::vec3(0.f, 0.0f, 0.f));
-        modelEntity.AddComponent<mesh>(std::shared_ptr<Object>(targetObj));
+        modelEntity.AddComponent<mesh>(std::shared_ptr<Renderable>(targetObj));
         modelEntity.AddComponent<rotate>();
         assert(modelEntity.HasComponent<mesh>() && "model doesn't have any mesh!");
 
@@ -77,7 +77,7 @@ public:
 
         Object* floorObj = Object::LoadFile("./assets/common/plane/plane.obj");
         auto floorEntt = scene->CreateEntity();
-        floorEntt.AddComponent<Transform>(glm::vec3(0.f));
+        floorEntt.AddComponent<Transform>(glm::vec3(0.f), glm::vec3(2.f), glm::vec3(5.f));
         floorEntt.AddComponent<mesh>(std::shared_ptr<Object>(floorObj));
         assert(floorEntt.HasComponent<mesh>() && "floor doesn't have any mesh component!");
 
