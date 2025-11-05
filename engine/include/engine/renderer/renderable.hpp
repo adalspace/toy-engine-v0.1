@@ -11,7 +11,7 @@ class Renderer;
 
 class ENGINE_API Renderable {
 protected:
-    Renderable();
+    Renderable() = default;
     virtual ~Renderable() = default;
 
 private:

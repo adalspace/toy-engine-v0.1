@@ -2,7 +2,7 @@
 #define COMPONENTS_MESH_H_
 
 #include <memory>
-#include "engine/renderer/renderable.h"
+#include "engine/renderer/renderable.hpp"
 
 #include "engine/export.h"
 
