@@ -4,13 +4,16 @@
 #include "engine/3d/vertex.hpp"
 #include "engine/3d/material.hpp"
 #include "engine/opengl/buffers.h"
-#include "engine/renderer/renderable.h"
+#include "engine/renderer/renderable.hpp"
 
 #include "engine/export.h"
 
 namespace Core {
 
+class MeshGroup;
+
 class ENGINE_API Mesh : public Renderable, public OpenGL::VertexArray {
+    friend class Core::MeshGroup;
 public:
     Mesh() = default;
     Mesh(const Material& material) : m_material(material) {}
@@ -43,6 +46,9 @@ public:
         m_indices.PushBack(b);
         m_indices.PushBack(c);
     }
+
+    const auto GetVerticesCount() const { return m_vertices.GetSize(); }
+    const auto GetIndicesCount() const { return m_indices.GetSize(); }
 public:
     inline const Material& GetMaterial() const { return m_material; }
 private:
@@ -79,11 +85,11 @@ private:
         // ---------- UPLOAD -----------
         Bind();
 
-        VertexBufferData(m_vertexBuffer.size() * sizeof(Vertex), m_vertexBuffer.data());
+        VertexBufferData(m_vertices.GetSize() * sizeof(Vertex), m_vertices.Begin());
 
         // Upload indices
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer.size() * sizeof(unsigned int), m_indexBuffer.data(), GL_DYNAMIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.GetSize() * sizeof(unsigned int), m_indices.Begin(), GL_DYNAMIC_DRAW);
 
         // TODO: delete after ebo moved in VertexArray
         // glBindBuffer(GL_DYNAMIC_DRAW, 0);
@@ -154,7 +160,7 @@ private:
         // if (count > 1) {
         //     glDrawElementsInstanced(GL_TRIANGLES, static_cast<GLsizei>(m_indexBuffer.size()), GL_UNSIGNED_INT, 0, count);
         // } else {
-        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indexBuffer.size()), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.GetSize()), GL_UNSIGNED_INT, 0);
         // }
         Unbind();
     }
@@ -165,8 +171,6 @@ private:
     // TODO: move out
     // ------- RENDERING ---------
     unsigned int m_ebo;
-    std::vector<Vertex> m_vertexBuffer;
-    std::vector<unsigned int> m_indexBuffer;
     // ------- RENDERING ---------
 
     Material m_material;
@@ -178,9 +182,21 @@ private:
 // In future we might want to add support for global material
 // that can affect all sub materials, aka this class
 // will act like Parent Mesh that contains Child Meshes
-class ENGINE_API MeshGroup : public Array<Mesh> {
+class ENGINE_API MeshGroup : public Array<Mesh>, public Renderable {
 public:
     MeshGroup() {}
+
+    void Prepare() override {
+        for (auto it = Begin(); it != End(); ++it) {
+            it->Prepare();
+        }
+    }
+
+    void Render(Shader& shader) {
+        for (auto it = Begin(); it != End(); ++it) {
+            it->Render(shader);
+        }
+    }
 
 public:
     inline Mesh* FindMeshByMaterial(const Material& material) {
