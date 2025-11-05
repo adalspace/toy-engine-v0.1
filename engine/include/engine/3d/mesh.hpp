@@ -3,12 +3,14 @@
 #include "engine/3d/array.hpp"
 #include "engine/3d/vertex.hpp"
 #include "engine/3d/material.hpp"
+#include "engine/opengl/buffers.h"
+#include "engine/renderer/renderable.h"
 
 #include "engine/export.h"
 
 namespace Core {
 
-class ENGINE_API Mesh {
+class ENGINE_API Mesh : public Renderable, public OpenGL::VertexArray {
 public:
     Mesh() = default;
     Mesh(const Material& material) : m_material(material) {}
@@ -44,8 +46,128 @@ public:
 public:
     inline const Material& GetMaterial() const { return m_material; }
 private:
+    void Prepare() override {
+        // ---------- INIT   -----------
+        m_ebo = 0;
+    
+        // glGenVertexArrays(1, &m_vao);
+        // glGenBuffers(1, &m_vbo);
+        glGenBuffers(1, &m_ebo);
+
+        Bind();
+
+        SetupVertexBuffer(GL_DYNAMIC_DRAW);
+
+        // EBO (index buffer)
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 0, nullptr, GL_DYNAMIC_DRAW);
+
+        // attributes
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, position)));
+        glEnableVertexAttribArray(0);
+
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, normal)));
+        glEnableVertexAttribArray(1);
+        
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, uv)));
+        glEnableVertexAttribArray(2);
+
+        // TODO: delete after ebo moved in VertexArray
+        // glBindBuffer(GL_DYNAMIC_DRAW, 0);
+        Unbind();
+
+        // ---------- UPLOAD -----------
+        Bind();
+
+        VertexBufferData(m_vertexBuffer.size() * sizeof(Vertex), m_vertexBuffer.data());
+
+        // Upload indices
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer.size() * sizeof(unsigned int), m_indexBuffer.data(), GL_DYNAMIC_DRAW);
+
+        // TODO: delete after ebo moved in VertexArray
+        // glBindBuffer(GL_DYNAMIC_DRAW, 0);
+        Unbind();
+    }
+
+    void Render(Shader& shader) override {
+        // --- Basic material properties ---
+        shader.setFloat("opacity", m_material.GetOpacity());
+
+        // Albedo (base color)
+        shader.setVec3("albedo", m_material.GetDiffuseColor());
+
+        // Metallic and roughness (defaults)
+        shader.setFloat("metallic", 0.8f);
+        shader.setFloat("roughness", 0.5f);
+        shader.setFloat("ao", 1.0f); // default ambient occlusion if none
+
+        // --- Optional textures ---
+        int texUnit = 0;
+
+        // Albedo texture
+        if (m_material.HasDiffuseTexture()) {
+            shader.setBool("useAlbedoMap", true);
+            glActiveTexture(GL_TEXTURE0 + texUnit);
+            glBindTexture(GL_TEXTURE_2D, m_material.GetDiffuseTexture()->GetID());
+            shader.setInt("albedoTex", texUnit++);
+        } else {
+            shader.setBool("useAlbedoMap", false);
+        }
+
+        // Metallic texture
+        // if (m_material.HasMetallicTexture()) {
+        if (false) {
+            shader.setBool("useMetallicMap", true);
+            glActiveTexture(GL_TEXTURE0 + texUnit);
+            // glBindTexture(GL_TEXTURE_2D, m_material.GetMetallicTexture()->GetID());
+            shader.setInt("metallicTex", texUnit++);
+        } else {
+            shader.setBool("useMetallicMap", false);
+        }
+
+        // Roughness texture
+        // if (m_material.HasRoughnessTexture()) {
+        if (false) {
+            shader.setBool("useRoughnessMap", true);
+            glActiveTexture(GL_TEXTURE0 + texUnit);
+            // glBindTexture(GL_TEXTURE_2D, m_material.GetRoughnessTexture()->GetID());
+            shader.setInt("roughnessTex", texUnit++);
+        } else {
+            shader.setBool("useRoughnessMap", false);
+        }
+
+        // AO texture
+        // if (m_material.HasAoTexture()) {
+        if (false) {
+            shader.setBool("useAoMap", true);
+            glActiveTexture(GL_TEXTURE0 + texUnit);
+            // glBindTexture(GL_TEXTURE_2D, m_material.GetAoTexture()->GetID());
+            shader.setInt("aoTex", texUnit++);
+        } else {
+            shader.setBool("useAoMap", false);
+        }
+
+        // --- Render mesh ---
+        Bind();
+        // TODO: support batch render
+        // if (count > 1) {
+        //     glDrawElementsInstanced(GL_TRIANGLES, static_cast<GLsizei>(m_indexBuffer.size()), GL_UNSIGNED_INT, 0, count);
+        // } else {
+        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indexBuffer.size()), GL_UNSIGNED_INT, 0);
+        // }
+        Unbind();
+    }
+private:
     Array<Vertex> m_vertices { VERTICES_INITIAL_CAPACITY };
     Array<uint32_t> m_indices { INDICES_INITIAL_CAPACITY };
+
+    // TODO: move out
+    // ------- RENDERING ---------
+    unsigned int m_ebo;
+    std::vector<Vertex> m_vertexBuffer;
+    std::vector<unsigned int> m_indexBuffer;
+    // ------- RENDERING ---------
 
     Material m_material;
 
