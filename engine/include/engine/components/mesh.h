@@ -2,13 +2,13 @@
 #define COMPONENTS_MESH_H_
 
 #include <memory>
+#include "engine/renderer/renderable.h"
 
-#include "engine/renderer/wavefront.h"
 #include "engine/export.h"
 
 namespace Core {
 struct ENGINE_API mesh {
-    std::shared_ptr<Object> object;
+    std::shared_ptr<Renderable> mesh;
 };
 }
 
