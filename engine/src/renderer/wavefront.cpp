@@ -301,6 +301,7 @@ Object* Object::LoadFile(const std::string& filename) {
                 x /= w; y /= w; z /= w;
             }
             obj->m_vertices.emplace_back(x, y, z);
+
             break;
         }
 
@@ -375,11 +376,10 @@ Object* Object::LoadFile(const std::string& filename) {
 
     file.close();
 
-    // FIXME:
-
-    // for (auto it = obj->Begin(); it != obj->End(); ++it) {
-    //     it->Upload();
-    // }
+    unsigned int i = 0;
+    for (auto it = obj->Begin(); it != obj->End(); ++it, ++i) {
+        std::cout << "Mesh #" << i << " primitives count: " << it->GetIndicesCount() / 3 << std::endl;
+    }
 
     return obj;
 }
