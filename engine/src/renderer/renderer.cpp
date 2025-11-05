@@ -57,6 +57,10 @@ Renderer::Renderer(std::shared_ptr<Scene> scene)
 
 void Renderer::Init() {
     GenerateShadowMaps();
+
+    for (auto [entt, mesh] : m_scene->m_registry.view<mesh>().each()) {
+        mesh.mesh->Prepare();
+    }
 }
 
 void Renderer::OnWindowResized(int w, int h) {
@@ -170,14 +174,15 @@ void Renderer::RenderScene(Shader &shader) {
         b.prepare(models.data(), models.size());
         if (!prevState) {
             std::cout << "[DEBUG] enabling batch" << std::endl;
-            m.object->EnableBatch(b.m_instanceBuffer);
+            // TODO:
+            // m.object->EnableBatch(b.m_instanceBuffer);
         }
-        m.object->Render(shader, batchItems.size());
+        m.mesh->Render(shader);
     }
     shader.setBool("u_isInstanced", false);
 
     for (auto [entity, transf, mesh] : m_scene->m_registry.view<Transform, mesh>(entt::exclude<batch, batch::item>).each()) {
-        if (mesh.object == nullptr) {
+        if (mesh.mesh == nullptr) {
             std::cerr << "WARN: Entity doesn't have a mesh to render" << std::endl;
             return;
         }
@@ -196,7 +201,7 @@ void Renderer::RenderScene(Shader &shader) {
 
         shader.setMat4("u_model", m_model);
 
-        mesh.object->Render(shader, 1);
+        mesh.mesh->Render(shader);
     }
 }
 
