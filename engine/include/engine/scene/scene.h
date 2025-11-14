@@ -6,6 +6,8 @@
 namespace Core {
 
 class Entity;
+class Renderer;
+class Prefab;
 
 class ENGINE_API Scene {
 public:
@@ -14,8 +16,9 @@ public:
     Entity CreateEntity();
 private:
     entt::registry m_registry;
-    friend class Renderer;
-    friend class Entity;
+    friend class Core::Renderer;
+    friend class Core::Entity;
+    friend class Core::Prefab;
 };
 
 class ENGINE_API Entity {

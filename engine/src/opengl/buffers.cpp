@@ -68,6 +68,7 @@ namespace OpenGL {
 
     VertexArray::VertexArray() : m_id(0) {
         glGenVertexArrays(1, &m_id);
+        std::cout << "[DEBUG] VArr initialized: " << m_id << std::endl;
     }
 
     VertexArray::~VertexArray() {
@@ -81,6 +82,7 @@ namespace OpenGL {
     void VertexArray::Bind() {
         assert(m_id != 0 && "Vertex Array wasn't initialized.");
 
+        std::cout << "[DEBUG] VArr binding: " << m_id << std::endl;
         glBindVertexArray(m_id);
     }
 

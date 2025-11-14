@@ -24,7 +24,7 @@ public:
         for (unsigned int i = 0; i < m_size; ++i) {
             m_items[i].~Item();
         }
-        delete m_items;
+        ::operator delete[](m_items);
     }
 
     Array(Array&& other) {
@@ -35,6 +35,25 @@ public:
         other.m_size = 0;
         other.m_capacity = 0;
         other.m_items = nullptr;
+    }
+
+    Array& operator=(Array&& other) noexcept {
+        if (this != &other) {
+            // Destroy current contents
+            for (unsigned int i = 0; i < m_size; ++i)
+                m_items[i].~Item();
+            ::operator delete[](m_items);
+
+            // Move from other
+            m_items = other.m_items;
+            m_size = other.m_size;
+            m_capacity = other.m_capacity;
+
+            other.m_items = nullptr;
+            other.m_size = 0;
+            other.m_capacity = 0;
+        }
+        return *this;
     }
 
     Array(const Array&) = delete;
@@ -79,11 +98,11 @@ private:
 
         std::uninitialized_move(
             std::make_move_iterator(m_items),
-            std::make_move_iterator(m_items + m_capacity),
+            std::make_move_iterator(m_items + m_size),
             newItems
         );
 
-        for (unsigned int i = 0; i < m_capacity; ++i) {
+        for (unsigned int i = 0; i < m_size; ++i) {
             m_items[i].~Item();
         }
 

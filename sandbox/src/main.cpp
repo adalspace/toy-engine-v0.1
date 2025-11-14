@@ -17,7 +17,8 @@
 #include "engine/components/camera.h"
 #include "engine/components/mesh.h"
 #include "engine/components/rotate.h"
-#include "engine/components/batch.h"
+
+#include "engine/3d/prefab.hpp"
 
 #include "engine/scene/scene.h"
 #include "engine/input/input.h"
@@ -55,13 +56,13 @@ public:
         assert(modelEntity.HasComponent<mesh>() && "model doesn't have any mesh!");
 
         // Cube template (use shared object to avoid reloading 1000 times)
-        std::shared_ptr<Object> cubeObj = std::shared_ptr<Object>(Object::LoadFile("./assets/grass_block/grass_block.obj"));
+        auto cubeObj = Object::LoadFile("./assets/grass_block/grass_block.obj");
         auto batchEntt = scene->CreateEntity();
-        auto& cubeBatch = batchEntt.AddComponent<batch>();
+        auto& cubeBatch = batchEntt.AddComponent<Prefab>(std::move(*cubeObj));
         // auto& cubeBatch = batchEntt.GetComponent<batch>();
-        batchEntt.AddComponent<mesh>(cubeObj);
-        assert(batchEntt.HasComponent<batch>() && "batch doesn't have any batch component!");
-        assert(batchEntt.HasComponent<mesh>() && "batch doesn't have any mesh component!");
+        // batchEntt.AddComponent<mesh>(cubeObj);
+        // assert(batchEntt.HasComponent<batch>() && "batch doesn't have any batch component!");
+        // assert(batchEntt.HasComponent<mesh>() && "batch doesn't have any mesh component!");
         // Generate 1000 random cubes
         for (int i = 0; i < 100; ++i) {
             auto cubeEntity = scene->CreateEntity();
@@ -72,12 +73,12 @@ public:
 
             cubeEntity.AddComponent<Transform>(glm::vec3(x, y, z));
             cubeEntity.AddComponent<rotate>();
-            cubeEntity.AddComponent<batch::item>(cubeBatch.id());
+            cubeEntity.AddComponent<batch::item>(cubeBatch.GetID());
         }
 
         Object* floorObj = Object::LoadFile("./assets/common/plane/plane.obj");
         auto floorEntt = scene->CreateEntity();
-        floorEntt.AddComponent<Transform>(glm::vec3(0.f), glm::vec3(2.f), glm::vec3(5.f));
+        floorEntt.AddComponent<Transform>(glm::vec3(0.f));
         floorEntt.AddComponent<mesh>(std::shared_ptr<Object>(floorObj));
         assert(floorEntt.HasComponent<mesh>() && "floor doesn't have any mesh component!");
 

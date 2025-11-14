@@ -19,6 +19,7 @@ void batch::prepare(glm::mat4 *instances, unsigned int count) {
         m_instance_count = count;
     } else if (count > m_instance_count) {
         // Optional: reallocate only if you *really* have more instances than before
+        // FIXME: what the hell is m_instance_vbo
         glBindBuffer(GL_ARRAY_BUFFER, m_instance_vbo);
         OpenGL::Buffer::Bind(m_instanceBuffer);
         OpenGL::Buffer::Data(m_instanceBuffer, nullptr, sizeof(glm::mat4) * count);

@@ -16,7 +16,7 @@ protected:
 
 private:
     virtual void Prepare() = 0;
-    virtual void Render(Shader& shader) = 0;
+    virtual void Render(Shader& shader, Scene& scene, unsigned int count = 1) = 0;
 
     friend class Core::Renderer;
 };

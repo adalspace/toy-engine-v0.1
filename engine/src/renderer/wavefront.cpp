@@ -344,13 +344,16 @@ Object* Object::LoadFile(const std::string& filename) {
                 Vertex v;
                 v.position = obj->m_vertices[vi];
                 v.normal = (ni >= 0) ? obj->m_normals[ni] : glm::vec3(0.0f);
-                v.uv = (ti >= 0) ? obj->m_texCoords[ti] : glm::vec3(0.0f);
+                v.uv = (ti >= 0) ? obj->m_texCoords[ti] : glm::vec2(0.0f);
 
                 uint32_t idx = mesh.PushVertex(v);
                 faceIndices.push_back(idx);
                 // mesh.m_vertexBuffer.emplace_back(vert, norm, texCoord);
                 // mesh.m_indexBuffer.push_back(mesh.m_vertexBuffer.size() - 1);
             }
+
+            // [0, 1, 2]
+            //     ^
 
             // triangulate polygon (fan)
             if (faceIndices.size() >= 3) {

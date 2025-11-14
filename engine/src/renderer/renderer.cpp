@@ -20,6 +20,7 @@
 #include "engine/components/light.h"
 #include "engine/components/mesh.h"
 #include "engine/components/batch.h"
+#include "engine/3d/prefab.hpp"
 
 namespace Core {
 
@@ -60,6 +61,10 @@ void Renderer::Init() {
 
     for (auto [entt, mesh] : m_scene->m_registry.view<mesh>().each()) {
         mesh.mesh->Prepare();
+    }
+
+    for (auto [entt, prefab] : m_scene->m_registry.view<Prefab>().each()) {
+        prefab.Prepare();
     }
 }
 
@@ -142,46 +147,54 @@ void Renderer::UpdateView() {
 }
 
 void Renderer::RenderScene(Shader &shader) {
-    std::unordered_map<unsigned int, std::vector<entt::entity>> batches;
+    // std::unordered_map<unsigned int, std::vector<entt::entity>> batches;
 
-    for (auto [entt, item] : m_scene->m_registry.view<batch::item>().each()) {
-        if (batches.find(item.batchId) == batches.end())
-            batches.insert(std::make_pair(item.batchId, std::vector<entt::entity>()));
+    // for (auto [entt, item] : m_scene->m_registry.view<batch::item>().each()) {
+    //     if (batches.find(item.batchId) == batches.end())
+    //         batches.insert(std::make_pair(item.batchId, std::vector<entt::entity>()));
 
-        batches[item.batchId].push_back(entt);
-    }
+    //     batches[item.batchId].push_back(entt);
+    // }
 
-    shader.setBool("u_isInstanced", true);
+    // shader.setBool("u_isInstanced", true);
+    // shader.setBool("isLight", false);
+    // shader.setVec3("currentLightColor", glm::vec3(0.f));
+    // for (auto [entt, b, m] : m_scene->m_registry.view<batch, mesh>().each()) {
+    //     // check if have items for batch render
+    //     if (batches.find(b.id()) == batches.end()) continue;
+
+    //     auto &batchItems = batches[b.id()];
+
+    //     std::vector<glm::mat4> models;
+    //     models.reserve(batchItems.size());
+
+    //     for (auto item : batchItems) {
+    //         auto &t = m_scene->m_registry.get<Transform>(item);
+    //         glm::mat4 rotation = glm::yawPitchRoll(t.rotation.y, t.rotation.x, t.rotation.z);
+    //         auto itemModel = glm::translate(glm::mat4(1.f), t.position) * rotation;
+    //         models.push_back(itemModel);
+    //     }
+
+    //     auto prevState = b.Initialized();
+    //     b.prepare(models.data(), models.size());
+    //     if (!prevState) {
+    //         std::cout << "[DEBUG] enabling batch" << std::endl;
+    //         // TODO:
+    //         // m.object->EnableBatch(b.m_instanceBuffer);
+    //     }
+    //     m.mesh->Render(shader);
+    // }
+    // shader.setBool("u_isInstanced", false);
+
+    // light cannot be batch rendered (yet :3)
     shader.setBool("isLight", false);
     shader.setVec3("currentLightColor", glm::vec3(0.f));
-    for (auto [entt, b, m] : m_scene->m_registry.view<batch, mesh>().each()) {
-        // check if have items for batch render
-        if (batches.find(b.id()) == batches.end()) continue;
-
-        auto &batchItems = batches[b.id()];
-
-        std::vector<glm::mat4> models;
-        models.reserve(batchItems.size());
-
-        for (auto item : batchItems) {
-            auto &t = m_scene->m_registry.get<Transform>(item);
-            glm::mat4 rotation = glm::yawPitchRoll(t.rotation.y, t.rotation.x, t.rotation.z);
-            auto itemModel = glm::translate(glm::mat4(1.f), t.position) * rotation;
-            models.push_back(itemModel);
-        }
-
-        auto prevState = b.Initialized();
-        b.prepare(models.data(), models.size());
-        if (!prevState) {
-            std::cout << "[DEBUG] enabling batch" << std::endl;
-            // TODO:
-            // m.object->EnableBatch(b.m_instanceBuffer);
-        }
-        m.mesh->Render(shader);
+    for (auto [entity, prefab] : m_scene->m_registry.view<Prefab>().each()) {
+        prefab.Render(shader, *m_scene.get(), 1);
     }
-    shader.setBool("u_isInstanced", false);
 
-    for (auto [entity, transf, mesh] : m_scene->m_registry.view<Transform, mesh>(entt::exclude<batch, batch::item>).each()) {
+    // entt::exclude<batch, batch::item>
+    for (auto [entity, transf, mesh] : m_scene->m_registry.view<Transform, mesh>().each()) {
         if (mesh.mesh == nullptr) {
             std::cerr << "WARN: Entity doesn't have a mesh to render" << std::endl;
             return;
@@ -201,7 +214,7 @@ void Renderer::RenderScene(Shader &shader) {
 
         shader.setMat4("u_model", m_model);
 
-        mesh.mesh->Render(shader);
+        mesh.mesh->Render(shader, *m_scene.get(), 1);
     }
 }
 

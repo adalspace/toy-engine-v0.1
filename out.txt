@@ -1,0 +1,3685 @@
+GL_VENDOR:   NVIDIA Corporation
+GL_RENDERER: NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2
+GL_VERSION:  4.6.0 NVIDIA 550.163.01
+[DEBUG] VArr initialized: 1
+Object name: Sphere
+Vertices count: 482
+Normals count: 530
+TexCoords count: 559
+Meshes count: 1
+Materials count: 1
+Mesh #0 primitives count: 960
+Loaded texture under './assets/grass_block/textures/bottom.jpg' with size of 8 bytes
+Loaded texture under './assets/grass_block/textures/side.jpg' with size of 8 bytes
+Loaded texture under './assets/grass_block/textures/top.jpg' with size of 8 bytes
+[DEBUG] VArr initialized: 2
+[DEBUG] VArr initialized: 3
+[DEBUG] VArr initialized: 2
+Object name: Cube
+Vertices count: 8
+Normals count: 6
+TexCoords count: 4
+Meshes count: 3
+Materials count: 3
+Mesh #0 primitives count: 8
+Mesh #1 primitives count: 2
+Mesh #2 primitives count: 2
+ModelViewer initialized
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Invalid VAO/VBO/pointer usage.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Invalid VAO/VBO/pointer usage.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Invalid VAO/VBO/pointer usage.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 1
+[DEBUG] <EVENT> Window resized to 1024x768
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] <EVENT> Window resized to 1916x1030
+[DEBUG] <EVENT> Window resized to 1916x1030
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] <EVENT> Window closing
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 3
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. VAO names must be generated with glGenVertexArrays before they can be bound or used.
+Source: API
+Type: Error
+Severity: high
+
+---------------
+Debug message (1282): GL_INVALID_OPERATION error generated. Array object is not active.
+Source: API
+Type: Error
+Severity: high
+
+[DEBUG] VArr binding: 2
+[DEBUG] VArr binding: 1

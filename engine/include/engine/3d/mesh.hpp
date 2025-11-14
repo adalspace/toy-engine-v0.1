@@ -96,7 +96,7 @@ private:
         Unbind();
     }
 
-    void Render(Shader& shader) override {
+    void Render(Shader& shader, Scene& scene, unsigned int count) override {
         // --- Basic material properties ---
         shader.setFloat("opacity", m_material.GetOpacity());
 
@@ -156,12 +156,11 @@ private:
 
         // --- Render mesh ---
         Bind();
-        // TODO: support batch render
-        // if (count > 1) {
-        //     glDrawElementsInstanced(GL_TRIANGLES, static_cast<GLsizei>(m_indexBuffer.size()), GL_UNSIGNED_INT, 0, count);
-        // } else {
-        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.GetSize()), GL_UNSIGNED_INT, 0);
-        // }
+        if (count > 1) {
+            glDrawElementsInstanced(GL_TRIANGLES, static_cast<GLsizei>(m_indices.GetSize()), GL_UNSIGNED_INT, 0, count);
+        } else {
+            glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.GetSize()), GL_UNSIGNED_INT, 0);
+        }
         Unbind();
     }
 private:
@@ -192,9 +191,9 @@ public:
         }
     }
 
-    void Render(Shader& shader) {
+    void Render(Shader& shader, Scene& scene, unsigned int count) {
         for (auto it = Begin(); it != End(); ++it) {
-            it->Render(shader);
+            it->Render(shader, scene, count);
         }
     }
 
