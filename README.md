@@ -1,8 +1,18 @@
-
-
 # Project Description
 
-This is a basic future game engine for OpenGL 3D rendered games
+Toy project to understand how 3D engines work.
+
+<p align="center">
+  <img src="assets/github/wizard-demo.png" alt="Toy Engine Wizard Demo" width="800">
+</p>
+
+It includes several custom built features like:
+
+- Entity Component System powered by [EnTT](https://github.com/skypjack/entt) with texture loading and all required stuff
+- Instance (Batch) rendering using OpenGL's instance buffers
+- Custom C++ basics (prelude) implementations like arrays and file loaders
+- Self-written Wavefront `.obj` model files parser
+- Input handling, camera movements etc.
 
 ## Building on Windows
 
