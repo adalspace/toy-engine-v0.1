@@ -18,7 +18,7 @@ public:
     Mesh() = default;
     Mesh(const Material& material) : m_material(material) {}
 
-    Mesh(const Mesh&) = delete;
+    Mesh(const Mesh&) = default;
     Mesh(Mesh&&) = default;
 public:
     template<typename... Args>

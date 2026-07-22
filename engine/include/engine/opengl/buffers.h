@@ -22,11 +22,33 @@ namespace OpenGL {
         inline const BufferID GetID() const { return m_buffer; }
         inline const BufferTarget GetTarget() const { return m_target; }
     public:
-        static inline const bool IsBound(const Buffer& buffer) { return m_bound == buffer.GetID(); }
-        static inline const bool IsBound(const Buffer* buffer) { return buffer && m_bound == buffer->GetID(); }
-        // static inline void Bind(const Buffer& buffer) { glBindBuffer(buffer.GetTarget(), buffer.GetID()); }
-        static inline void Bind(const Buffer* buffer) { glBindBuffer(buffer->GetTarget(), buffer->GetID()); m_bound = buffer->GetID(); }
-        static inline void Unbind(const Buffer* buffer) { glBindBuffer(buffer->GetTarget(), 0); m_bound = 0; }
+		static bool IsBound(const Buffer& buffer) noexcept
+		{
+			return m_bound == buffer.GetID();
+		}
+
+		static bool IsBound(const Buffer* buffer) noexcept
+		{
+			return buffer != nullptr && m_bound == buffer->GetID();
+		}
+
+		static void Bind(const Buffer* buffer)
+		{
+			assert(buffer != nullptr && "Trying to bind a null Buffer");
+
+			glBindBuffer(buffer->GetTarget(), buffer->GetID());
+			m_bound = buffer->GetID();
+		}
+
+		static void Unbind(const Buffer* buffer)
+		{
+			assert(buffer != nullptr && "Trying to unbind a null Buffer");
+
+			glBindBuffer(buffer->GetTarget(), 0);
+
+			if (m_bound == buffer->GetID())
+				m_bound = 0;
+		}
 
         static void Data(const Buffer* buffer, const void* data, size_t size);
         static void SubData(const Buffer* buffer, const void *data, size_t size, size_t offset);
@@ -38,7 +60,7 @@ namespace OpenGL {
         BufferTarget m_target;
         BufferUsage m_usage;
     private:
-        static BufferID m_bound;
+		inline static BufferID m_bound = 0;
     };
 
     // TODO: Implement custom fields structuring via ordered_map?

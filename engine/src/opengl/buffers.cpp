@@ -6,7 +6,7 @@ namespace Core {
 
 namespace OpenGL {
 
-    BufferID Buffer::m_bound = 0;
+    // BufferID Buffer::m_bound = 0;
 
     Buffer::Buffer(BufferTarget target, BufferUsage usage)
         : m_target(target), m_usage(usage)

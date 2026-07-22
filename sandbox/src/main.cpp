@@ -78,7 +78,7 @@ public:
 
         Object* floorObj = Object::LoadFile("./assets/common/plane/plane.obj");
         auto floorEntt = scene->CreateEntity();
-        floorEntt.AddComponent<Transform>(glm::vec3(0.f));
+        floorEntt.AddComponent<Transform>(glm::vec3(0.f, -0.5f, 0.f));
         floorEntt.AddComponent<mesh>(std::shared_ptr<Object>(floorObj));
         assert(floorEntt.HasComponent<mesh>() && "floor doesn't have any mesh component!");
 

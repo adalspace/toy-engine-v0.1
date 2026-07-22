@@ -1,0 +1,12 @@
+[submodule "vendored/SDL3"]
+	path = vendored/SDL3
+	url = https://github.com/libsdl-org/SDL.git
+[submodule "vendored/glew"]
+	path = vendored/glew
+	url = https://github.com/nigels-com/glew.git
+[submodule "vendored/glm"]
+	path = vendored/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "vendored/EnTT"]
+	path = vendored/EnTT
+	url = https://github.com/skypjack/entt.git
