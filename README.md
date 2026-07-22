@@ -3,8 +3,8 @@
 Toy project to understand how 3D engines work.
 
 <p align="center">
-  <img src="assets/github/wizard-demo.png" alt="Toy Engine Wizard Demo" width="400">
-  <img src="assets/github/scanned-crashed-car.png" alt="Toy Engine Crashed Car Demo" width="400">
+  <img src="assets/github/wizard-demo.png" alt="Toy Engine Wizard Demo" width="450">
+  <img src="assets/github/scanned-crashed-car.png" alt="Toy Engine Crashed Car Demo" width="450">
 </p>
 
 It includes several custom built features like:
@@ -18,6 +18,16 @@ It includes several custom built features like:
 ## Building on Windows
 
 In order to configure and run project on windows platform accomplish several steps.
+
+### Prerequisites
+
+- CMake version at least 3.16
+- C++ Desktop Development Build Tools 2022 (for Windows)
+- OpenGL installed (should be always the case)
+
+### Cautions
+
+This project wasn't designed to be used in production or any other projects, it's primarily for educational purposes and inspiration. It's likely expected that something will not working or build on your computer, because this project wasn't meant to be able to run on ANY computer. But if you have hands coming out of the right place, then it should be relatively straightforward on how to build the engine library and sandbox executable.
 
 ### Configuring
 
