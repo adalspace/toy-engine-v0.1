@@ -3,8 +3,8 @@
 Toy project to understand how 3D engines work.
 
 <p align="center">
-  <img src="assets/github/wizard-demo.png" alt="Toy Engine Wizard Demo" width="450">
-  <img src="assets/github/scanned-crashed-car.png" alt="Toy Engine Crashed Car Demo" width="450">
+  <img src="assets/github/wizard-demo.png" alt="Toy Engine Wizard Demo" width="400">
+  <img src="assets/github/scanned-crashed-car.png" alt="Toy Engine Crashed Car Demo" width="400">
 </p>
 
 It includes several custom built features like:
@@ -22,17 +22,20 @@ In order to configure and run project on windows platform accomplish several ste
 ### Prerequisites
 
 - CMake version at least 3.16
+- VCPKG installed (for GLEW)
 - C++ Desktop Development Build Tools 2022 (for Windows)
 - OpenGL installed (should be always the case)
 
 ### Cautions
 
-This project wasn't designed to be used in production or any other projects, it's primarily for educational purposes and inspiration. It's likely expected that something will not working or build on your computer, because this project wasn't meant to be able to run on ANY computer. But if you have hands coming out of the right place, then it should be relatively straightforward on how to build the engine library and sandbox executable.
+This project was NOT designed to be used in production or any other projects, it's primarily for educational purposes and inspiration. It's likely expected that something will not working or build on your computer, because this project wasn't meant to be able to run on ANY computer. However I tried at that time to fully automate the build process, so if you have hands coming out of the right place, then it should be relatively straightforward on how to build the engine library and sandbox executable.
 
 ### Configuring
 
+Make sure to replace vcpkg's path with your actual vcpkg folder.
+
 ```console
-cmake -S . -B build -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B build -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE=C:/path/to/your/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release
 ```
 
 ### Building
@@ -46,7 +49,7 @@ cmake --build build --config Release
 For static linking you just need to modify the configure command as follows:
 
 ```console
-cmake -S . -B build -G "Visual Studio 17 2022"-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_BUILD_TYPE=Release -DENGINE_BUILD_SHARED=OFF
+cmake -S . -B build -G "Visual Studio 17 2022"-DCMAKE_TOOLCHAIN_FILE=C:/path/to/your/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_BUILD_TYPE=Release -DENGINE_BUILD_SHARED=OFF
 ```
 
 ## Multi-GPU Devices
