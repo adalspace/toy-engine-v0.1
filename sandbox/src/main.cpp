@@ -55,6 +55,7 @@ public:
         modelEntity.AddComponent<rotate>();
         assert(modelEntity.HasComponent<mesh>() && "model doesn't have any mesh!");
 
+        /*
         // Cube template (use shared object to avoid reloading 1000 times)
         auto cubeObj = Object::LoadFile("./assets/grass_block/grass_block.obj");
         auto batchEntt = scene->CreateEntity();
@@ -75,6 +76,7 @@ public:
             cubeEntity.AddComponent<rotate>();
             cubeEntity.AddComponent<batch::item>(cubeBatch.GetID());
         }
+        */
 
         Object* floorObj = Object::LoadFile("./assets/common/plane/plane.obj");
         auto floorEntt = scene->CreateEntity();
