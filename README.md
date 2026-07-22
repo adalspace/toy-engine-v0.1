@@ -3,7 +3,8 @@
 Toy project to understand how 3D engines work.
 
 <p align="center">
-  <img src="assets/github/wizard-demo.png" alt="Toy Engine Wizard Demo" width="800">
+  <img src="assets/github/wizard-demo.png" alt="Toy Engine Wizard Demo" width="400">
+  <img src="assets/github/scanned-crashed-car.png" alt="Toy Engine Crashed Car Demo" width="400">
 </p>
 
 It includes several custom built features like:
