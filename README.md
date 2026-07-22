@@ -52,7 +52,7 @@ For static linking you just need to modify the configure command as follows:
 cmake -S . -B build -G "Visual Studio 17 2022"-DCMAKE_TOOLCHAIN_FILE=C:/path/to/your/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_BUILD_TYPE=Release -DENGINE_BUILD_SHARED=OFF
 ```
 
-## Multi-GPU Devices
+## Multi-GPU Devices (Linux)
 
 If you want to use non-primary GPU on your device when launching the game specifically on Linux you should specify additional environment variables before running. For example in my case I have a hybrid gaming laptop with 2 GPUs AMD from CPU and NVIDIA discrete.
 
